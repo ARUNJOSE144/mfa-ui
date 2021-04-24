@@ -1,0 +1,40 @@
+.three-cogs {
+  position: relative;
+  > .fa:nth-child(1) {
+    animation-duration: 4s;
+  }
+  > .fa:nth-child(2),
+  > .fa:nth-child(3) {
+    position: absolute;
+    top: -0.2em;
+    right: -0.45em;
+    animation-direction: reverse;
+    animation-duration: 2s;
+  }
+  > .fa:nth-child(3) {
+    top: auto;
+    bottom: -0.2em;
+  }
+}
+
+@keyframes color {
+  0% { color: red }
+  50% { color: blue }
+  100% { color: red }
+}
+
+
+div {
+  margin: 20px
+}
+html,body {
+  height: 100%;
+  width: 100%;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}

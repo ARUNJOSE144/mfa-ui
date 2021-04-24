@@ -1,0 +1,387 @@
+
+/* form Elements */
+.custom-container {
+    padding: 15px;
+}
+
+.form-Brick {
+    margin-bottom: 20px;
+    padding: 0px 15px;
+}
+
+.form-Brick-body {
+    -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    border: 1px solid #E6E6E6;
+    padding: 20px 15px;
+}
+
+.form-Brick-Head {
+    color: #5D5D5D;
+    font-size: 14px;
+    padding: 5px 0px;
+    font-weight: bold;
+}
+
+input.form-control {
+    font-size: 15px;
+    z-index: 0;
+}
+
+::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    font-size: 12px;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    font-size: 12px;
+}
+
+:-ms-input-placeholder {
+    /* IE 10+ */
+    font-size: 12px;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    font-size: 12px;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.fs-20 {
+    font-size: 20px;
+}
+
+.fs-16 {
+    font-size: 16px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-13 {
+    font-size: 13px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.fs-10 {
+    font-size: 10px;
+}
+
+.c-pointer {
+    cursor: pointer;
+}
+
+button.close.custom-close {
+    height: 30px;
+    width: 30px;
+    border-radius: 2px;
+    background-color: #C8C7C8;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.08);
+    color: white;
+}
+
+.custom-close.close {
+    font-weight: 100;
+    text-shadow: none;
+}
+
+.dataTableFormgroup {
+    background-color: #ffffff;
+    border: 1px solid #DADADA;
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.13);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.13);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.13);
+    padding: 15px 0px;
+}
+
+.noMargin {
+    margin: 0px;
+}
+
+.form-card {
+    border: 1px solid #E6E6E6;
+    background-color: #FFFFFF;
+    box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.05);
+    padding: 15px;
+    color: #6D6D6D;
+    font-size: 13px;
+}
+
+.form-card-header {
+    font-weight: 600;
+    line-height: 20px;
+    border-bottom: 1px solid #EEEEEE;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.form-card-body {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #6D6D6D
+}
+
+.form-card>.container-fluid>.row>.col {
+    padding: 0;
+}
+
+.form-card>.container-fluid>.row>.col:nth-of-type(odd) {
+    padding-right: 7.5px;
+}
+
+.form-card>.container-fluid>.row>.col:nth-of-type(even) {
+    padding-left: 7.5px;
+}
+
+/* Wizard */
+/* navTab */
+
+.form-tab .nav-item {
+    margin-bottom: 0;
+}
+
+.form-tab .nav-link {
+    border-radius: 0;
+    border: 0;
+    color: #66686A;
+    background: #FFFFFF;
+    padding: 11px 10px;
+    min-width: 120px;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+    font-size: 12px;
+}
+
+.form-tab .nav-item:last-child>.nav-link,
+.form-tab .nav-item:only-child>.nav-link {
+    border-right: none;
+}
+
+/*Added in main Style CSS=> .form-tab .nav-link.active {
+    background: #0185E1;
+    color: #FFFFFF;
+} */
+
+/* .form-tab .nav-link.done {
+    background: #26A1FD;
+    color: #FFFFFF;
+}
+
+.form-tab .nav-tabs {
+    border-bottom: 1px solid #0185E1;
+} */
+
+.form-tab-pane {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.form-tab-pane .form-collapse-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.wizardTab .nav-tabs {
+    border-bottom: 0px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.wizardTab .nav-link::after {
+    position: absolute;
+    content: " ";
+    border-style: solid;
+    border-width: 20px 0 20px 20px;
+    /* border-color: transparent transparent transparent #ffffff; */
+    right: -18px;
+    top: 0px;
+}
+
+/* .wizardTab .active.nav-link::after {
+    border-color: transparent transparent transparent #0185e1;
+}
+
+.wizardTab .nav-tabs>li:not(:first-child)>.active.nav-link::before {
+    border-color: #0185e1 #0185e1 #0185e1 transparent;
+}
+
+.wizardTab .done.nav-link::after {
+    border-color: transparent transparent transparent #26A1FD;
+}
+
+.wizardTab .nav-tabs>li:not(:first-child)>.done.nav-link::before {
+    border-color: #26A1FD #26A1FD #26A1FD transparent;
+} */
+
+.wizardTab .nav-tabs>li:not(:first-child)>.nav-link::before {
+    position: absolute;
+    content: " ";
+    border-style: solid;
+    border-width: 20px 0px 20px 20px;
+    /* border-color: #ffffff #ffffff #ffffff transparent; */
+    top: 0px;
+    left: -18px;
+}
+
+.wizardTab .nav-item {
+    margin-left: 11px;
+    margin-right: 11px;
+}
+
+.wizardTab .nav-tabs>li:first-child {
+    margin-left: 0px;
+}
+
+.wizardTab .nav-link {
+    overflow: visible;
+    height: 40px;
+}
+
+
+/***********************************************/
+
+/* userNode (Routes.js)*/
+
+ul.userNode {
+    padding-left: 15px;
+    margin-top: 0px;
+    width: 100%;
+}
+
+ul.userNode li {
+    padding-left: 33px;
+    margin-bottom: 2.5em;
+    list-style: none;
+}
+
+ul.userNode li {
+    position: relative;
+    /* so that pseudoelements are positioned relatively to their "li"s*/
+    /* use padding-bottom instead of margin-bottom.*/
+    margin-bottom: 0;
+    /* This overrides previously specified margin-bottom */
+    padding-bottom: 1rem;
+}
+
+ul.userNode li.entityNode {
+    margin-bottom: 0;
+    /* This overrides previously specified margin-bottom */
+    padding-bottom: 3.5em;
+}
+
+ul.userNode li:after {
+    content: url(./icon/globe.svg);
+    position: absolute;
+    left: 8px;
+    /*adjust manually*/
+    top: 8px;
+}
+
+ul.userNode li.entityNode:after {
+    content: '';
+    height: 15px;
+    width: 15px;
+    /* background-color: #000000;	 */
+    background-color: #0185E1;
+    box-shadow: 0 0 2px 1px rgba(32, 37, 45, 0.14);
+    position: absolute;
+    left: 11px;
+    /*adjust manually*/
+    top: 8px;
+    border-radius: 7px;
+}
+
+ul.userNode li:before {
+    /* lines */
+    content: "";
+    position: absolute;
+    left: 18px;
+    /* adjust manually */
+    border-left: 1px solid black;
+    height: 100%;
+    width: 1px;
+}
+
+ul.userNode li:first-child:before {
+    /* first li's line */
+    top: 20px;
+    /* moves the line down so that it disappears under the bullet. Adjust manually */
+}
+
+ul.userNode li:last-child:before {
+    /* last li's line */
+    height: 15px;
+    /* shorten the line so it goes only up to the bullet. Is equal to first-child:before's top */
+}
+
+ul.userNode li.entityNode:last-child:after {
+    content: '';
+    height: 15px;
+    width: 15px;
+    background-color: #0185E1;
+    box-shadow: 0 0 2px 1px rgba(32, 37, 45, 0.14);
+    position: absolute;
+    left: 11px;
+    /*adjust manually*/
+    top: 8px;
+    border-radius: 7px;
+}
+
+.add-pos-btn {
+    padding: 2px 8px;
+    height: 23px;
+    width: 120px;
+    border: 1px solid #D6D6D6;
+    border-radius: 38px;
+    background-color: #FFFFFF;
+    font-size: 12px;
+    cursor: pointer
+}
+
+.route-action-btn {
+    background: #FFFFFF;
+    height: 25px;
+    border-radius: 13px;
+    line-height: 10px;
+}
+
+.route-frequency {
+    cursor: pointer;
+}
+
+.route-frequency-selected {
+    color: #0185E1;
+}
+
+.route-user-select .Select .Select-control {
+    border: none;
+}
+.home-main-div {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    overflow-x: hidden;
+    overflow: hidden;
+}
+
+.top-padding{
+    padding-top: 15px;
+}
+/***********************************************/

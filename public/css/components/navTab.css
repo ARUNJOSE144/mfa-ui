@@ -1,0 +1,104 @@
+/* navTab */
+
+.form-tab .nav-item {
+    margin-bottom: 0;
+}
+
+.form-tab .nav-link {
+    border-radius: 0;
+    border: 0;
+    color: #66686A;
+    background: #FFFFFF;
+    padding: 11px 10px;
+    min-width: 120px;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
+    position: relative;
+    font-size: 12px;
+}
+
+.form-tab .nav-item:last-child>.nav-link,
+.form-tab .nav-item:only-child>.nav-link {
+    border-right: none;
+}
+
+.form-tab .nav-link.active {
+    background: #0185E1;
+    color: #FFFFFF;
+}
+
+.form-tab .nav-link.done {
+    background: #26A1FD;
+    color: #FFFFFF;
+}
+
+.form-tab .nav-tabs {
+    border-bottom: 1px solid #0185E1;
+}
+
+.form-tab-pane {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.form-tab-pane .form-collapse-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.wizardTab .nav-tabs {
+    border-bottom: 0px;
+}
+
+.wizardTab .nav-link::after {
+    position: absolute;
+    content: " ";
+    border-style: solid;
+    border-width: 20px 0 20px 20px;
+    border-color: transparent transparent transparent #ffffff;
+    right: -19px;
+    top: 0px;
+}
+
+.wizardTab .active.nav-link::after {
+    border-color: transparent transparent transparent #0185e1;
+}
+
+.wizardTab .nav-tabs>li:not(:first-child)>.active.nav-link::before {
+    border-color: #0185e1 #0185e1 #0185e1 transparent;
+}
+
+.wizardTab .done.nav-link::after {
+    border-color: transparent transparent transparent #26A1FD;
+}
+
+.wizardTab .nav-tabs>li:not(:first-child)>.done.nav-link::before {
+    border-color: #26A1FD #26A1FD #26A1FD transparent;
+}
+
+.wizardTab .nav-tabs>li:not(:first-child)>.nav-link::before {
+    position: absolute;
+    content: " ";
+    border-style: solid;
+    border-width: 20px 0px 20px 20px;
+    border-color: #ffffff #ffffff #ffffff transparent;
+    top: 0px;
+    left: -18px;
+}
+
+.wizardTab .nav-item {
+    margin-left: 11px;
+    margin-right: 11px;
+}
+
+.wizardTab .nav-tabs>li:first-child {
+    margin-left: 0px;
+}
+
+.wizardTab .nav-link {
+    overflow: visible;
+    height: 40px;
+}

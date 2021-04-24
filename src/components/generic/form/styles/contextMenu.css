@@ -1,0 +1,15 @@
+.custom-context-menu:hover {
+  background: #f0f3f5 !important;
+}
+
+.custom-context-menu {
+  /* background: blue; */
+  padding: 0.25rem .5rem;
+}
+
+.react-contextmenu {
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 2px;
+  z-index: 2;
+}

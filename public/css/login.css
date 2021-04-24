@@ -1,0 +1,140 @@
+.login-form .card {
+    background: #fff;
+    border: none;
+    border-radius: 4px;
+    box-shadow: none;
+    border-left: 4px solid #B30027;
+}
+.login-container {
+    background: url('../images/bg/cellcard_bg.png');
+
+}
+.login-form .floating-label {   
+  position: absolute;
+  pointer-events: none;
+  left: 0px;
+  top: 45px;
+  transition: 0.2s ease all;
+  z-index: 9;
+  color: #9c9c9c;
+}
+.login-form input:focus ~ .floating-label,
+.login-form input:not([value=""]):not(:focus):valid ~ .floating-label {
+  top: 13px;
+  color: #6d6d6d;
+}
+.errorMsg_login {
+  border: 1px solid #dc3545;
+padding: 6px;
+background-color: #fdf5e5;
+border-radius: 2px;
+}
+
+.success_login {
+  border: 1px solid #008000;
+padding: 6px;
+background-color: rgba(102,219,102,0.8);
+border-radius: 2px;
+}
+
+.login-form .card-header {
+    color: #B30027;
+    padding: 0.7rem 0;
+    /* padding-left: 2.3rem; */
+    background-color: #ffffff;
+    font-size: 24px;
+    padding-left: 2.4rem;
+    padding-right: 2.4rem;
+    border-bottom: 1px solid #E5E5E5;
+    font-weight: lighter;
+}
+
+.login-form .card-body {
+    width: 450px;
+    padding-left: 2.4rem;
+    padding-right: 2.4rem;
+}
+
+.login-form .input-group {
+    padding: 2rem 0 0 0;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.login-form .input-group .input-group-addon {
+    border: none;
+    background: #fff;
+    color: #a0a0a0;
+    padding-right: 0.2rem;
+}
+
+.login-form .input-group input[type="text"],
+.login-form .card-body input[type="password"] {
+    border: none;
+    border-radius: 0;
+    padding: .5rem 0rem;
+    font-size: 15px;
+    box-shadow: none;
+}
+
+.login-form .input-group input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.login-form .login-btn {
+    margin-top: 4rem;
+    margin-bottom: 1.25rem;
+    text-align: right
+}
+
+.login-form .login-btn>button {
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    font-weight: normal;
+    background-color: #ffffff;
+border: 1px solid #B30027;
+border-radius: 25px;
+color: #B30027;
+}
+
+.login-form .login-btn>.btn-signin:hover,
+.login-form .login-btn>.btn-signin:active,
+.login-form .login-btn>.btn-signin:focus {
+    background: #B30027;
+    color: #ffffff;
+}
+
+.login-form .forgot-password{
+    text-align: right;
+}
+.mw-none {
+    max-width: unset !important;
+}
+
+
+
+
+
+/* New Css Done For Branding....Needs to link with Sass Later */
+a{
+    color: #B30027;
+}
+.dataTable_label_tab td{
+    background-color:  #B30027 !important;
+}
+.data-table th {
+    background-color:  #B30027 !important;
+}
+.fa b{
+    color:  #B30027;
+}
+.dataTable_selectedRow {
+    background-color: #f1083b !important;
+    color: white;
+}
+
+.user-ico{
+    color:white !important;
+}

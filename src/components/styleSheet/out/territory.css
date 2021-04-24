@@ -1,0 +1,71 @@
+.tree-node.selected {
+  color: #B30027;
+}
+
+.tree-node.selected .node-label {
+  border-color: #B30027;
+}
+
+.tree-view-btn-grp > .fa {
+  color: #B30027;
+}
+
+.tree-view li::before {
+  border-left: 1px solid #B30027;
+}
+
+.tree-view li:first-child::after {
+  border-top: 2px solid #B30027;
+}
+
+.tree-view .node-bullet {
+  background: #B30027;
+}
+
+.org-node {
+  border: 1px solid #D6D6D6;
+  background: #F5F5F6;
+}
+
+.org-node-type-1 {
+  background: #A3B4BC;
+  border-color: #A3B4BC;
+}
+
+.org-node-type-2 {
+  background: #409ccd;
+  border-color: #409ccd;
+}
+
+.org-node-selected {
+  border-color: #B30027;
+  background: #B30027;
+}
+
+.legend-bullet > span {
+  background: #F5F5F6;
+}
+
+.legend-bullet-1 > span {
+  background: #A3B4BC;
+}
+
+.legend-bullet-2 > span {
+  background: #409ccd;
+}
+
+.menu-icon-o:hover,
+.dropdown.show > .menu-icon-o {
+  background-color: #B30027;
+  border: 1px solid #B30027;
+}
+
+.customico-menu-o {
+  font-size: 16px;
+}
+
+.customico-menu-o .fa-ellipsis-h {
+  font-size: 1.4em;
+}
+
+/*# sourceMappingURL=territory.css.map */

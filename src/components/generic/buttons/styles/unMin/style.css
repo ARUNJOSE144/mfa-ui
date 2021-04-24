@@ -1,0 +1,117 @@
+.custom-btn {
+  cursor: pointer;
+  margin-top: 0px;
+  text-align: center;
+  display: inline-block;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  box-sizing: border-box;
+}
+
+/* Button Styles */
+.custom-btn.btn-block-c {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.custom-btn.btn-round {
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+
+/* Button Size */
+.custom-btn.btn-lg {
+  min-width: 150px;
+  padding: 9px 9px;
+  font-size: 14px;
+}
+
+.custom-btn.btn-md {
+  min-width: 110px;
+  padding: 5px 9px;
+  font-size: 12px;
+}
+
+.custom-btn.btn-sm {
+  padding: 4px 5px;
+  font-size: 11px;
+  min-width: 60px;
+}
+
+.custom-btn.btn-md-lg {
+  min-width: 80px;
+  padding: 5px 10px;
+  font-size: 16px;
+}
+
+/* Button Types */
+/* Added in Main style CSS => .custom-btn.custom-btn-primary {
+  color: #ffffff;
+  background-color: #0185E1;
+  border: 1px solid #0185E1;
+}
+.custom-btn.custom-btn-secondary {
+  color: #0185E1;
+  background-color: #ffffff;
+  border: 1px solid #0185E1;
+}
+.custom-btn.btn-alert-primary {
+  color: #ffffff;
+  background-color: #ED765C;
+  border: 1px solid #ED765C;
+}
+.custom-btn.btn-alert-secondary {
+  color: #0185E1;
+  background-color: #ffffff;
+  border: 1px solid #EDEDED;
+} */
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.custom-btn:hover {
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.custom-btn.addMargin {
+  margin: 0px 8px;
+}
+
+.custom-btn.margin-left {
+  margin-left: 8px;
+}
+
+.custom-btn.margin-right {
+  margin-right: 8px;
+}
+
+.btn-width-inherit {
+  min-width: unset;
+  width: 100%;
+}
+
+/* Added in Main style CSS => .color-primary {
+  color: #0185E1!important;
+}
+.color-secondary {
+  color:#6D6D6D!important;
+} */
+.btn-disabled {
+  opacity: .65;
+  cursor: not-allowed;
+}

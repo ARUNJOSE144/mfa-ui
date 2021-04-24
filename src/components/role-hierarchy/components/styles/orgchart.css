@@ -1,0 +1,138 @@
+.reactOrgChart {
+    margin: 2px;
+}
+
+.reactOrgChart .orgNodeChildGroup .node {
+    border: solid 1px #000000;
+    display: inline-block;
+    padding: 4px;
+    width: 100px;
+}
+
+.reactOrgChart .orgNodeChildGroup .nodeCell {
+    text-align: center;
+}
+
+.reactOrgChart .orgNodeChildGroup .nodeGroupCell {
+    vertical-align: top;
+}
+
+.reactOrgChart .orgNodeChildGroup .nodeGroupLineVerticalMiddle {
+    height: 25px;
+    width: 50%;
+    border-right: 2px solid #000;
+}
+
+.reactOrgChart .nodeLineBorderTop {
+    border-top: solid 2px #000;
+}
+
+.reactOrgChart table {
+    border-collapse: collapse;
+    border: none;
+    margin: 0 auto;
+}
+
+.reactOrgChart td {
+    padding: 0;
+}
+
+.reactOrgChart table.nodeLineTable {
+    width: 100%;
+}
+
+.reactOrgChart table td.nodeCell {
+    width: 50%;
+}
+
+.org-node {
+    border: 1px solid #D6D6D6;
+    background: #F5F5F6;
+    border-radius: 3px;
+    padding: 5px 5px;
+    margin: 0 5px;
+    min-width: 100px;
+    display: inline-block;
+    font-size: 12px;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    -webkit-transition: all 2s;
+    -o-transition: all 2s;
+    transition: all 2s;
+    cursor: pointer;
+    position: relative;
+}
+
+.org-view-container .orgNodeChildGroup .nodeGroupLineVerticalMiddle {
+    border-right: 2px solid #A3B4BC !important;
+}
+
+.org-view-container .nodeLineBorderTop {
+    border-top: 2px solid #A3B4BC !important;
+}
+
+.org-view-container {
+    padding: 5px;
+    height: 100%;
+}
+
+.reactOrgChart .orgNodeChildGroup .nodeGroupLineVerticalMiddle {
+    height: 40px !important;
+}
+
+.org-node::before {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #A3B4BC;
+    border-radius: 8px;
+    background: white;
+    text-align: center;
+    left: calc(50% - 7.5px);
+    top: -28px;
+}
+
+.reactOrgChart>.orgNodeChildGroup>tbody>tr:first-child .org-node::before {
+    content: none;
+}
+
+.org-node-type-1 {
+    background: #A3B4BC;
+    color: #FFFFFF;
+    box-shadow: 'none';
+    border-color: #A3B4BC;
+}
+
+.org-node-type-2 {
+    background: #f36369;
+    color: #FFFFFF;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    border-color: #f36369;
+}
+
+.org-node-selected {
+    border-color: #ee1c25;
+    background: #ee1c25;
+    color: #FFFFFF;
+}
+
+.legend-bullet>span {
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+    border: 1px solid #8c8c8c !important;
+}
+
+.legend-bullet-1>span {
+    background: #A3B4BC;
+}
+
+.legend-bullet-2>span {
+    background: #f36369;
+}
+
+.legend-bullet-3>span {
+    background: #F5F5F6;
+}

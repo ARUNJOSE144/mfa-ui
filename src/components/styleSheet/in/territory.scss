@@ -1,0 +1,73 @@
+@import './variables';
+
+.tree-node.selected {
+    color: $primary;
+}
+
+.tree-node.selected .node-label {
+    border-color: $primary;
+}
+
+.tree-view-btn-grp>.fa {
+    color: $primary;
+}
+
+.tree-view li::before {
+    border-left: 1px solid $primary;
+}
+
+.tree-view li:first-child::after {
+    border-top: 2px solid $primary;
+}
+
+.tree-view .node-bullet {
+    background: $primary;
+}
+
+
+
+// Organization page tree view
+.org-node {
+    border: 1px solid #D6D6D6;
+    background: #F5F5F6;
+}
+.org-node-type-1 {
+    background: $hierarchy_node_color_1;
+    border-color: $hierarchy_node_color_1
+}
+
+.org-node-type-2 {
+    background: $hierarchy_node_color_2;
+    border-color: $hierarchy_node_color_2
+}
+
+.org-node-selected {
+    border-color: $primary;
+    background: $primary;
+}
+
+.legend-bullet>span{
+    background: #F5F5F6;
+}
+
+.legend-bullet-1>span{
+    background: $hierarchy_node_color_1;
+}
+
+.legend-bullet-2>span{
+    background: $hierarchy_node_color_2;
+}
+
+// 6d-ui-compoennets
+.menu-icon-o:hover,
+.dropdown.show>.menu-icon-o {
+    background-color: $primary;
+    border: 1px solid $primary;
+}
+
+.customico-menu-o{
+    font-size: 16px;
+}
+.customico-menu-o .fa-ellipsis-h{
+    font-size: 1.4em;
+}

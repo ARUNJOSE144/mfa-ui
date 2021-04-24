@@ -1,0 +1,57 @@
+.pagination-SelectorModal {
+    display: inline-block;
+    padding-left: 0;
+}
+
+.pagination-SelectorModal>li {
+    display: inline;
+}
+
+.pagination-SelectorModal>.active>a,
+.pagination-SelectorModal>.active>span {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+.pagination-SelectorModal>li>a,
+.pagination-SelectorModal>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.pagination-SelectorModal>.disabled>span,
+.pagination-SelectorModal>.disabled>span:hover,
+.pagination-SelectorModal>.disabled>span:focus,
+.pagination-SelectorModal>.disabled>a,
+.pagination-SelectorModal>.disabled>a:hover,
+.pagination-SelectorModal>.disabled>a:focus {
+    cursor: not-allowed;
+    color: #b7b7b7;
+}
+.pagination-SelectorModal>.active>a:hover  {
+  color: #ffffff;
+}
+.pagination-SelectorModal .btn-next-more,
+.pagination-SelectorModal .btn-prev-more  {
+  display: none;
+}
+.pagination-SelectorModal.pagination>li>a,.pagination-SelectorModal.pagination>li>span {
+  padding: 13px 9px;
+}
+.pagination-SelectorModal {
+  margin-bottom: 0px;
+}
+.modal-footer .clearfix {
+  width: 100%;
+}

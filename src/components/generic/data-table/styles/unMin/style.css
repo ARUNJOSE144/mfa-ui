@@ -1,0 +1,318 @@
+.dataTable {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.data-table td,
+.data-table th {
+    white-space: nowrap;
+    vertical-align: middle !important;
+    padding: 0;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.data-table th {
+    background-color: #A3B4BC;
+    color: #FFFFFF;
+    padding-top: 5px;
+    padding-bottom: 6px;
+    border-bottom: 0px !important;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.data-table tr {
+    background-color: #ffffff;
+}
+
+.data-table.table-hover tbody tr:hover {
+    background-color: #F5F5F5;
+}
+
+.data-table .btn {
+    height: 30px;
+    min-width: 30px;
+    padding: 0 0.5rem;
+}
+
+.data-table-search {
+    max-width: 250px;
+    border: 1px solid #b3b3b3;
+    border-radius: 4px;
+}
+
+.dataTable_tc_head {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.data-table-search>input {
+    border: none;
+    box-shadow: none !important;
+}
+
+.data-table-search>.input-group-addon {
+    background: transparent;
+    border: none;
+}
+.dataTable_head_sortable {
+    cursor: pointer;
+}
+
+.dataTable_label_tab td {
+    border: 0px;
+    background-color: #A3B4BC;
+    padding: 0px;
+}
+
+.dataTable_sortIco.inActive {
+    color: #D3DEE4;
+}
+
+.dataTable_sortIco {
+    float: left;
+    padding: 0px 0px 0px 5px;
+}
+
+.dataTable-scrollable {
+    width: 100%;
+    border-radius: 3px 3px 0 0;
+    overflow: auto;
+}
+
+.dataTable-mainTable {
+    margin: 0px;
+    /* border: 1px solid #D3DEE4; */
+}
+
+.dataTable_pageDetails {
+    float: left;
+    padding: 0px 0px 5px 0px;
+}
+
+.datatable_filter_components .filterClose {
+    float: right;
+    padding: 0px 0px 0px 9px;
+    color: #2e373c;
+    cursor: pointer;
+}
+
+.dataTable_wrapper {
+    margin-bottom: 10px;
+}
+
+.datatable_filter_components {
+    float: left;
+    padding: 1px 10px;
+    margin-right: 10px;
+    background-color: #c6c6c6;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    margin-bottom: 4px;
+}
+
+/* .dataTable_selectedRow {
+    background-color: #B6E0FF !important;
+} */
+
+.dataTable_notFound {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+.dataTable_common_search {
+    width: 200px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #D6D6D6;
+    height: 30px;
+}
+.dataTable_rowCountText {
+    font-size: 10px;
+}
+.fit-content {
+    width: 1%;
+    white-space: nowrap;
+    text-align: center;
+    /*Added In Main Style css=> color: #0185e1; */
+    font-size: 16px;
+    color: #A3B4BC !important;
+}
+.clickable_ico_dt .fa {
+    cursor: pointer;
+}
+.btn-group.show .dropdown-menu {
+  display: block;
+}
+
+/* Buttons */
+.dataTable .btn {
+  cursor: pointer;
+  margin-top: 0px;
+}
+.dataTable .btn.active.focus,
+.dataTable .btn.active:focus,
+.dataTable .btn.focus,
+.dataTable .btn.focus:active,
+.dataTable .btn:active:focus,
+.dataTable .btn:focus,
+button:focus {
+    outline: 0 !important;
+    outline-offset: 0 !important;
+    background-image: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+.btn-outline-dataTable-export-btn, .btn-dataTable-sm-btn {
+border: 1px solid #D6D6D6;
+background-color: #ffffff;
+color: #b1afaf;
+height: 30px;
+cursor: pointer;
+}
+
+.btn-outline-dataTable-export-btn {
+  font-size: 12px;
+  min-width: 100px;
+  text-align: left;
+}
+.btn-outline-dataTable-export-btn::after {
+  float: right;
+margin-top: 8px;
+}
+.btn-dataTable-sm-btn {
+  font-size: 14px;
+}
+
+.dataTable_export_dd.dropdown-menu {
+  min-width: unset;
+ border-radius: 2px;
+ width: 100%;
+ color: #6d6d6d;
+}
+
+.dataTable_export_dd.dropdown-menu .dropdown-item {
+  font-size: 13px;
+  color: #6D6D6D;
+  cursor: pointer;
+}
+
+/* Row Count */
+.btn-outline-dataTable-rowCount {
+  background-color: #ffffff;
+      border-color: #d6d6d6;
+      color: #6d6d6d;
+}
+
+.btn-outline-dataTable-rowCount:hover {
+  border-color: #d6d6d6;
+background-color: #ffffff;
+color: #6d6d6d;
+}
+
+
+
+.data-table-rowCount-dd.dropdown-menu {
+  min-width: unset;
+ border-radius: 2px;
+ width: 100%;
+ color: #6d6d6d;
+}
+
+.data-table-rowCount-dd.dropdown-menu .dropdown-item {
+  padding: 5px 0px;
+  color: #6d6d6d;
+  text-align: center;
+}
+
+.dataTable_common_search:focus {
+    -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.2);
+    border: 1px solid #1286DD;
+}
+
+/* Pagination */
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+}
+
+.pagination>li {
+    display: inline;
+}
+
+.pagination>.active>a,
+.pagination>.active>span {
+    z-index: 2;
+    color: #fff;
+    background-color: #A3B4BC;
+    cursor: default;
+    /* Added in main Style CSS => background-color: #337ab7;
+    border-color: #337ab7; */
+ 
+}
+
+.pagination>li>a,
+.pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 5px 15px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #33495F;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.pagination>.disabled>span,
+.pagination>.disabled>span:hover,
+.pagination>.disabled>span:focus,
+.pagination>.disabled>a,
+.pagination>.disabled>a:hover,
+.pagination>.disabled>a:focus {
+    cursor: not-allowed;
+    color: #b7b7b7;
+}
+.pagination>.active>a:hover  {
+  color: #ffffff;
+}
+
+
+
+/* data list css */
+
+.list-Brick-component {
+    border-bottom: 1px solid #E3E9EC;
+    cursor: pointer;
+}
+.pager-css {
+    margin-top: 6px;
+    text-align: center;
+}
+.pager-css .btn-next-more {
+    display: none;
+}
+.pager-css .btn-prev-more {
+    display: none;
+}
+
+/* customDataTable: small font and size*/
+
+.customDataTable .dataTable_wrapper {    
+    font-size: 12px;
+}
+.customDataTable .data-table td, .customDataTable .data-table th {
+    padding-left: 0.4rem;
+    padding-right: .4rem;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+}
+

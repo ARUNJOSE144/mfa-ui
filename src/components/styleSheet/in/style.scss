@@ -1,0 +1,407 @@
+@import '_variables.scss';
+@import "login.scss";
+// Common CSS 6d-UI-Components
+.login-backgrnd{
+  background: $primary;
+}
+.loginTitle{
+  color: $primary;
+}
+.forgot-password a{
+  color: $primary;
+}
+.btn-signin{
+  color: $primary;
+  border: 1px solid $primary;
+  &:hover{
+    background: $primary;
+  }
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans';
+    font-size: 13px;
+    color: #3d3d3d;
+    padding-right: 0px !important;
+}
+
+// Header CSS
+.primary-background {
+    background-color: $primary;
+    color: $secondary;
+}
+
+.primary-color {
+    color: $primary;
+    background-color: $secondary;
+}
+
+header.navbar .navbar-nav .nav-item {
+    border-left: 1px solid lighten(desaturate($primary, 5.05), 16.86);
+    color: lighten(saturate(adjust-hue($primary, -1), 13.93), 40.39);
+}
+header.navbar .dropdown.show .user-ico {
+    color: $secondary;
+}
+header.navbar .dropdown .user-ico {
+    color: lighten(saturate(adjust-hue($primary, -1), 13.93), 40.39);
+}
+header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar-nav .nav-item .dropdown-item:active {
+    color: $secondary;
+    background-color: $primary;
+}
+
+//Side Menu CSS
+.side-menu-item>.list-group-item>a.opened, .side-menu-item>.list-group-item>a.selected, .side-menu-item>li>a:hover {
+    color: $secondary;
+    background: $primary;
+}
+.side-menu-item>.list-group-item>a.opened, .side-menu-item>.list-group-item>a.selected, .side-menu-item>li>a:hover .menu-icon{
+  color: $secondary;
+}
+.side-submenu-item>li>a:hover, .side-submenu-item>.list-group-item>a.selected {
+    border-right: 5px solid $primary;
+    color: $primary;
+}
+.side-submenu-item>li>a:not([href]):not([tabindex]):focus, .side-submenu-item>li>a:not([href]):not([tabindex]):hover {
+  color: $primary;
+}
+
+//Data Table CSS 6d-data-table
+.fit-content {
+    color: $primary;
+}
+.pagination>.active>a,
+.pagination>.active>span {
+    color: $pagination_active_col;
+    background-color: $pagination_active;
+    border-color: $pagination_active;
+}
+.data-table-rowCount-dd.dropdown-menu .dropdown-item.active,
+.data-table-rowCount-dd.dropdown-menu .dropdown-item:active,
+.dataTable_export_dd.dropdown-menu .dropdown-item.active,
+.dataTable_export_dd.dropdown-menu .dropdown-item:activel {
+    color: $secondary;
+    background-color: $primary;
+}
+.dataTable_selectedRow {
+    background-color: lighten(saturate(adjust-hue($primary, 1), 0.88), 41.37) !important;
+}
+.selectedUser {
+  background-color: $primary;
+  color: #ffffff;
+  -webkit-transition: background-color 0.3s;
+  -moz-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+//Button CSS 6d-buttons
+.custom-btn.custom-btn-primary {
+  color: $button_primary_col;
+  background-color: $button_primary;
+  border: 1px solid $button_primary_border;
+}
+.custom-btn.custom-btn-primary:hover {
+  background-color: lighten(desaturate($button_primary, 1.60), 2.94);
+}
+.custom-btn.custom-btn-secondary {
+  color: $button_secondary_col;
+  background-color: $button_secondary;
+  border: 1px solid $button_secondary_border;
+}
+.custom-btn.btn-alert-primary {
+  color: $button_alert_primary_col;
+  background-color: $button_alert_primary;
+  border: 1px solid $button_alert_primary_border;
+}
+.custom-btn.btn-alert-secondary {
+  color: $button_alert_secondary_col;
+  background-color: $button_alert_secondary;
+  border: 1px solid $button_alert_secondary_border;
+}
+.color-primary {
+  color: $button_col_primary !important;
+}
+.color-secondary {
+  color: $button_col_secondary !important;
+}
+
+//Popup 6d-action-popup
+.custom-modal .modal-header .close {
+    color: $secondary;
+}
+.custom-modal .primary-background {
+    background-color: $primary;
+    color: $secondary;
+}
+
+//Alert Box
+.center-alert_box .modal-content {
+    border: 1px solid $alert_box_border;
+}
+.center-alert_box .close {
+    color: $alert_box_secondary;
+}
+.center-alert_box .modal-header {
+    background-color: $alert_box_primary;
+    border-radius: 0px;
+    color: $alert_box_secondary;
+}
+.center-alert_box .alert_ico {
+    color: $alert_box_primary;
+}
+
+//Selector Modal 66d-form-components
+.pagination-SelectorModal>.active>a,
+.pagination-SelectorModal>.active>span {
+    color: $pagination_active_col;
+    background-color: $pagination_active;
+    border-color: $pagination_active;
+}
+
+//Form css
+.form-tab .nav-link.active {
+    background: $primary;
+    color: $secondary;
+}
+.form-tab .nav-link.done {
+    background: lighten(desaturate(adjust-hue($primary, 1), 0.94), 12.75);
+    color: $secondary;
+}
+.form-tab .nav-tabs {
+    border-bottom: 1px solid $primary;
+}
+.wizardTab .nav-link::after {
+    border-color: transparent transparent transparent $secondary;
+}
+
+.wizardTab .active.nav-link::after {
+    border-color: transparent transparent transparent $primary;
+}
+
+.wizardTab .nav-tabs>li:not(:first-child)>.active.nav-link::before {
+    border-color: $primary $primary $primary transparent;
+}
+
+.wizardTab .done.nav-link::after {
+    border-color: transparent transparent transparent lighten(desaturate(adjust-hue($primary, 1), 0.94), 12.75);
+}
+
+.wizardTab .nav-tabs>li:not(:first-child)>.done.nav-link::before {
+    border-color: lighten(desaturate(adjust-hue($primary, 1), 0.94), 12.75) lighten(desaturate(adjust-hue($primary, 1), 0.94), 12.75) lighten(desaturate(adjust-hue($primary, 1), 0.94), 12.75) transparent;
+}
+
+.wizardTab .nav-tabs>li:not(:first-child)>.nav-link::before {
+    border-color: $secondary $secondary $secondary transparent;
+}
+
+//Survey
+.svd_container .select2-container .select2-selection--single .select2-selection__arrow,
+.svd_container .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow {
+  background: $primary !important;
+}
+.svd_container a {
+  color: $primary !important;
+}
+.svd_container a:hover {
+  color: $primary !important;
+}
+.svd_container .btn-primary {
+  background-color: $primary !important;
+  border-color: $primary !important;
+}
+.svd_container .sjs-cb-container:hover input:checked ~ .checkmark {
+  background-color: $primary !important;
+}
+.svd_container .svd_toolbar li.active a {
+  background-color: $primary !important;
+}
+.svd_container .nav-tabs > li.active > a {
+  color: $primary !important;
+}
+.svd_container .editor-tabs > li.active > a {
+  color: $primary !important;
+}
+.svd_container .svd_custom_select:before {
+  background-color: $primary !important;
+}
+.svd_container .form-control:focus {
+  border-color: #0185E1 !important;
+}
+.svd_container .svd-main-color {
+  color: $primary !important;
+}
+.svd_container .svd-main-background-color {
+  background-color: $primary !important;
+}
+.svd_container .svd-main-border-color {
+  border-color: $primary !important;
+}
+.svd_container .svd-primary-icon .svd-svg-icon {
+  fill: $primary !important;
+}
+.svd_container .svd-secondary-icon .svd-svg-icon {
+  fill: $primary !important;
+}
+.svd_container .icon-gearactive .svd-svg-icon {
+  fill: $primary !important;
+}
+
+.sv_main input[type="button"],
+.sv_main button {
+  color: $secondary !important;
+  background-color: $primary !important;
+}
+.sv_main input[type="button"]:hover,
+.sv_main button:hover {
+  background-color: $primary !important;
+}
+.sv_main .sv_select_wrapper {
+  background-color: $secondary !important;
+}
+.sv_main .sv_select_wrapper:before {
+  background-color: $primary !important;
+}
+.sv_main .sv_body {
+  background-color: $secondary !important;
+  border-top: 2px solid $primary !important;
+}
+.sv_main .sv_progress_bar {
+  background-color: $primary !important;
+}
+.sv_main .sv_q_m_cell_selected {
+  color: $secondary !important;
+  background-color: $primary !important;
+}
+.sv_main .sv_q_rating_item.active .sv_q_rating_item_text {
+  background-color: $primary !important;
+  border-color: $primary !important;
+  color: $secondary !important;
+}
+.sv_main .sv_q_rating_item .sv_q_rating_item_text:hover {
+  border: 1px solid $primary !important;
+}
+
+
+//territory tree view
+.tree-node.selected {
+  color: $primary;
+}
+
+.tree-node.selected .node-label {
+  border-color: $primary;
+}
+
+.tree-view-btn-grp>.fa {
+  color: $primary;
+}
+
+.tree-view li::before {
+  border-left: 1px solid $primary;
+}
+
+.tree-view li:first-child::after {
+  border-top: 2px solid $primary;
+}
+
+.tree-view .node-bullet {
+  background: $primary;
+}
+
+
+
+// Organization page tree view
+.org-node {
+  border: 1px solid #D6D6D6;
+  background: #F5F5F6;
+}
+.org-node-type-1 {
+  background: $hierarchy_node_color_1;
+  border-color: $hierarchy_node_color_1
+}
+
+.org-node-type-2 {
+  background: $hierarchy_node_color_2;
+  border-color: $hierarchy_node_color_2
+}
+
+.org-node-selected {
+  border-color: $primary;
+  background: $primary;
+}
+
+.legend-bullet>span{
+  background: #F5F5F6;
+}
+
+.legend-bullet-1>span{
+  background: $hierarchy_node_color_1;
+}
+
+.legend-bullet-2>span{
+  background: $hierarchy_node_color_2;
+}
+
+// 6d-ui-compoennets
+.menu-icon-o:hover,
+.dropdown.show>.menu-icon-o {
+  background-color: $primary;
+  border: 1px solid $primary;
+}
+
+.customico-menu-o{
+  font-size: 16px;
+}
+.customico-menu-o .fa-ellipsis-h{
+  font-size: 1.4em;
+}
+
+/* **********ListData css************** */
+.list-data:hover{
+    background-color: lighten(saturate(adjust-hue($primary, -1), 13.93), 40.39);
+}
+ul.list-background > li:nth-of-type(odd) {
+    background: #f5f5f5;
+}
+ul.list-background > li:nth-of-type(odd):hover {
+    background-color: lighten(saturate(adjust-hue($primary, -1), 13.93), 40.39);
+}
+.primary-color-list{
+    color: $primary;
+}
+
+/* **********Drag and Drop ************** */
+.list-submenu-item>li>a {
+    background: lighten(saturate(adjust-hue($primary, -1), 13.93), 40.39);
+    border-bottom: 1px solid #ccc;
+} 
+
+.draggable-item:hover{
+    background: lighten(saturate(adjust-hue($primary, -1), 13.93), 40.39);
+}
+
+.list-menu-item > .list-group-item > a.opened, .list-menu-item > .list-group-item > a.selected, .list-menu-item > li > a:hover {
+    color: $secondary;
+    background: $primary;
+}
+
+.draggable-item{
+    border: 1px solid #ccc;
+    padding-top: 3px;
+    padding-left: 10px;
+    padding-bottom: 3px;
+    cursor: move;
+    background-color: lighten(saturate(adjust-hue($primary, -357), 13.93), 44.90);
+    display: flex;
+}
+
+ .activeTabStyle {
+  background-color: $primary;
+  color: $secondary !important;
+  cursor: pointer;
+}
+
+.inActiveTabStyle {
+  cursor: pointer;
+} 

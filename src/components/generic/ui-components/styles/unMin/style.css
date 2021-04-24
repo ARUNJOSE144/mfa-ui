@@ -1,0 +1,948 @@
+/* Home Css */
+
+.home-main-div {
+    display: flex;
+    flex-direction: row;
+    overflow-x: hidden;
+}
+
+.main-content-div {
+    flex: 1;
+    min-width: 0px;
+    background-color: #EAEDF0;
+}
+
+.main-container {
+    position: relative;
+    min-height: 200px;
+}
+
+.side-nav-menu {
+    flex: 0 0 215px;
+    background-color: #ffffff;
+    transition: 0.2s margin;
+    z-index: 10;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.loadingPageContainer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    -webkit-box-shadow: inset 5px 5px 13px 0px rgba(0,0,0,0.1);
+    -moz-box-shadow: inset 5px 5px 13px 0px rgba(0,0,0,0.1);
+    box-shadow: inset 5px 5px 13px 0px rgba(0,0,0,0.1);
+}
+
+.toastify_class {
+    z-index: 1051 !important;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.toastify_body_class {
+    padding: 10px;
+}
+
+.mw-none {
+    max-width: unset !important;
+}
+
+.three-cogs {
+    position: relative;
+}
+
+.three-cogs .fa:nth-child(1) {
+    animation-duration: 4s;
+}
+
+.three-cogs .fa:nth-child(2),
+.three-cogs .fa:nth-child(3) {
+    position: absolute;
+    top: -0.5em;
+    right: 2.4em;
+    animation-direction: reverse;
+    animation-duration: 2s;
+}
+
+.three-cogs .fa:nth-child(3) {
+    top: auto;
+    bottom: -0.5em;
+}
+
+.three-cogs {
+    margin: 20px
+}
+
+.three-cogs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* **************scrollbarStyl************** */
+
+.scrollbar::-webkit-scrollbar-track {
+    /* box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); */
+    background-color: #CCCCCC;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 8px;
+    background-color: #CCCCCC;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: #7A7A7A;
+    border-radius: 4px;
+}
+
+/* Header Styles */
+
+header.navbar .triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 15px solid white;
+    position: absolute;
+    top: -15px;
+    right: 12px;
+}
+
+header.navbar .dropdown.show .dropdown-menu {
+    display: block;
+    position: absolute;
+    transform: translate3d(-157px, 66px, 0px);
+    top: 0px;
+    left: 0px;
+    will-change: transform;
+}
+
+header.app-header.navbar {
+    padding: 0;
+    border-bottom: 1px solid #EEEEEE;
+    height: 70px;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+header.navbar .logo-div-main {
+    height: 100%;
+}
+
+header.navbar .menu-toggle {
+    float: left;
+    height: 100%;
+}
+
+header.navbar .page-heading {
+    float: left;
+    height: 100%;
+    font-size: 24px;
+    font-weight: 200;
+}
+
+header.navbar .menu-toggle-ico {
+    cursor: pointer;
+    font-size: 20px;
+    padding: 3px 20px;
+}
+
+header.navbar .navbar-nav {
+    flex-direction: row;
+    align-items: center;
+    font-size: 20px;
+}
+
+/* Added In Main Style CSS=>  header.navbar .dropdown.show .user-ico {
+    color: #ffffff;
+}
+
+header.navbar .dropdown .user-ico {
+    color: #b4e0ff;
+} */
+
+header.navbar .navbar-nav .nav-item {
+    font-size: 20px;
+    /*Added In Main Style CSS=> border-left: 1px solid #2c95df;
+    color: #b4e0ff; */
+}
+
+header.navbar .dropdown-menu {
+    margin: 0px;
+    border-radius: 0px;
+    padding: 0px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    width: 220px;
+}
+
+header.navbar .navbar-nav .nav-link {
+    padding: 18px 24px;
+}
+
+header.navbar .header_fullName {
+    padding: 17px 15px;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+header.navbar .header_fullName .ico,
+header.navbar .header_cogs .ico {
+    padding: 0px 20px 0px 0px;
+}
+
+header.navbar .header_cogs {
+    padding: 14px 17px;
+    font-size: 14px;
+}
+
+header.navbar .dropdown-item {
+    padding: 0px;
+}
+
+header.navbar .setOverflow {
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+/* SideMenu CSS */
+
+.logo-div {
+    padding: 15px 0px;
+    height: 70px;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+.side-nav-menu-in {
+    overflow: auto;
+}
+
+.menu_footer {
+    position: fixed;
+    padding: 10px;
+    width: 215px;
+    color: #6D6D6D;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.menu_footer span {
+    font-weight: bold;
+}
+
+.side-nav-menu .list-group-item:first-child {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.side-menu-item>li,
+.side-submenu-item>li {
+    padding: 0;
+    line-height: normal;
+    background-color: transparent;
+    line-height: 1.5;
+    border: none;
+    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 0;
+}
+
+/* .side-menu-item>li>a:hover {
+    color: #ffffff;
+    background: #0185E1;
+}
+
+.side-menu-item>li>a:not([href]):not([tabindex]):focus,
+.side-menu-item>li>a:not([href]):not([tabindex]):hover {
+    color: #ffffff;
+} */
+
+/*Added in main style css =>  .side-submenu-item>li>a:not([href]):not([tabindex]):focus,
+.side-submenu-item>li>a:not([href]):not([tabindex]):hover {
+    color: #0185E1;
+} */
+
+.side-menu-item>li>a,
+.side-submenu-item>li>a {
+    padding: 0.7rem;
+    line-height: 1.5;
+    display: block;
+    cursor: pointer;
+    color: #262626;
+    transition: background .3s ease-in-out;
+    text-decoration: none;
+}
+
+.side-submenu-item>li>a {
+    border-right: 2px transparent;
+}
+
+/* Added in main style css => .side-submenu-item>li>a:hover {
+    border-right: 5px solid #0185E1;
+    color: #0185E1;
+} */
+
+.side-submenu-item>li>a::after {
+    border-left: 1px solid #BBCCDD;
+    bottom: 0;
+    content: "";
+    left: 16px;
+    position: absolute;
+    top: 0;
+}
+
+.side-submenu-item>li>a::before {
+    border-bottom: 1px solid #BBCCDD;
+    content: "";
+    left: 16px;
+    position: absolute;
+    width: 10px;
+    top: 19px;
+}
+
+.side-submenu-item {
+    background-color: #FAFAFA;
+}
+
+.side-submenu-item>li {
+    border-top-color: #ffffff;
+    border: none;
+}
+
+.side-submenu-item>li>a {
+    padding-left: 40px;
+}
+
+.side-menu-item a:hover {
+    text-decoration: none;
+}
+
+.side-submenu-item>.list-group-item>a>i.submenu-icon {
+    float: right;
+    line-height: 1.5;
+}
+
+.side-menu-item>.list-group-item>a>i.submenu-icon {
+    float: right;
+    line-height: 1.5;
+    -webkit-transition: transform .2s ease;
+    -o-transition: transform .2s ease;
+    transition: transform .2s ease;
+}
+
+.side-menu-item .menu-icon {
+    width: 20px;
+    margin-right: 0.5rem;
+}
+/* Added In Main Style css */
+/* .side-menu-item>.list-group-item>a.selected {
+    background: #0185E1;
+    color: #ffffff;
+} */
+
+/* .side-menu-item>.list-group-item>a.opened {
+    color: #ffffff;
+    background: #0185E1
+}
+
+.side-submenu-item>.list-group-item>a.selected {
+    background: #FAFAFA;
+    color: #0185e1;
+    border-right: 5px solid #0185e1;
+} */
+
+/* ************************ */
+
+.content-container {
+    width: auto;
+    margin: 15px;
+    background: #FFFFFF;
+    border: 1px solid #E6E6E6;
+}
+
+.header-row {
+    height: 50px;
+    border-bottom: 1px solid #E6E6E6;
+}
+
+.header-content {
+    height: 100%;
+}
+
+/* React toastify css */
+
+.Toastify__toast-container {
+    z-index: 9999;
+    position: fixed;
+    padding: 4px;
+    width: 320px;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+.Toastify__toast-container--top-left {
+    top: 1em;
+    left: 1em;
+}
+
+.Toastify__toast-container--top-center {
+    top: 1em;
+    left: 50%;
+    margin-left: -160px;
+}
+
+.Toastify__toast-container--top-right {
+    top: 1em;
+    right: 1em;
+}
+
+.Toastify__toast-container--bottom-left {
+    bottom: 1em;
+    left: 1em;
+}
+
+.Toastify__toast-container--bottom-center {
+    bottom: 1em;
+    left: 50%;
+    margin-left: -160px;
+}
+
+.Toastify__toast-container--bottom-right {
+    bottom: 1em;
+    right: 1em;
+}
+
+@media only screen and (max-width: 480px) {
+    .Toastify__toast-container {
+        width: 100vw;
+        padding: 0;
+        left: 0;
+        margin: 0;
+    }
+    .Toastify__toast-container--top-left,
+    .Toastify__toast-container--top-center,
+    .Toastify__toast-container--top-right {
+        top: 0;
+    }
+    .Toastify__toast-container--bottom-left,
+    .Toastify__toast-container--bottom-center,
+    .Toastify__toast-container--bottom-right {
+        bottom: 0;
+    }
+    .Toastify__toast-container--rtl {
+        right: 0;
+        left: initial;
+    }
+}
+
+.Toastify__toast {
+    position: relative;
+    min-height: 64px;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+    padding: 8px;
+    border-radius: 1px;
+    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    max-height: 800px;
+    overflow: hidden;
+    font-family: sans-serif;
+    cursor: pointer;
+    direction: ltr;
+}
+
+.Toastify__toast--rtl {
+    direction: rtl;
+}
+
+.Toastify__toast--default {
+    background: #fff;
+    color: #aaa;
+}
+
+.Toastify__toast--info {
+    background: #3498db;
+}
+
+.Toastify__toast--success {
+    background: #07bc0c;
+}
+
+.Toastify__toast--warning {
+    background: #f1c40f;
+}
+
+.Toastify__toast--error {
+    background: #e74c3c;
+}
+
+.Toastify__toast-body {
+    margin: auto 0;
+    -ms-flex: 1;
+    flex: 1;
+}
+
+@media only screen and (max-width: 480px) {
+    .Toastify__toast {
+        margin-bottom: 0;
+    }
+}
+
+.Toastify__close-button {
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    background: transparent;
+    outline: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.3s ease;
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+}
+
+.Toastify__close-button--default {
+    color: #000;
+    opacity: 0.3;
+}
+
+.Toastify__close-button:hover,
+.Toastify__close-button:focus {
+    opacity: 1;
+}
+
+@keyframes Toastify__trackProgress {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
+.Toastify__progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 5px;
+    z-index: 9999;
+    opacity: 0.7;
+    animation: Toastify__trackProgress linear 1;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.Toastify__progress-bar--rtl {
+    right: 0;
+    left: initial;
+}
+
+.Toastify__progress-bar--default {
+    background: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55);
+}
+
+@keyframes Toastify__bounceInRight {
+    from,
+    60%,
+    75%,
+    90%,
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    from {
+        opacity: 0;
+        transform: translate3d(3000px, 0, 0);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(-25px, 0, 0);
+    }
+    75% {
+        transform: translate3d(10px, 0, 0);
+    }
+    90% {
+        transform: translate3d(-5px, 0, 0);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@keyframes Toastify__bounceOutRight {
+    20% {
+        opacity: 1;
+        transform: translate3d(-20px, 0, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(2000px, 0, 0);
+    }
+}
+
+@keyframes Toastify__bounceInLeft {
+    from,
+    60%,
+    75%,
+    90%,
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    0% {
+        opacity: 0;
+        transform: translate3d(-3000px, 0, 0);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(25px, 0, 0);
+    }
+    75% {
+        transform: translate3d(-10px, 0, 0);
+    }
+    90% {
+        transform: translate3d(5px, 0, 0);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@keyframes Toastify__bounceOutLeft {
+    20% {
+        opacity: 1;
+        transform: translate3d(20px, 0, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(-2000px, 0, 0);
+    }
+}
+
+@keyframes Toastify__bounceInUp {
+    from,
+    60%,
+    75%,
+    90%,
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    from {
+        opacity: 0;
+        transform: translate3d(0, 3000px, 0);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(0, -20px, 0);
+    }
+    75% {
+        transform: translate3d(0, 10px, 0);
+    }
+    90% {
+        transform: translate3d(0, -5px, 0);
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes Toastify__bounceOutUp {
+    20% {
+        transform: translate3d(0, -10px, 0);
+    }
+    40%,
+    45% {
+        opacity: 1;
+        transform: translate3d(0, 20px, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(0, -2000px, 0);
+    }
+}
+
+@keyframes Toastify__bounceInDown {
+    from,
+    60%,
+    75%,
+    90%,
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -3000px, 0);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(0, 25px, 0);
+    }
+    75% {
+        transform: translate3d(0, -10px, 0);
+    }
+    90% {
+        transform: translate3d(0, 5px, 0);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@keyframes Toastify__bounceOutDown {
+    20% {
+        transform: translate3d(0, 10px, 0);
+    }
+    40%,
+    45% {
+        opacity: 1;
+        transform: translate3d(0, -20px, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(0, 2000px, 0);
+    }
+}
+
+.Toastify__bounce-enter--top-left,
+.Toastify__bounce-enter--bottom-left {
+    animation-name: Toastify__bounceInLeft;
+}
+
+.Toastify__bounce-enter--top-right,
+.Toastify__bounce-enter--bottom-right {
+    animation-name: Toastify__bounceInRight;
+}
+
+.Toastify__bounce-enter--top-center {
+    animation-name: Toastify__bounceInDown;
+}
+
+.Toastify__bounce-enter--bottom-center {
+    animation-name: Toastify__bounceInUp;
+}
+
+.Toastify__bounce-exit--top-left,
+.Toastify__bounce-exit--bottom-left {
+    animation-name: Toastify__bounceOutLeft;
+}
+
+.Toastify__bounce-exit--top-right,
+.Toastify__bounce-exit--bottom-right {
+    animation-name: Toastify__bounceOutRight;
+}
+
+.Toastify__bounce-exit--top-center {
+    animation-name: Toastify__bounceOutUp;
+}
+
+.Toastify__bounce-exit--bottom-center {
+    animation-name: Toastify__bounceOutDown;
+}
+
+@keyframes Toastify__zoomIn {
+    from {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes Toastify__zoomOut {
+    from {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.Toastify__zoom-enter {
+    animation-name: Toastify__zoomIn;
+}
+
+.Toastify__zoom-exit {
+    animation-name: Toastify__zoomOut;
+}
+
+@keyframes Toastify__flipIn {
+    from {
+        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        animation-timing-function: ease-in;
+        opacity: 0;
+    }
+    40% {
+        transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+        animation-timing-function: ease-in;
+    }
+    60% {
+        transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+        opacity: 1;
+    }
+    80% {
+        transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    }
+    to {
+        transform: perspective(400px);
+    }
+}
+
+@keyframes Toastify__flipOut {
+    from {
+        transform: perspective(400px);
+    }
+    30% {
+        transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+        opacity: 1;
+    }
+    to {
+        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        opacity: 0;
+    }
+}
+
+.Toastify__flip-enter {
+    animation-name: Toastify__flipIn;
+}
+
+.Toastify__flip-exit {
+    animation-name: Toastify__flipOut;
+}
+
+@keyframes Toastify__slideInRight {
+    from {
+        transform: translate3d(110%, 0, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes Toastify__slideInLeft {
+    from {
+        transform: translate3d(-110%, 0, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes Toastify__slideInUp {
+    from {
+        transform: translate3d(0, 110%, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes Toastify__slideInDown {
+    from {
+        transform: translate3d(0, -110%, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes Toastify__slideOutRight {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        transform: translate3d(110%, 0, 0);
+    }
+}
+
+@keyframes Toastify__slideOutLeft {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        transform: translate3d(-110%, 0, 0);
+    }
+}
+
+@keyframes Toastify__slideOutUp {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        transform: translate3d(0, 110%, 0);
+    }
+}
+
+@keyframes Toastify__slideOutDown {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        transform: translate3d(0, -110%, 0);
+    }
+}
+
+.Toastify__slide-enter--top-left,
+.Toastify__slide-enter--bottom-left {
+    animation-name: Toastify__slideInLeft;
+}
+
+.Toastify__slide-enter--top-right,
+.Toastify__slide-enter--bottom-right {
+    animation-name: Toastify__slideInRight;
+}
+
+.Toastify__slide-enter--top-center {
+    animation-name: Toastify__slideInDown;
+}
+
+.Toastify__slide-enter--bottom-center {
+    animation-name: Toastify__slideInUp;
+}
+
+.Toastify__slide-exit--top-left,
+.Toastify__slide-exit--bottom-left {
+    animation-name: Toastify__slideOutLeft;
+}
+
+.Toastify__slide-exit--top-right,
+.Toastify__slide-exit--bottom-right {
+    animation-name: Toastify__slideOutRight;
+}
+
+.Toastify__slide-exit--top-center {
+    animation-name: Toastify__slideOutUp;
+}
+
+.Toastify__slide-exit--bottom-center {
+    animation-name: Toastify__slideOutDown;
+}
+
+/*# sourceMappingURL=ReactToastify.css.map */
+

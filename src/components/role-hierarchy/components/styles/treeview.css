@@ -1,0 +1,232 @@
+.tree-view {
+    font-size: 15px;
+    padding-left: 4px;
+    margin-bottom: 30px;
+}
+
+.tree-view ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.tree-node.selected {
+    border-radius: 0.2rem;
+    color: #26a1fd;
+}
+
+.tree-node {
+    /* height: 37px; */
+    /* max-width: 220px; */
+    color: #7f8b97;
+}
+
+.tree-node .node-label {
+    border-radius: 0.2rem;
+    border: 1px solid #e0e3e6;
+    padding: 0.2rem 0.5rem;
+    height: 40px;
+}
+
+.tree-node.selected .node-label {
+    border-color: #26a1fd;
+}
+
+.node-label input {
+    width: 100%;
+}
+
+.tree-node tr>td:first-child {
+    width: 300px;
+}
+
+.tree-view .input-node {
+    width: 200px !important;
+}
+
+.tree-view .select-node {
+    min-width: 200px;
+    border-radius: 0.2rem;
+    border: 1px solid #e0e3e6;
+    height: 40px;
+}
+
+.tree-view .select-node .custom-field {
+    width: 100%;
+}
+
+.tree-view .select-node .Select>.Select-control {
+    border: none;
+}
+
+.tree-view .select-node .Select>.Select-menu-outer {
+    margin-top: 1px;
+}
+
+.tree-view-btn-grp {
+    padding-left: 20px;
+}
+
+.tree-view-btn-grp>.fa {
+    font-size: 20px;
+    color: #3572b0;
+}
+
+.tree-view-btn-grp>.fa:not(:last-child) {
+    margin-right: 5px;
+}
+
+
+/* *********************** */
+
+.tree-view li {
+    position: relative;
+    padding-top: 10px;
+}
+
+.tree-view li::before {
+    border-left: 1px solid #26A1FD;
+    bottom: 50px;
+    height: 100%;
+    top: 0;
+    width: 1px;
+}
+
+.tree-view>ul>li {
+    margin-left: 5px;
+}
+
+.tree-view>ul>li::after {
+    content: none;
+}
+
+
+/* .tree-view ul>li:last-child::before {
+    height: 28.5px;
+} */
+
+.tree-view li:first-child::before {
+    top: 28px;
+}
+
+
+/* .tree-view li::after { */
+
+.tree-view li:first-child::after {
+    border-top: 2px solid #26A1FD;
+    ;
+    ;
+    height: 20px;
+    top: 28.5px;
+    width: 20px;
+    margin-left: -20px;
+}
+
+.tree-view li:only-child::before {
+    content: none;
+}
+
+.tree-view li:last-child::before {
+    height: 30px;
+}
+
+.tree-view>ul>li::before {
+    content: '' !important;
+    height: 100%;
+}
+
+.tree-view li::before,
+.tree-view li::after {
+    content: '';
+    left: -20px;
+    position: absolute;
+    right: auto;
+}
+
+/* .menu-icon-o {
+    height: 32px;
+    width: 32px;
+    line-height: 32px;
+    background-image: url('../images/icons/more_horiz_2.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    border: 1px solid #DADADA;
+    border-radius: 50%;
+}
+
+.menu-icon-o:hover,
+.dropdown.show>.menu-icon-o {
+    background-image: url('../images/icons/more_horiz_1.svg');
+    background-color: #26a1fd;
+    border: 1px solid #26a1fd;
+    color: #fff;
+} */
+
+.tree-view .dropdown-menu {
+    box-shadow: 3px 3px 15px 0px rgba(181, 181, 181, 1);
+    border: none;
+}
+
+.tree-view .dropdown-item:not(:active) {
+    color: #7f8b97;
+}
+
+.tree-view .dropdown-item {
+    font-weight: 100;
+    font-size: 15px;
+}
+
+.tree-view .add-node {
+    width: fit-content;
+    padding: 0 15px;
+    border-radius: 15px;
+    border: 1px solid #3572b063;
+    margin-top: 7px;
+    cursor: pointer;
+}
+
+.tree-view .node-bullet {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    background: #26A1FD;
+    left: -24px;
+    top: 24px;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.tree-view>ul>li>.node-bullet:first-child {
+    background: #0185e1;
+    border-radius: 10px;
+    /* background-image: url(../images/icons/globe.svg);
+    background-size: 20px; */
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    left: -29px;
+}
+
+.tree-view .node-bullet-o {
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    background: #FFFFFF;
+    left: -25px;
+    top: 22px;
+    border-radius: 6px;
+    z-index: 1;
+    border: 1px solid #26A1FD;
+}
+
+.tree-view input {
+    border: none;
+    /* border-bottom: 1px solid #ccc; */
+    outline: none;
+}
+
+.tree-view b {
+    font-weight: bold;
+    color: #000000;
+}

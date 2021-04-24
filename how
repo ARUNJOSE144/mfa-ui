@@ -1,0 +1,165 @@
+[33mcommit eed1b434f9ad81fcc30df18c2e33c3a8cfa853c5[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: STS\johnson.c <johnson.c@6dtech.co.in>
+Date:   Tue Jan 2 12:11:10 2018 +0530
+
+    login chnages revert
+
+[33mcommit 8d0540ab9d851060200bb35f2d28e3ea24738abc[m
+Merge: 890b96b ae0f1dc
+Author: balu-sk93 <balu_sk93@hotmail.com>
+Date:   Tue Jan 2 12:06:38 2018 +0530
+
+    Merge branch 'master' of http://10.0.0.15/AbhilashNambiar/Sales_And_Distribution_UI
+
+[33mcommit 890b96b0a05bf2e407e13498050104899c84948c[m
+Merge: c5df3c9 6e5959b
+Author: balu-sk93 <balu_sk93@hotmail.com>
+Date:   Tue Jan 2 12:05:39 2018 +0530
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       src/util/Constants.js
+
+[33mcommit ae0f1dc6a02bbca61795bfe77cdd065a70f2e736[m
+Merge: 3bd0a5d 6e5959b
+Author: STS\johnson.c <johnson.c@6dtech.co.in>
+Date:   Tue Jan 2 12:03:29 2018 +0530
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 3bd0a5d95739b3b74ff8bd61fa0a4d3324a5199b[m
+Author: STS\johnson.c <johnson.c@6dtech.co.in>
+Date:   Tue Jan 2 12:02:41 2018 +0530
+
+    sales hierarchy changes
+
+[33mcommit c5df3c97efcbb5d6c587dce95bc3b8287adb9941[m
+Author: balu-sk93 <balu_sk93@hotmail.com>
+Date:   Tue Jan 2 11:14:31 2018 +0530
+
+    Roles
+
+[33mcommit 2bc53ab8cab851efd2f017920b872abf0fbbc582[m
+Author: balu-sk93 <balu_sk93@hotmail.com>
+Date:   Tue Jan 2 11:09:11 2018 +0530
+
+    Roles Menu
+
+[33mcommit 6e5959bde944e7939b7f304767e5a4d310bb44fd[m
+Author: STS\midhun.gs <midhun.gs@6dtech.co.in>
+Date:   Fri Dec 29 19:51:16 2017 +0530
+
+    no message
+
+[33mcommit 729ec7221015ea08297e1abc6c4418ecbe75872b[m
+Author: STS\midhun.gs <midhun.gs@6dtech.co.in>
+Date:   Fri Dec 29 19:40:49 2017 +0530
+
+    no message
+
+[33mcommit 12230b7288f51797bdc023cbcda9e6f1aa9ff600[m
+Author: STS\midhun.gs <midhun.gs@6dtech.co.in>
+Date:   Fri Dec 29 19:37:43 2017 +0530
+
+    Reload Case - BL call added
+    Side Menu Scrolling added
+
+[33mcommit 5d37d2d7d787f65ee0b585b1562cdb2d842f8df6[m
+Author: STS\midhun.gs <midhun.gs@6dtech.co.in>
+Date:   Fri Dec 29 16:04:45 2017 +0530
+
+    Datatable fix
+
+[33mcommit 5c5b0548453e0e72b7dd2a11ed8e853d4627ef25[m
+Author: STS-764\charisma.k <charisma.salim@6dtech.co.in>
+Date:   Fri Dec 29 13:47:15 2017 +0530
+
+    Doc Type Supported files
+
+[33mcommit 9b47a46786b99da91c9fbf6130e5768f1a6808bb[m
+Author: STS\midhun.gs <midhun.gs@6dtech.co.in>
+Date:   Fri Dec 29 13:41:19 2017 +0530
+
+    Privilages Conflict
+
+[33mcommit d213311723893e95859db33cd9a8faa1c7afd420[m
+Merge: c7460b7 e942171
+Author: STS\midhun.gs <midhun.gs@6dtech.co.in>
+Date:   Fri Dec 29 13:31:21 2017 +0530
+
+    Merge branch 'master' of http://10.0.0.15/AbhilashNambiar/Sales_And_Distribution_UI
+
+[33mcommit c7460b7f51aa8c2f1d1163d3e6780bac3a0480a5[m
+Author: STS\midhun.gs <midhun.gs@6dtech.co.in>
+Date:   Fri Dec 29 13:25:24 2017 +0530
+
+    Send Post Req Bug
+
+[33mcommit e942171cc7fbcfdea171bccc3fe8ea7cf845511a[m
+Merge: 75f86c2 fa78227
+Author: STS-764\charisma.k <charisma.salim@6dtech.co.in>
+Date:   Fri Dec 29 13:17:29 2017 +0530
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       db.json
+    #       src/components/common/DataTable.js
+    #       src/util/Constants.js
+    #       src/util/FormElements.js
+    #       src/util/Privilages.js
+
+[33mcommit 75f86c2159a3558c1dc5d3538e563e97b404a4a7[m
+Author: STS-764\charisma.k <charisma.salim@6dtech.co.in>
+Date:   Fri Dec 29 13:03:17 2017 +0530
+
+    Doc Type
+
+[33mcommit fa78227c088ff252d0dfacd49b3ba9d2c32f6a8d[m
+Merge: f383313 8cf1bfa
+Author: STS\ashrin.rose <ashrin.rose@6dtech.co.in>
+Date:   Fri Dec 29 12:59:23 2017 +0530
+
+    Merge remote-tracking branch 'origin/master'
+    
+    # Conflicts:
+    #       src/components/common/DataTable.js
+    #       src/util/Constants.js
+    #       src/util/DataTableHeaders.js
+
+[33mcommit f383313fb579967252c24e8ed4c9fa5b3a66ef9e[m
+Author: STS\ashrin.rose <ashrin.rose@6dtech.co.in>
+Date:   Fri Dec 29 12:52:03 2017 +0530
+
+    Company Type Supported files
+
+[33mcommit 5b28d73243fd674dbf723fcfb83f1db78654d6bf[m
+Author: STS\ashrin.rose <ashrin.rose@6dtech.co.in>
+Date:   Fri Dec 29 12:47:00 2017 +0530
+
+    Company Type
+
+[33mcommit 8cf1bfa0811023e8f4f6251832bae9f7b09f4829[m
+Author: STS\midhun.gs <midhun.gs@6dtech.co.in>
+Date:   Fri Dec 29 12:36:32 2017 +0530
+
+    no message
+
+[33mcommit 72b282813ebc0fbcdf4325a0a3110e770814b5fe[m
+Author: STS\midhun.gs <midhun.gs@6dtech.co.in>
+Date:   Fri Dec 29 12:31:54 2017 +0530
+
+    Css Arranged
+
+[33mcommit 7d00115e0b4ac4ef26828257b49745d3e217a31d[m
+Author: STS-764\charisma.k <charisma.salim@6dtech.co.in>
+Date:   Wed Dec 27 19:00:38 2017 +0530
+
+    Document Type
+
+[33mcommit f199cf32f0f9eab15de02a7d85b7900af49fb09c[m
+Author: STS\johnson.c <johnson.c@6dtech.co.in>
+Date:   Wed Dec 20 16:43:54 2017 +0530
+
+    initial stable commit

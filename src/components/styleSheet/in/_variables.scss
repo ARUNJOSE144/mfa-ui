@@ -1,0 +1,37 @@
+$primary :#B30027; //Blue
+// $primary : #ee1c25; //red
+$secondary : #ffffff;
+
+//Buttons
+$button_primary : $primary;
+$button_primary_col : $secondary;
+$button_primary_border : $primary;
+
+$button_secondary : $secondary;
+$button_secondary_col : $primary;
+$button_secondary_border : $primary;
+
+$button_alert_primary : #ED765C;
+$button_alert_primary_col : #ffffff;
+$button_alert_primary_border : #ED765C;
+
+$button_alert_secondary : #ffffff;
+$button_alert_secondary_col : #0185E1;
+$button_alert_secondary_border : #EDEDED;
+
+//Button Text color
+$button_col_primary : $primary;
+$button_col_secondary : #6D6D6D;
+
+//Pagination
+$pagination_active : $primary; //#337ab7;
+$pagination_active_col : $secondary;
+
+//Alert Box color
+$alert_box_border : #FF4A22;
+$alert_box_primary : #ED765C;
+$alert_box_secondary : #ffffff;
+
+// Hierarchy color configurations
+$hierarchy_node_color_1: #A3B4BC; 
+$hierarchy_node_color_2: #409ccd; // #f36369;

@@ -1,0 +1,128 @@
+.custom-modal .modal-body {
+    background-color: #F5F5F6;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+.custom-modal .modal-title {
+    font-weight: 200;
+    font-size: 24px;
+}
+.custom-modal .modal-footer {
+    padding: 10px 0px;
+}
+.custom-modal .modal-header {
+    padding: 16px;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+}
+.custom-modal .modal-header .close {
+    /* color: #ffffff; */
+    font-weight: 200;
+    opacity: 1;
+    padding-top: 18px;
+    cursor: pointer;
+}
+/* Added in main Style css => .custom-modal .primary-background {
+    background-color: #0185E1;
+    color: #ffffff;
+} */
+.custom-modal .modal-footer>:not(:last-child) {
+  margin-right: 0px;
+}
+.right-fixed-modal {
+    margin: 0px;
+    position: fixed;
+    right: 0px;
+    min-width: 40%;
+    height: 100%;
+}
+
+.right-fixed-modal .modal-content {
+    height: 100%;
+}
+
+.right-fixed-modal .modal-body {
+    overflow: hidden;
+    padding: 0px;
+}
+
+.right-fixed-modal .modal-header {
+    display: block;
+}
+
+.right-fixed-modal .overlay_position {
+    padding: 10px;
+    overflow: auto;
+}
+.right-fixed-modal .modal-title {
+    float: left;
+}
+
+.right-fixed-modal .modal-footer {
+    bottom: 0px;
+    width: 100%;
+    padding: 10px;
+    left: 0px;
+}
+
+.center-modal {
+    min-width: 70%;
+    margin-top: 0px;
+}
+.center-alert_box {
+    margin-top: 0px;
+}
+
+.center-alert_box .modal-content {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    /*Main Style CSS => border: 1px solid #FF4A22; */
+}
+
+.center-alert_box .modal-title {
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 1;
+}
+
+.center-alert_box .close {
+    font-size: 33px;
+    padding: 8px 15px;
+    font-weight: lighter;
+    /* Main Style CSS => color: #ffffff; */
+    opacity: 1;
+    cursor: pointer;
+}
+
+/* Main Style CSS => .center-alert_box .modal-header {
+    background-color: #ED765C;
+    border-radius: 0px;
+    color: #ffffff;
+} */
+
+.center-alert_box .modal-body {
+    padding: 20px 15px;
+}
+
+.center-alert_box .alert_ico {
+    font-size: 32px;
+    /* Main Style CSS=> color: #ED765C; */
+}
+
+.center-alert_box .modal-footer {
+    border-top: 0px;
+    padding: 10px 20px 20px 20px;
+}
+
+.center-alert_box .alert_text {
+    font-size: 16px;
+}
+
+/* .custom-modal-header>.modal-title{
+    width: calc(100% - 75px);
+}
+.custom-modal-header>.close {
+    width: 75px;
+} */

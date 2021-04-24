@@ -1,0 +1,26 @@
+/* ****************from index.css****************** */
+
+
+/* Common */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans';
+    font-size: 13px;
+    color: #3d3d3d;
+    padding-right: 0px !important;
+}
+
+
+.primary-background1 div div:nth-child(2) {
+    background-color:Green;
+    color: #ffffff;
+  }
+  
+.primary-color {
+    color: #B30027;
+    background-color: #ffffff;
+}
+
+

@@ -1,0 +1,4 @@
+Extra Info
+--------------------
+
+Connecting to Db using putti -    mysql -ustsuser -pstsuser@6Dtech -h10.0.0.85 -P3306 -A
