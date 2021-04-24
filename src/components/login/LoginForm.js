@@ -116,7 +116,7 @@ class LoginForm extends Component {
                                             <Card style={{ margin: 0, padding: 0 }}>
                                                 <CardHeader>
                                                     <span className="loginTitle">
-                                                        Welcome To <b>Commission System</b>
+                                                        Welcome To <b>Inno App</b>
                                                     </span>
                                                 </CardHeader>
                                                 <CardBody>
@@ -144,9 +144,9 @@ class LoginForm extends Component {
                                                             </Button>
                                                             : <Button type="submit" className="btn-signin" name="login">Login</Button>}
                                                     </div>
-                                                    <div>
+                                                   {/*  <div>
                                                         <div> <a href={AD_URL}> <span style={{ paddingLeft: "138px" }}>Login With AD</span></a></div>
-                                                    </div>
+                                                    </div> */}
                                                     <div>
                                                         <Row>
                                                             <Col></Col>

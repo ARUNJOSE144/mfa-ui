@@ -1,5 +1,5 @@
 .forgotPwd {
-  background-color: #B30027;
+  background-color: green;
 }
 
 .side-nav-menu img {
@@ -12,7 +12,7 @@
   border: none;
   border-radius: 4px;
   box-shadow: none;
-  border-left: 4px solid #B30027;
+  border-left: 4px solid green;
 }
 
 .login-container img {
@@ -37,7 +37,7 @@
 }
 
 .errorMsg_login {
-  border: 1px solid #B30027;
+  border: 1px solid green;
   padding: 6px;
   background-color: #fdf5e5;
   border-radius: 2px;
@@ -51,7 +51,7 @@
 }
 
 .login-form .card-header {
-  color: #B30027;
+  color: green;
   padding: 0.7rem 0;
   /* padding-left: 2.3rem; */
   background-color: #ffffff;
@@ -116,7 +116,7 @@
 .login-form .login-btn > .btn-signin:hover,
 .login-form .login-btn > .btn-signin:active,
 .login-form .login-btn > .btn-signin:focus {
-  background: #B30027;
+  background: green;
   color: #ffffff;
 }
 
@@ -130,23 +130,23 @@
 
 /* New Css Done For Branding....Needs to link with Sass Later */
 a {
-  color: #B30027;
+  color: green;
 }
 
 .dataTable_label_tab td {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .data-table th {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .fa b {
-  color: #B30027;
+  color: green;
 }
 
 .dataTable_selectedRow {
-  background-color: #B30027 !important;
+  background-color: green !important;
   color: white;
 }
 

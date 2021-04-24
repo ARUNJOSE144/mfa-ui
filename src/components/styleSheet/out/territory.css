@@ -1,25 +1,25 @@
 .tree-node.selected {
-  color: #B30027;
+  color: green;
 }
 
 .tree-node.selected .node-label {
-  border-color: #B30027;
+  border-color: green;
 }
 
 .tree-view-btn-grp > .fa {
-  color: #B30027;
+  color: green;
 }
 
 .tree-view li::before {
-  border-left: 1px solid #B30027;
+  border-left: 1px solid green;
 }
 
 .tree-view li:first-child::after {
-  border-top: 2px solid #B30027;
+  border-top: 2px solid green;
 }
 
 .tree-view .node-bullet {
-  background: #B30027;
+  background: green;
 }
 
 .org-node {
@@ -38,8 +38,8 @@
 }
 
 .org-node-selected {
-  border-color: #B30027;
-  background: #B30027;
+  border-color: green;
+  background: green;
 }
 
 .legend-bullet > span {
@@ -56,8 +56,8 @@
 
 .menu-icon-o:hover,
 .dropdown.show > .menu-icon-o {
-  background-color: #B30027;
-  border: 1px solid #B30027;
+  background-color: green;
+  border: 1px solid green;
 }
 
 .customico-menu-o {

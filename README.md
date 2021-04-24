@@ -54,3 +54,8 @@ All the urls are configured inside `src\util\Constants.js`. Apart from the exist
 ## For Enabling CICD in gitlab
 keep below statement in package.json file
  "build": "CI=false react-scripts build",
+
+
+
+## For Running SASS files
+  sass --watch in:out

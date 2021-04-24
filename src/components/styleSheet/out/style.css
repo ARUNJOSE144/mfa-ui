@@ -1,5 +1,5 @@
 .forgotPwd {
-  background-color: #B30027;
+  background-color: green;
 }
 
 .side-nav-menu img {
@@ -12,7 +12,7 @@
   border: none;
   border-radius: 4px;
   box-shadow: none;
-  border-left: 4px solid #B30027;
+  border-left: 4px solid green;
 }
 
 .login-container img {
@@ -37,7 +37,7 @@
 }
 
 .errorMsg_login {
-  border: 1px solid #B30027;
+  border: 1px solid green;
   padding: 6px;
   background-color: #fdf5e5;
   border-radius: 2px;
@@ -51,7 +51,7 @@
 }
 
 .login-form .card-header {
-  color: #B30027;
+  color: green;
   padding: 0.7rem 0;
   /* padding-left: 2.3rem; */
   background-color: #ffffff;
@@ -116,7 +116,7 @@
 .login-form .login-btn > .btn-signin:hover,
 .login-form .login-btn > .btn-signin:active,
 .login-form .login-btn > .btn-signin:focus {
-  background: #B30027;
+  background: green;
   color: #ffffff;
 }
 
@@ -130,23 +130,23 @@
 
 /* New Css Done For Branding....Needs to link with Sass Later */
 a {
-  color: #B30027;
+  color: green;
 }
 
 .dataTable_label_tab td {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .data-table th {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .fa b {
-  color: #B30027;
+  color: green;
 }
 
 .dataTable_selectedRow {
-  background-color: #B30027 !important;
+  background-color: green !important;
   color: white;
 }
 
@@ -155,23 +155,23 @@ a {
 }
 
 .login-backgrnd {
-  background: #B30027;
+  background: green;
 }
 
 .loginTitle {
-  color: #B30027;
+  color: green;
 }
 
 .forgot-password a {
-  color: #B30027;
+  color: green;
 }
 
 .btn-signin {
-  color: #B30027;
-  border: 1px solid #B30027;
+  color: green;
+  border: 1px solid green;
 }
 .btn-signin:hover {
-  background: #B30027;
+  background: green;
 }
 
 body {
@@ -184,18 +184,18 @@ body {
 }
 
 .primary-background {
-  background-color: #B30027;
+  background-color: green;
   color: #ffffff;
 }
 
 .primary-color {
-  color: #B30027;
+  color: green;
   background-color: #ffffff;
 }
 
 header.navbar .navbar-nav .nav-item {
-  border-left: 1px solid #f91043;
-  color: #ff829f;
+  border-left: 1px solid #05d105;
+  color: #52ff4f;
 }
 
 header.navbar .dropdown.show .user-ico {
@@ -203,17 +203,17 @@ header.navbar .dropdown.show .user-ico {
 }
 
 header.navbar .dropdown .user-ico {
-  color: #ff829f;
+  color: #52ff4f;
 }
 
 header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar-nav .nav-item .dropdown-item:active {
   color: #ffffff;
-  background-color: #B30027;
+  background-color: green;
 }
 
 .side-menu-item > .list-group-item > a.opened, .side-menu-item > .list-group-item > a.selected, .side-menu-item > li > a:hover {
   color: #ffffff;
-  background: #B30027;
+  background: green;
 }
 
 .side-menu-item > .list-group-item > a.opened, .side-menu-item > .list-group-item > a.selected, .side-menu-item > li > a:hover .menu-icon {
@@ -221,23 +221,23 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .side-submenu-item > li > a:hover, .side-submenu-item > .list-group-item > a.selected {
-  border-right: 5px solid #B30027;
-  color: #B30027;
+  border-right: 5px solid green;
+  color: green;
 }
 
 .side-submenu-item > li > a:not([href]):not([tabindex]):focus, .side-submenu-item > li > a:not([href]):not([tabindex]):hover {
-  color: #B30027;
+  color: green;
 }
 
 .fit-content {
-  color: #B30027;
+  color: green;
 }
 
 .pagination > .active > a,
 .pagination > .active > span {
   color: #ffffff;
-  background-color: #B30027;
-  border-color: #B30027;
+  background-color: green;
+  border-color: green;
 }
 
 .data-table-rowCount-dd.dropdown-menu .dropdown-item.active,
@@ -245,15 +245,15 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 .dataTable_export_dd.dropdown-menu .dropdown-item.active,
 .dataTable_export_dd.dropdown-menu .dropdown-item:activel {
   color: #ffffff;
-  background-color: #B30027;
+  background-color: green;
 }
 
 .dataTable_selectedRow {
-  background-color: #ff879f !important;
+  background-color: #54ff57 !important;
 }
 
 .selectedUser {
-  background-color: #B30027;
+  background-color: green;
   color: #ffffff;
   -webkit-transition: background-color 0.3s;
   -moz-transition: background-color 0.3s;
@@ -263,18 +263,18 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 
 .custom-btn.custom-btn-primary {
   color: #ffffff;
-  background-color: #B30027;
-  border: 1px solid #B30027;
+  background-color: green;
+  border: 1px solid green;
 }
 
 .custom-btn.custom-btn-primary:hover {
-  background-color: #c0022b;
+  background-color: #018e01;
 }
 
 .custom-btn.custom-btn-secondary {
-  color: #B30027;
+  color: green;
   background-color: #ffffff;
-  border: 1px solid #B30027;
+  border: 1px solid green;
 }
 
 .custom-btn.btn-alert-primary {
@@ -290,7 +290,7 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .color-primary {
-  color: #B30027 !important;
+  color: green !important;
 }
 
 .color-secondary {
@@ -302,7 +302,7 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .custom-modal .primary-background {
-  background-color: #B30027;
+  background-color: green;
   color: #ffffff;
 }
 
@@ -327,22 +327,22 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 .pagination-SelectorModal > .active > a,
 .pagination-SelectorModal > .active > span {
   color: #ffffff;
-  background-color: #B30027;
-  border-color: #B30027;
+  background-color: green;
+  border-color: green;
 }
 
 .form-tab .nav-link.active {
-  background: #B30027;
+  background: green;
   color: #ffffff;
 }
 
 .form-tab .nav-link.done {
-  background: #f30132;
+  background: #01c004;
   color: #ffffff;
 }
 
 .form-tab .nav-tabs {
-  border-bottom: 1px solid #B30027;
+  border-bottom: 1px solid green;
 }
 
 .wizardTab .nav-link::after {
@@ -350,19 +350,19 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .wizardTab .active.nav-link::after {
-  border-color: transparent transparent transparent #B30027;
+  border-color: transparent transparent transparent green;
 }
 
 .wizardTab .nav-tabs > li:not(:first-child) > .active.nav-link::before {
-  border-color: #B30027 #B30027 #B30027 transparent;
+  border-color: green green green transparent;
 }
 
 .wizardTab .done.nav-link::after {
-  border-color: transparent transparent transparent #f30132;
+  border-color: transparent transparent transparent #01c004;
 }
 
 .wizardTab .nav-tabs > li:not(:first-child) > .done.nav-link::before {
-  border-color: #f30132 #f30132 #f30132 transparent;
+  border-color: #01c004 #01c004 #01c004 transparent;
 }
 
 .wizardTab .nav-tabs > li:not(:first-child) > .nav-link::before {
@@ -371,40 +371,40 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 
 .svd_container .select2-container .select2-selection--single .select2-selection__arrow,
 .svd_container .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow {
-  background: #B30027 !important;
+  background: green !important;
 }
 
 .svd_container a {
-  color: #B30027 !important;
+  color: green !important;
 }
 
 .svd_container a:hover {
-  color: #B30027 !important;
+  color: green !important;
 }
 
 .svd_container .btn-primary {
-  background-color: #B30027 !important;
-  border-color: #B30027 !important;
+  background-color: green !important;
+  border-color: green !important;
 }
 
 .svd_container .sjs-cb-container:hover input:checked ~ .checkmark {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .svd_container .svd_toolbar li.active a {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .svd_container .nav-tabs > li.active > a {
-  color: #B30027 !important;
+  color: green !important;
 }
 
 .svd_container .editor-tabs > li.active > a {
-  color: #B30027 !important;
+  color: green !important;
 }
 
 .svd_container .svd_custom_select:before {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .svd_container .form-control:focus {
@@ -412,38 +412,38 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .svd_container .svd-main-color {
-  color: #B30027 !important;
+  color: green !important;
 }
 
 .svd_container .svd-main-background-color {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .svd_container .svd-main-border-color {
-  border-color: #B30027 !important;
+  border-color: green !important;
 }
 
 .svd_container .svd-primary-icon .svd-svg-icon {
-  fill: #B30027 !important;
+  fill: green !important;
 }
 
 .svd_container .svd-secondary-icon .svd-svg-icon {
-  fill: #B30027 !important;
+  fill: green !important;
 }
 
 .svd_container .icon-gearactive .svd-svg-icon {
-  fill: #B30027 !important;
+  fill: green !important;
 }
 
 .sv_main input[type=button],
 .sv_main button {
   color: #ffffff !important;
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .sv_main input[type=button]:hover,
 .sv_main button:hover {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .sv_main .sv_select_wrapper {
@@ -451,55 +451,55 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .sv_main .sv_select_wrapper:before {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .sv_main .sv_body {
   background-color: #ffffff !important;
-  border-top: 2px solid #B30027 !important;
+  border-top: 2px solid green !important;
 }
 
 .sv_main .sv_progress_bar {
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .sv_main .sv_q_m_cell_selected {
   color: #ffffff !important;
-  background-color: #B30027 !important;
+  background-color: green !important;
 }
 
 .sv_main .sv_q_rating_item.active .sv_q_rating_item_text {
-  background-color: #B30027 !important;
-  border-color: #B30027 !important;
+  background-color: green !important;
+  border-color: green !important;
   color: #ffffff !important;
 }
 
 .sv_main .sv_q_rating_item .sv_q_rating_item_text:hover {
-  border: 1px solid #B30027 !important;
+  border: 1px solid green !important;
 }
 
 .tree-node.selected {
-  color: #B30027;
+  color: green;
 }
 
 .tree-node.selected .node-label {
-  border-color: #B30027;
+  border-color: green;
 }
 
 .tree-view-btn-grp > .fa {
-  color: #B30027;
+  color: green;
 }
 
 .tree-view li::before {
-  border-left: 1px solid #B30027;
+  border-left: 1px solid green;
 }
 
 .tree-view li:first-child::after {
-  border-top: 2px solid #B30027;
+  border-top: 2px solid green;
 }
 
 .tree-view .node-bullet {
-  background: #B30027;
+  background: green;
 }
 
 .org-node {
@@ -518,8 +518,8 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .org-node-selected {
-  border-color: #B30027;
-  background: #B30027;
+  border-color: green;
+  background: green;
 }
 
 .legend-bullet > span {
@@ -536,8 +536,8 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 
 .menu-icon-o:hover,
 .dropdown.show > .menu-icon-o {
-  background-color: #B30027;
-  border: 1px solid #B30027;
+  background-color: green;
+  border: 1px solid green;
 }
 
 .customico-menu-o {
@@ -550,7 +550,7 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 
 /* **********ListData css************** */
 .list-data:hover {
-  background-color: #ff829f;
+  background-color: #52ff4f;
 }
 
 ul.list-background > li:nth-of-type(odd) {
@@ -558,26 +558,26 @@ ul.list-background > li:nth-of-type(odd) {
 }
 
 ul.list-background > li:nth-of-type(odd):hover {
-  background-color: #ff829f;
+  background-color: #52ff4f;
 }
 
 .primary-color-list {
-  color: #B30027;
+  color: green;
 }
 
 /* **********Drag and Drop ************** */
 .list-submenu-item > li > a {
-  background: #ff829f;
+  background: #52ff4f;
   border-bottom: 1px solid #ccc;
 }
 
 .draggable-item:hover {
-  background: #ff829f;
+  background: #52ff4f;
 }
 
 .list-menu-item > .list-group-item > a.opened, .list-menu-item > .list-group-item > a.selected, .list-menu-item > li > a:hover {
   color: #ffffff;
-  background: #B30027;
+  background: green;
 }
 
 .draggable-item {
@@ -586,12 +586,12 @@ ul.list-background > li:nth-of-type(odd):hover {
   padding-left: 10px;
   padding-bottom: 3px;
   cursor: move;
-  background-color: #ff99aa;
+  background-color: #66ff6e;
   display: flex;
 }
 
 .activeTabStyle {
-  background-color: #B30027;
+  background-color: green;
   color: #ffffff !important;
   cursor: pointer;
 }
