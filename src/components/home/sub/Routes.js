@@ -49,43 +49,6 @@ const AsyncUserReassign = Loadable({
   loading: Loading
 });
 
-
-
-
-
-
-
-
-
-
-
-const AsyncRoleHierarchyMain = Loadable({
-  loader: () => import('../../role-hierarchy/components/hierarchy/RoleHierarchyMain'),
-  loading: Loading
-});
-
-const AsyncRoleHierarchyTree = Loadable({
-  loader: () => import('../../role-hierarchy/components/hierarchy/HierarchyTree'),
-  loading: Loading
-});
-const AsyncRoleHierarchiesCreate = Loadable({
-  loader: () => import('../../role-hierarchy/components/hierarchy/CreateHierarchy'),
-  loading: Loading
-});
-
-
-
-
-
-const AsyncRoleMangement = Loadable({
-  loader: () => import('../../role-management/components/RoleManagement/ViewRoles'),
-  loading: Loading
-});
-const AsyncCreateRoleMangement = Loadable({
-  loader: () => import('../../role-management/components/RoleManagement/CreateRole'),
-  loading: Loading
-});
-
 const AsyncRoleView = Loadable({
   loader: () => import('../../role-management/components/ViewRoles'),
   loading: Loading
@@ -170,48 +133,6 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
           url_GetRoles={GLOBAL_CONSTANTS.GET_ROLES_URL}
         />} />
 
-
-
-
-
-
-
-        <Route exact path="/roleHierarchyMain" render={(props) => <AsyncRoleHierarchyMain
-          {...properties}
-          {...props}
-          const_SalesHierarchy={CONSTANTS.SALES_HIERARCHY}
-          menuPrivilages={MENU_PRIVILIAGES.SALES_HIERARCHY}
-          url_GetRoles={GLOBAL_CONSTANTS.GET_ROLES_URL}
-        />} />
-
-        <Route exact path="/roleHierarchies/tree/:id/:mode" render={(props) => <AsyncRoleHierarchyTree
-          {...props}
-          {...properties}
-          const_SalesHierarchy={CONSTANTS.SALES_HIERARCHY}
-          menuPrivilages={MENU_PRIVILIAGES.SALES_HIERARCHY}
-          url_GetRoles={GLOBAL_CONSTANTS.GET_ROLES_URL}
-        />} />
-        <Route exact path="/roleHierarchies/create" render={({ ...props }) => <AsyncRoleHierarchiesCreate
-          const_SalesHierarchy={CONSTANTS.SALES_HIERARCHY}
-          menuPrivilages={MENU_PRIVILIAGES.SALES_HIERARCHY}
-          {...properties}
-          {...props}
-        />} />
-
-
-        <Route exact path="/RoleManagement" render={(props) => <AsyncRoleMangement
-          {...props}
-          {...properties}
-          url_Roles={CONSTANTS.COMMISSION_ROLES}
-          menuPrivilages={MENU_PRIVILIAGES.ROLES}
-        />} />
-        <Route exact path="/RoleManagement/create" render={(props) => <AsyncCreateRoleMangement
-          {...props}
-          {...properties}
-          url_Roles={CONSTANTS.COMMISSION_ROLES}
-          menuPrivilages={MENU_PRIVILIAGES.ROLES}
-        />} />
-
         <Route exact path="/Roles" render={() => <AsyncRoleView
           {...properties}
           url_Roles={CONSTANTS.ROLES}
@@ -234,8 +155,6 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
           {...properties}
           url_Roles={CONSTANTS.ROLES}
         />} />
-
-
 
 
         <Route exact path="/" render={(props) => <Redirect to="/home" />} />
