@@ -44,11 +44,6 @@ const AsyncUserCreate = Loadable({
   loader: () => import('../../user-management/components/CreateUser'),
   loading: Loading
 });
-const AsyncUserReassign = Loadable({
-  loader: () => import('../../user-management/components/UserReassign'),
-  loading: Loading
-});
-
 const AsyncRoleView = Loadable({
   loader: () => import('../../role-management/components/ViewRoles'),
   loading: Loading
@@ -123,14 +118,6 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
           const_Commission={CONSTANTS.COMMISSION}
           menuPrivilages={MENU_PRIVILIAGES.USER_MGMNT}
           roleHierarchyPrivilages={MENU_PRIVILIAGES.SALES_HIERARCHY}
-        />} />
-
-        <Route exact path="/user/reassign/" render={(props) => <AsyncUserReassign
-          {...props}
-          {...properties}
-          const_SalesHierarchy={CONSTANTS.SALES_HIERARCHY}
-          menuPrivilages={MENU_PRIVILIAGES.USER_MGMNT}
-          url_GetRoles={GLOBAL_CONSTANTS.GET_ROLES_URL}
         />} />
 
         <Route exact path="/Roles" render={() => <AsyncRoleView

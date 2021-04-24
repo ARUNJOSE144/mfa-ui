@@ -8,61 +8,46 @@ export const CustomButton = ({type, style, size, icon, label, onClick, align, is
     switch (style) {
       case BUTTON_STYLE.BRICK:
         return 'btn-block-c';
-        break;
       case BUTTON_STYLE.ROUNDED:
         return 'btn-round';
-        break;
       default:
         return 'btn';
-        break;
     }
   }
   const getTypeClass = () => {
     switch (type) {
       case BUTTON_TYPE.PRIMARY:
         return 'custom-btn-primary';
-        break;
       case BUTTON_TYPE.SECONDARY:
         return 'custom-btn-secondary';
-        break;
       case BUTTON_TYPE.ALERT_PRIMARY:
         return 'btn-alert-primary';
-        break;
       case BUTTON_TYPE.ALERT_SECONDARY:
         return 'btn-alert-secondary';
-        break;
       default:
         return '';
-        break;
     }
   }
   const getSizeClass = () => {
     switch (size) {
       case BUTTON_SIZE.SMALL:
         return 'btn-sm';
-        break;
       case BUTTON_SIZE.MEDIUM:
         return 'btn-md';
-        break;
       case BUTTON_SIZE.LARGE:
         return 'btn-lg';
-        break;
       case BUTTON_SIZE.MEDIUM_LARGE:
         return 'btn-md-lg';
-        break;
       default:
         return '';
-        break;
     }
   }
   const getButtonWidth = () => {
     switch (width) {
       case BUTTON_ALIGN.INHERIT:
         return 'btn-width-inherit';
-        break;
       default:
         return '';
-        break;
     }
   }
   const getIcon = () => {
@@ -79,13 +64,10 @@ export const CustomButton = ({type, style, size, icon, label, onClick, align, is
     switch (color) {
       case COLOR.PRIMARY:
       return 'color-primary';
-      break;
       case COLOR.SECONDARY:
       return 'color-secondary';
-      break;
       default:
       return '';
-      break;
     }
   }
   return (

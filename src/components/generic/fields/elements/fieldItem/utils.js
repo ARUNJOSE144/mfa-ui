@@ -53,7 +53,7 @@ export const createOptions = (options, value, label) => {
 
 
 export const validate = (value) => {
-    if (value != null && value != undefined && value != "")
+    if (value !== null && value !== undefined && value !== "")
         return true;
     else
         return false;

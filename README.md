@@ -51,5 +51,6 @@ All the urls are configured inside `src\util\Constants.js`. Apart from the exist
 | CHANGE_PSWD_URL | BL change password url
 | FORGET_PSWD_URL | BL forgot/reset password url
 
-
+## For Enabling CICD in gitlab
+keep below statement in package.json file
  "build": "CI=false react-scripts build",

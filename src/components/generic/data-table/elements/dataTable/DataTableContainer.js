@@ -48,7 +48,7 @@ export default class DataTableContainer extends Component {
             'postRequestCallback': props.postRequestCallback,
         }
 
-        this.dataTable = props.apiVersion == 3 ? new DataTableUtilsV3(dtOpts) : new DataTableUtils(dtOpts);
+        this.dataTable = props.apiVersion === 3 ? new DataTableUtilsV3(dtOpts) : new DataTableUtils(dtOpts);
 
         this.state = !props.previousState ? {
             'keyword': '',
@@ -145,7 +145,7 @@ export default class DataTableContainer extends Component {
     render() {
 
         let exportProps = {};
-        if (this.props.hasExport && this.props.apiVersion == 3) {
+        if (this.props.hasExport && this.props.apiVersion === 3) {
             this.validateExportFunctionality();
             exportProps = {
                 exportCall: this.dataTable.exportDetails.bind(this, this.state),
