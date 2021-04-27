@@ -5,11 +5,11 @@ export function getToken(auth, channel) {
     return {
         "X-Auth-Token": getCookie("X-Auth-Token"),
         "X-UserId": getCookie("X-UserId"),
-        "orderId": getuuid(),
-        //"Authorization": "Basic aW50ZXJmYWNlX3dlYl91c2VyOjk4OHNkc2RAdHU=",
-        "Authorization" : auth,
-        "channel": channel,
-        "Access-Control-Allow-Origin": "*"
+        //"orderId": getuuid(),
+        "Authorization": "Basic aW50ZXJmYWNlX3dlYl91c2VyOjk4OHNkc2RAdHU=",
+        //"Authorization" : auth,
+        //"channel": channel,
+        //"Access-Control-Allow-Origin": "*"
     }
 }
 function getCookie(name) {

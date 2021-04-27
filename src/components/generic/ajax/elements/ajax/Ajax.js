@@ -48,10 +48,9 @@ export function ajax(url, request, makeCallBack, callback, loadingFunction, opti
       loadingFunction({ isLoading: false, firstLoad, timestamp: loadingId });
   })
 }
-export function ajaxRequest(url, requestData, options,emailId) {
+export function ajaxRequest(url, requestData, options) {
   const { method = 'POST', authKey, channel } = options || {};
   var headers = getToken(authKey, channel);
-  headers.emailId=emailId;
   console.log("headres : ",headers);
   const authOptions = {
     method,
