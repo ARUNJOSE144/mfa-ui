@@ -1,5 +1,5 @@
 .forgotPwd {
-  background-color: green;
+  background-color: blue;
 }
 
 .side-nav-menu img {
@@ -12,7 +12,7 @@
   border: none;
   border-radius: 4px;
   box-shadow: none;
-  border-left: 4px solid green;
+  border-left: 4px solid blue;
 }
 
 .login-container img {
@@ -37,7 +37,7 @@
 }
 
 .errorMsg_login {
-  border: 1px solid green;
+  border: 1px solid blue;
   padding: 6px;
   background-color: #fdf5e5;
   border-radius: 2px;
@@ -51,7 +51,7 @@
 }
 
 .login-form .card-header {
-  color: green;
+  color: blue;
   padding: 0.7rem 0;
   /* padding-left: 2.3rem; */
   background-color: #ffffff;
@@ -116,7 +116,7 @@
 .login-form .login-btn > .btn-signin:hover,
 .login-form .login-btn > .btn-signin:active,
 .login-form .login-btn > .btn-signin:focus {
-  background: green;
+  background: blue;
   color: #ffffff;
 }
 
@@ -130,23 +130,23 @@
 
 /* New Css Done For Branding....Needs to link with Sass Later */
 a {
-  color: green;
+  color: blue;
 }
 
 .dataTable_label_tab td {
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .data-table th {
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .fa b {
-  color: green;
+  color: blue;
 }
 
 .dataTable_selectedRow {
-  background-color: green !important;
+  background-color: blue !important;
   color: white;
 }
 
@@ -155,23 +155,23 @@ a {
 }
 
 .login-backgrnd {
-  background: green;
+  background: blue;
 }
 
 .loginTitle {
-  color: green;
+  color: blue;
 }
 
 .forgot-password a {
-  color: green;
+  color: blue;
 }
 
 .btn-signin {
-  color: green;
-  border: 1px solid green;
+  color: blue;
+  border: 1px solid blue;
 }
 .btn-signin:hover {
-  background: green;
+  background: blue;
 }
 
 body {
@@ -184,18 +184,18 @@ body {
 }
 
 .primary-background {
-  background-color: green;
+  background-color: blue;
   color: #ffffff;
 }
 
 .primary-color {
-  color: green;
+  color: blue;
   background-color: #ffffff;
 }
 
 header.navbar .navbar-nav .nav-item {
-  border-left: 1px solid #05d105;
-  color: #52ff4f;
+  border-left: 1px solid #5a5afb;
+  color: #cecfff;
 }
 
 header.navbar .dropdown.show .user-ico {
@@ -203,17 +203,17 @@ header.navbar .dropdown.show .user-ico {
 }
 
 header.navbar .dropdown .user-ico {
-  color: #52ff4f;
+  color: #cecfff;
 }
 
 header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar-nav .nav-item .dropdown-item:active {
   color: #ffffff;
-  background-color: green;
+  background-color: blue;
 }
 
 .side-menu-item > .list-group-item > a.opened, .side-menu-item > .list-group-item > a.selected, .side-menu-item > li > a:hover {
   color: #ffffff;
-  background: green;
+  background: blue;
 }
 
 .side-menu-item > .list-group-item > a.opened, .side-menu-item > .list-group-item > a.selected, .side-menu-item > li > a:hover .menu-icon {
@@ -221,23 +221,23 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .side-submenu-item > li > a:hover, .side-submenu-item > .list-group-item > a.selected {
-  border-right: 5px solid green;
-  color: green;
+  border-right: 5px solid blue;
+  color: blue;
 }
 
 .side-submenu-item > li > a:not([href]):not([tabindex]):focus, .side-submenu-item > li > a:not([href]):not([tabindex]):hover {
-  color: green;
+  color: blue;
 }
 
 .fit-content {
-  color: green;
+  color: blue;
 }
 
 .pagination > .active > a,
 .pagination > .active > span {
   color: #ffffff;
-  background-color: green;
-  border-color: green;
+  background-color: blue;
+  border-color: blue;
 }
 
 .data-table-rowCount-dd.dropdown-menu .dropdown-item.active,
@@ -245,15 +245,15 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 .dataTable_export_dd.dropdown-menu .dropdown-item.active,
 .dataTable_export_dd.dropdown-menu .dropdown-item:activel {
   color: #ffffff;
-  background-color: green;
+  background-color: blue;
 }
 
 .dataTable_selectedRow {
-  background-color: #54ff57 !important;
+  background-color: #d4d3ff !important;
 }
 
 .selectedUser {
-  background-color: green;
+  background-color: blue;
   color: #ffffff;
   -webkit-transition: background-color 0.3s;
   -moz-transition: background-color 0.3s;
@@ -263,18 +263,18 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 
 .custom-btn.custom-btn-primary {
   color: #ffffff;
-  background-color: green;
-  border: 1px solid green;
+  background-color: blue;
+  border: 1px solid blue;
 }
 
 .custom-btn.custom-btn-primary:hover {
-  background-color: #018e01;
+  background-color: #1111fd;
 }
 
 .custom-btn.custom-btn-secondary {
-  color: green;
+  color: blue;
   background-color: #ffffff;
-  border: 1px solid green;
+  border: 1px solid blue;
 }
 
 .custom-btn.btn-alert-primary {
@@ -290,7 +290,7 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .color-primary {
-  color: green !important;
+  color: blue !important;
 }
 
 .color-secondary {
@@ -302,7 +302,7 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .custom-modal .primary-background {
-  background-color: green;
+  background-color: blue;
   color: #ffffff;
 }
 
@@ -327,22 +327,22 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 .pagination-SelectorModal > .active > a,
 .pagination-SelectorModal > .active > span {
   color: #ffffff;
-  background-color: green;
-  border-color: green;
+  background-color: blue;
+  border-color: blue;
 }
 
 .form-tab .nav-link.active {
-  background: green;
+  background: blue;
   color: #ffffff;
 }
 
 .form-tab .nav-link.done {
-  background: #01c004;
+  background: #4542fe;
   color: #ffffff;
 }
 
 .form-tab .nav-tabs {
-  border-bottom: 1px solid green;
+  border-bottom: 1px solid blue;
 }
 
 .wizardTab .nav-link::after {
@@ -350,19 +350,19 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .wizardTab .active.nav-link::after {
-  border-color: transparent transparent transparent green;
+  border-color: transparent transparent transparent blue;
 }
 
 .wizardTab .nav-tabs > li:not(:first-child) > .active.nav-link::before {
-  border-color: green green green transparent;
+  border-color: blue blue blue transparent;
 }
 
 .wizardTab .done.nav-link::after {
-  border-color: transparent transparent transparent #01c004;
+  border-color: transparent transparent transparent #4542fe;
 }
 
 .wizardTab .nav-tabs > li:not(:first-child) > .done.nav-link::before {
-  border-color: #01c004 #01c004 #01c004 transparent;
+  border-color: #4542fe #4542fe #4542fe transparent;
 }
 
 .wizardTab .nav-tabs > li:not(:first-child) > .nav-link::before {
@@ -371,40 +371,40 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 
 .svd_container .select2-container .select2-selection--single .select2-selection__arrow,
 .svd_container .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow {
-  background: green !important;
+  background: blue !important;
 }
 
 .svd_container a {
-  color: green !important;
+  color: blue !important;
 }
 
 .svd_container a:hover {
-  color: green !important;
+  color: blue !important;
 }
 
 .svd_container .btn-primary {
-  background-color: green !important;
-  border-color: green !important;
+  background-color: blue !important;
+  border-color: blue !important;
 }
 
 .svd_container .sjs-cb-container:hover input:checked ~ .checkmark {
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .svd_container .svd_toolbar li.active a {
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .svd_container .nav-tabs > li.active > a {
-  color: green !important;
+  color: blue !important;
 }
 
 .svd_container .editor-tabs > li.active > a {
-  color: green !important;
+  color: blue !important;
 }
 
 .svd_container .svd_custom_select:before {
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .svd_container .form-control:focus {
@@ -412,38 +412,38 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .svd_container .svd-main-color {
-  color: green !important;
+  color: blue !important;
 }
 
 .svd_container .svd-main-background-color {
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .svd_container .svd-main-border-color {
-  border-color: green !important;
+  border-color: blue !important;
 }
 
 .svd_container .svd-primary-icon .svd-svg-icon {
-  fill: green !important;
+  fill: blue !important;
 }
 
 .svd_container .svd-secondary-icon .svd-svg-icon {
-  fill: green !important;
+  fill: blue !important;
 }
 
 .svd_container .icon-gearactive .svd-svg-icon {
-  fill: green !important;
+  fill: blue !important;
 }
 
 .sv_main input[type=button],
 .sv_main button {
   color: #ffffff !important;
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .sv_main input[type=button]:hover,
 .sv_main button:hover {
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .sv_main .sv_select_wrapper {
@@ -451,55 +451,55 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .sv_main .sv_select_wrapper:before {
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .sv_main .sv_body {
   background-color: #ffffff !important;
-  border-top: 2px solid green !important;
+  border-top: 2px solid blue !important;
 }
 
 .sv_main .sv_progress_bar {
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .sv_main .sv_q_m_cell_selected {
   color: #ffffff !important;
-  background-color: green !important;
+  background-color: blue !important;
 }
 
 .sv_main .sv_q_rating_item.active .sv_q_rating_item_text {
-  background-color: green !important;
-  border-color: green !important;
+  background-color: blue !important;
+  border-color: blue !important;
   color: #ffffff !important;
 }
 
 .sv_main .sv_q_rating_item .sv_q_rating_item_text:hover {
-  border: 1px solid green !important;
+  border: 1px solid blue !important;
 }
 
 .tree-node.selected {
-  color: green;
+  color: blue;
 }
 
 .tree-node.selected .node-label {
-  border-color: green;
+  border-color: blue;
 }
 
 .tree-view-btn-grp > .fa {
-  color: green;
+  color: blue;
 }
 
 .tree-view li::before {
-  border-left: 1px solid green;
+  border-left: 1px solid blue;
 }
 
 .tree-view li:first-child::after {
-  border-top: 2px solid green;
+  border-top: 2px solid blue;
 }
 
 .tree-view .node-bullet {
-  background: green;
+  background: blue;
 }
 
 .org-node {
@@ -518,8 +518,8 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 }
 
 .org-node-selected {
-  border-color: green;
-  background: green;
+  border-color: blue;
+  background: blue;
 }
 
 .legend-bullet > span {
@@ -536,8 +536,8 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 
 .menu-icon-o:hover,
 .dropdown.show > .menu-icon-o {
-  background-color: green;
-  border: 1px solid green;
+  background-color: blue;
+  border: 1px solid blue;
 }
 
 .customico-menu-o {
@@ -550,7 +550,7 @@ header.navbar .navbar-nav .nav-item .dropdown-item.active, header.navbar .navbar
 
 /* **********ListData css************** */
 .list-data:hover {
-  background-color: #52ff4f;
+  background-color: #cecfff;
 }
 
 ul.list-background > li:nth-of-type(odd) {
@@ -558,26 +558,26 @@ ul.list-background > li:nth-of-type(odd) {
 }
 
 ul.list-background > li:nth-of-type(odd):hover {
-  background-color: #52ff4f;
+  background-color: #cecfff;
 }
 
 .primary-color-list {
-  color: green;
+  color: blue;
 }
 
 /* **********Drag and Drop ************** */
 .list-submenu-item > li > a {
-  background: #52ff4f;
+  background: #cecfff;
   border-bottom: 1px solid #ccc;
 }
 
 .draggable-item:hover {
-  background: #52ff4f;
+  background: #cecfff;
 }
 
 .list-menu-item > .list-group-item > a.opened, .list-menu-item > .list-group-item > a.selected, .list-menu-item > li > a:hover {
   color: #ffffff;
-  background: green;
+  background: blue;
 }
 
 .draggable-item {
@@ -586,18 +586,76 @@ ul.list-background > li:nth-of-type(odd):hover {
   padding-left: 10px;
   padding-bottom: 3px;
   cursor: move;
-  background-color: #66ff6e;
+  background-color: #e6e5ff;
   display: flex;
 }
 
 .activeTabStyle {
-  background-color: green;
+  background-color: blue;
   color: #ffffff !important;
   cursor: pointer;
 }
 
 .inActiveTabStyle {
   cursor: pointer;
+}
+
+.dth {
+  background-color: blue;
+  color: #ffffff !important;
+}
+
+.dtd {
+  background-color: #ffffff !important;
+}
+
+.react-bs-table .table {
+  margin-bottom: 0;
+}
+
+.react-bootstrap-table-page-btns-ul .active a {
+  background-color: blue !important;
+}
+
+.react-bootstrap-table-page-btns-ul {
+  float: right;
+}
+
+.table th {
+  padding: 0.5rem;
+}
+
+.react-bs-table-search-form input {
+  width: 50%;
+  float: right;
+  margin-bottom: 5px;
+}
+
+.react-bs-table-no-data {
+  background-color: white;
+  align-items: center;
+  text-align: center;
+  font-weight: 700;
+}
+
+.react-bs-table-sizePerPage-dropdown button {
+  color: black;
+  background-color: white;
+  height: 35px;
+  border-radius: 0px;
+  border: 0;
+}
+
+.react-bs-table-sizePerPage-dropdown button :hover {
+  background-color: white;
+}
+
+.datatabletoolsButtons div {
+  margin: 5px;
+}
+
+.datatabletoolsButtons {
+  display: flex;
 }
 
 /*# sourceMappingURL=style.css.map */

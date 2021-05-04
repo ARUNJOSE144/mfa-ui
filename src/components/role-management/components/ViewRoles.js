@@ -1,12 +1,14 @@
 import _ from "lodash";
 import React, { Component } from "react";
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect, Switch } from "react-router-dom";
-import DataTableContainer from '../../generic/data-table/elements/dataTable/DataTableContainer';
+import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE, COLOR } from '../../generic/buttons/elements/ButtonTypes';
+import { CustomButton } from '../../generic/buttons/elements/CustomButton';
 import { POPUP_ALIGN } from '../../generic/popup/constants/Types';
 import Popup from '../../generic/popup/elements/Popup';
+import { getIcon } from "../../home/Utils";
 import RoleDetails from "./RoleDetails";
 import SearchFilter from "./SearchFilter";
-import { ROLES as DataTableHeader } from './util/DataTableHeader';
 const modules = [];
 
 export default class View extends Component {
@@ -14,24 +16,113 @@ export default class View extends Component {
     super(props);
     this.FORM_MODAL = props.globalConstants.FORM_MODAL;
 
-    if (!props.previousState) {
-      this.state = {
-        filterParams: {}
-      };
-    } else {
-      this.state = {
-        roleId: "",
-        roleName: "",
-        permissions: "",
-        ajaxUtil: props.previousState.ajaxUtil,
-        filterParams: props.previousState.filterParams,
-      };
-    }
+
+    this.state = {
+      roleId: "",
+      roleName: "",
+      permissions: "",
+      data: [],
+
+
+      page: 1,
+      dataTotalSize: 0,
+      recordCount: 5,
+      searchKey: "",
+      roleNameSort: ""
+    };
+
+
 
     this.toggleAction = this.toggleAction.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
     props.setHeader("System Roles");
   }
+
+  componentDidMount() {
+    this.getRolesList();
+  }
+
+
+  sizePerPageListChange = (sizePerPage) => {
+    this.state.recordCount = sizePerPage;
+    this.getRolesList(true);
+  }
+
+  onPageChange = (page, sizePerPage) => {
+    this.state.page = page;
+    this.forceUpdate();
+    this.getRolesList(false);
+  }
+
+  onSearchChange = (searchText, colInfos, multiColumnSearch) => {
+    this.state.searchKey = searchText;
+    this.getRolesList(true);
+  }
+
+  onExportToCSV = () => {
+    this.downloadReport();
+  }
+
+  resetList = () => {
+    this.state.dataTotalSize = 0;
+    this.state.page = 1;
+    this.forceUpdate();
+  }
+
+  onKeyUp = (event) => {
+    if (event.key === 'Enter' && event.target.value <= 100 && event.target.value >= 1) {
+      this.state.recordCount = event.target.value;
+      this.getRolesList(true);
+    }
+  }
+
+  priceFormatter = (cell, row) => {
+    //alert("Inside")
+    return `<i class='fa fa-eye'></i> `;
+  }
+  targetFun = (row) => {
+    console.log("----------row : ", row);
+  }
+
+
+
+
+  createCustomToolBar = (props) => {
+    return (
+      <div className="col-md-12">
+        <div className="row">
+          <div className='col-md-8 datatabletoolsButtons' >
+            <h5 style={{ fontWeight: 700, fontSize: 14, marginTop: 10 }}>All Roles |  {this.state.dataTotalSize}</h5>
+            <CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create" isButtonGroup={true} onClick={() => this.setState({ modal: 2 })} />
+
+          </div>
+          <div className='col-md-4' >
+            {props.components.searchPanel}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+
+
+
+  getRolesList = (isReset) => {
+    if (isReset)
+      this.resetList();
+    var self = this;
+    var request = {
+      "recordCount": this.state.recordCount,
+      "firstRecord": this.state.recordCount * this.state.page - this.state.recordCount,
+      "dataTotalSize": this.state.dataTotalSize,
+      "searchKey1": this.state.searchKey,
+    }
+    this.props.ajaxUtil.sendRequest("/role/v1/search", request, function (resp, hasError) {
+      console.log("===============resp : ", resp);
+      self.setState({ dataTotalSize: resp.dataTotalSize, data: resp.list })
+    }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
+  }
+
 
   deleteRow(obj, message, callback) {
     if (obj === 1) {
@@ -52,7 +143,7 @@ export default class View extends Component {
   onConfirmCallBack(callback, rowId) {
     var self = this;
     this.props.ajaxUtil.sendRequest(this.props.url_Roles.DELETE_URL, { roleId: rowId }, function (resp, hasError) {
-        callback();
+      callback();
     }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
   }
 
@@ -150,29 +241,24 @@ export default class View extends Component {
 
   render() {
 
-    const propsForDataTable = {
-      privilages: this.props.privilages,
-      menuPrivilages: this.props.menuPrivilages,
-      ajaxUtil: this.props.ajaxUtil,
-      listUrl: this.props.url_Roles.SEARCH_URL,
-      previousState: this.props.previousState,
-      apiVersion: 2,
-      defaultRowCount: this.props.globalConstants.INITIAL_ROW_COUNT,
-      listName: 'roleList',
-      rowIdParam: 'roleId',
-      tableHeaderLabels: DataTableHeader.LABEL_LIST_SYSTEM,
-      loadingFunction: this.props.loadingFunction,
-      header: "System Roles",
-      togglePopup: this.toggleAction,
-      deleteRow: this.deleteRow,
-      deleteMessage: 'Are you sure to Delete role',
-      deleteMessageParam: ['roleName'],
-      saveState: state => this.props.saveCurrentState({ [this.props.previousStateKey]: state }),
-      orderByCol: "roleId",
-      tabPriv: { info: true },
-      renderSearchFilter: this.renderSearchFilter,
-      isSearchOnEnter: false
-    }
+    var options = {
+      noDataText: 'No records found...',
+      page: this.state.page,  // which page you want to show as default
+      // clearSearch: true,
+      sizePerPageList: [{ text: '5', value: 5 }, { text: '50', value: 50 }, { text: '100', value: 100 }],  // you can change the dropdown list for size per page
+      sizePerPage: this.state.recordCount,  // which size per page you want to locate as default
+      prePage: 'Prev', // Previous page button text
+      nextPage: 'Next', // Next page button text
+      firstPage: 'First', // First page button text
+      lastPage: 'Last', // Last page button text
+      paginationPosition: 'bottom',  // default is bottom, top and both is all available
+      toolBar: this.createCustomToolBar,
+      onPageChange: this.onPageChange,
+      onSizePerPageList: this.sizePerPageListChange,
+      onSearchChange: this.onSearchChange,
+      onSortChange: this.onSortChange,
+      onExportToCSV: this.onExportToCSV
+    };
 
     if (this.state.modal === 2) {
       return (
@@ -192,10 +278,26 @@ export default class View extends Component {
 
     return (
       <div className="custom-container">
-        <DataTableContainer
-          {...propsForDataTable}
-        >
-        </DataTableContainer>
+        <BootstrapTable
+          ref="table"
+          pagination={true}
+          remote={true}
+          options={options}
+          data={this.state.data}
+          exportCSV={true}
+          version="4"
+          search
+          fetchInfo={{ dataTotalSize: this.state.dataTotalSize }}        >
+          <TableHeaderColumn isKey dataField="id" className="dth" columnClassName="dtd" width={0} hidden={true}>ID</TableHeaderColumn>
+          <TableHeaderColumn dataField="roleName" className="dth" columnClassName="dtd" width={130} dataSort>Role Name</TableHeaderColumn>
+          <TableHeaderColumn dataField="createDate" className="dth" columnClassName="dtd" width={130} >Created Date</TableHeaderColumn>
+          <TableHeaderColumn dataField="description" className="dth" columnClassName="dtd" width={130}>Description</TableHeaderColumn>
+          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.targetFun(row))}>View</TableHeaderColumn>
+          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.targetFun(row))}>Edit</TableHeaderColumn>
+          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.targetFun(row))}>Delete</TableHeaderColumn>
+
+        </BootstrapTable >
+
 
         <Popup
           type={POPUP_ALIGN.RIGHT}

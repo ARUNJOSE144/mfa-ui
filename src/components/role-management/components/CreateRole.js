@@ -27,7 +27,7 @@ export default class CreateRole extends Component {
   }
 
   componentDidMount() {
-    this.props.ajaxUtil.sendRequest(this.props.url_Roles.GET_FEATURES, {}, (response) => {
+    this.props.ajaxUtil.sendRequest("role/v1/getModulePermissions", {}, (response) => {
       if (!response) {
         this.onCancel();
         this.props.setNotification({
@@ -37,7 +37,7 @@ export default class CreateRole extends Component {
         });
       } else {
         const modules = [];
-        response.modules.forEach((module, index) => {
+        response.list.forEach((module, index) => {
           modules.push(module);
         });
         this.setState({ modules: modules })

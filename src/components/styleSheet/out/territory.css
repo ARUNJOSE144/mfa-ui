@@ -1,25 +1,25 @@
 .tree-node.selected {
-  color: green;
+  color: blue;
 }
 
 .tree-node.selected .node-label {
-  border-color: green;
+  border-color: blue;
 }
 
 .tree-view-btn-grp > .fa {
-  color: green;
+  color: blue;
 }
 
 .tree-view li::before {
-  border-left: 1px solid green;
+  border-left: 1px solid blue;
 }
 
 .tree-view li:first-child::after {
-  border-top: 2px solid green;
+  border-top: 2px solid blue;
 }
 
 .tree-view .node-bullet {
-  background: green;
+  background: blue;
 }
 
 .org-node {
@@ -38,8 +38,8 @@
 }
 
 .org-node-selected {
-  border-color: green;
-  background: green;
+  border-color: blue;
+  background: blue;
 }
 
 .legend-bullet > span {
@@ -56,8 +56,8 @@
 
 .menu-icon-o:hover,
 .dropdown.show > .menu-icon-o {
-  background-color: green;
-  border: 1px solid green;
+  background-color: blue;
+  border: 1px solid blue;
 }
 
 .customico-menu-o {

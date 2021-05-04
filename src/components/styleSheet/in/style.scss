@@ -405,3 +405,67 @@ ul.list-background > li:nth-of-type(odd):hover {
 .inActiveTabStyle {
   cursor: pointer;
 } 
+
+
+
+
+
+
+.dth{
+  background-color: $primary;
+  color: $secondary !important;
+}
+
+.dtd{
+  background-color:  $secondary !important;;
+}
+
+.react-bs-table .table{
+  margin-bottom: 0;
+}
+
+.react-bootstrap-table-page-btns-ul .active a{
+  background-color: $primary !important;
+}
+
+.react-bootstrap-table-page-btns-ul {
+  float: right;
+}
+
+.table th{
+  padding: .50rem;
+}
+
+.react-bs-table-search-form input{
+  width: 50%;
+  float: right;
+  margin-bottom: 5px;
+}
+
+.react-bs-table-no-data{
+  background-color: white;
+  align-items: center;
+  text-align: center;
+  font-weight: 700;
+}
+
+.react-bs-table-sizePerPage-dropdown button{
+  color: black;
+  background-color: white;
+  height: 35px;
+  border-radius: 0px;
+  border: 0;
+}
+
+.react-bs-table-sizePerPage-dropdown button  :hover{
+  background-color: white;
+ 
+}
+
+.datatabletoolsButtons div{
+  margin: 5px;
+}
+
+.datatabletoolsButtons{
+  display: flex;
+}

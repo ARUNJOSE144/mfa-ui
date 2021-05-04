@@ -39,13 +39,13 @@ export const PRIVILIAGES = {
 };
 
 export const MENU_DETAILS = [
-  /*  {
-     id: 1,
-     label: "Dashboard",
-     linkTo: "/home",
-     icon: "fa fa-area-chart",
-     privilages: []
-   }, */
+  {
+    id: 1,
+    label: "Dashboard",
+    linkTo: "/home",
+    icon: "fa fa-area-chart",
+    privilages: []
+  },
   {
     id: 11,
     label: "User Management",
