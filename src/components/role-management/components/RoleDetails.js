@@ -140,7 +140,7 @@ export default class RoleDetails extends Component {
         >
           <div className="form-Brick">
             <div className="form-Brick-Head">
-              <span>System Role Details</span>
+              <span>Role Details</span>
             </div>
             <div className="form-Brick-body">
               <Row className="mx-0">
@@ -149,7 +149,7 @@ export default class RoleDetails extends Component {
                     <Col xs="6">
                       <Row>
                         <Col className="form-data-label" xs="6">
-                          System Role Id
+                          Role Id
                         </Col>
                         <Col className="form-data-value" xs="6">
                           {this.props.roleId}
@@ -159,7 +159,7 @@ export default class RoleDetails extends Component {
                     <Col xs="6">
                       <Row>
                         <Col className="form-data-label" xs="6">
-                          System Role Name
+                          Role Name
                         </Col>
                         <Col className="form-data-value" xs="6">
                           {this.props.roleName}

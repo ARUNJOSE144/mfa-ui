@@ -34,7 +34,7 @@ export default class View extends Component {
 
     this.toggleAction = this.toggleAction.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
-    props.setHeader("System Roles");
+    props.setHeader("Roles");
   }
 
   componentDidMount() {

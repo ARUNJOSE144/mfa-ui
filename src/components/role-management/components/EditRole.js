@@ -24,7 +24,7 @@ export default class EditRole extends Component {
     this.getPermissions = this.getPermissions.bind(this);
     this.handleDropDownChange = this.handleDropDownChange.bind(this);
     this.getAllPermissions = this.getAllPermissions.bind(this);
-    this.props.setHeader("System Roles");
+    this.props.setHeader("Roles");
   }
 
   componentDidMount() {
@@ -247,7 +247,7 @@ export default class EditRole extends Component {
       <div className="custom-container">
         <div className="form-Brick">
           <div className="form-Brick-Head">
-            <span>System Role Details</span>
+            <span>Role Details</span>
           </div>
           <div className="form-Brick-body">
             <Row className="mx-0">

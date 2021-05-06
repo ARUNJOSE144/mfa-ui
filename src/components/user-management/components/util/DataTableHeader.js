@@ -28,7 +28,7 @@ export const USER_MGMNT = {
       isSortable: false
     }, {
       id: "systemRoleName",
-      name: "System Role",
+      name: "Role",
       isSortable: false
     },
     {

@@ -137,7 +137,7 @@ export const USER_MGMNT = {
     "name": "systemRole",
     "type": FIELD_TYPES.DROP_DOWN,
     "placeholder": "Select",
-    "label": "System Role",
+    "label": "Role",
     "width": "sm",
     "values": [
       { value: 1, label: "Admin" },

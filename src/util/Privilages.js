@@ -63,12 +63,12 @@ export const MENU_DETAILS = [
 
   {
     id: 4,
-    label: "System Role",
-    icon: "fa fa-user",
+    label: "Role",
+    icon: "fa fa-users",
     submenus: [
       {
         id: 100,
-        label: "System Roles",
+        label: "Roles",
         linkTo: "/Roles",
         icon: "fa fa-users",
         privilages: _.values(PRIVILIAGES.SYSTEM_ROLES)

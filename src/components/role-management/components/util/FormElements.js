@@ -4,15 +4,15 @@ import FIELD_TYPES from '../../../generic/fields/elements/fieldItem/FieldTypes';
 export const ROLES = {
     "roleId": {
         name: "roleId",
-        placeholder: "System Role Id",
-        label: "System Role Id",
+        placeholder: "Role Id",
+        label: "Role Id",
         width: "sm",
         type: FIELD_TYPES.TEXT
     },
     "roleName": {
         name: "roleName",
-        placeholder: "System Role Name",
-        label: "System Role Name",
+        placeholder: "Role Name",
+        label: "Role Name",
         width: "sm",
         ismandatory: true,
         maxLength: 40,
