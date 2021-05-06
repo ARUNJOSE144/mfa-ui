@@ -26,7 +26,7 @@ export default class View extends Component {
 
       page: 1,
       dataTotalSize: 0,
-      recordCount: 5,
+      recordCount: 10,
       searchKey: "",
       roleNameSort: ""
     };
@@ -76,15 +76,15 @@ export default class View extends Component {
     }
   }
 
-  priceFormatter = (cell, row) => {
-    //alert("Inside")
-    return `<i class='fa fa-eye'></i> `;
-  }
-  targetFun = (row) => {
-    console.log("----------row : ", row);
-  }
 
 
+  openEditMode = (row) => {
+    this.setState({ modal: 3, roleId: row.roleId });
+  }
+
+  openViewMode = (row) => {
+    this.setState({ modal: 4, roleId: row.roleId });
+  }
 
 
   createCustomToolBar = (props) => {
@@ -118,23 +118,22 @@ export default class View extends Component {
       "searchKey1": this.state.searchKey,
     }
     this.props.ajaxUtil.sendRequest("/role/v1/search", request, function (resp, hasError) {
-      console.log("===============resp : ", resp);
       self.setState({ dataTotalSize: resp.dataTotalSize, data: resp.list })
     }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
   }
 
 
   deleteRow(obj, message, callback) {
-    if (obj === 1) {
+    if (obj.roleId === 1) {
       this.props.setNotification({ message: "Can't Delete Admin Role", hasError: true, timestamp: new Date().getTime() });
       return;
     }
     this.props.setModalPopup({
-      'rowId': obj,
+      'rowId': obj.roleId,
       'isOpen': true,
       'onConfirmCallBack': this.onConfirmCallBack.bind(this, callback),
       'title': "Confirm Delete",
-      'content': message,
+      'content': "Do you want to delete the Role?",
       'CancelBtnLabel': "Cancel",
       'confirmBtnLabel': "Delete"
     });
@@ -143,7 +142,7 @@ export default class View extends Component {
   onConfirmCallBack(callback, rowId) {
     var self = this;
     this.props.ajaxUtil.sendRequest(this.props.url_Roles.DELETE_URL, { roleId: rowId }, function (resp, hasError) {
-      callback();
+      self.getRolesList(true);
     }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
   }
 
@@ -245,7 +244,7 @@ export default class View extends Component {
       noDataText: 'No records found...',
       page: this.state.page,  // which page you want to show as default
       // clearSearch: true,
-      sizePerPageList: [{ text: '5', value: 5 }, { text: '50', value: 50 }, { text: '100', value: 100 }],  // you can change the dropdown list for size per page
+      sizePerPageList: [{ text: '10', value: 10 }, { text: '50', value: 50 }, { text: '100', value: 100 }],  // you can change the dropdown list for size per page
       sizePerPage: this.state.recordCount,  // which size per page you want to locate as default
       prePage: 'Prev', // Previous page button text
       nextPage: 'Next', // Next page button text
@@ -268,7 +267,7 @@ export default class View extends Component {
       );
     }
     if (this.state.modal === 3) {
-      const editUrl = `/Roles/edit/${this.state.actionParamId}`;
+      const editUrl = `/Roles/edit/${this.state.roleId}`;
       return (
         <Switch>
           <Redirect to={editUrl} />
@@ -292,12 +291,10 @@ export default class View extends Component {
           <TableHeaderColumn dataField="roleName" className="dth" columnClassName="dtd" width={130} dataSort>Role Name</TableHeaderColumn>
           <TableHeaderColumn dataField="createDate" className="dth" columnClassName="dtd" width={130} >Created Date</TableHeaderColumn>
           <TableHeaderColumn dataField="description" className="dth" columnClassName="dtd" width={130}>Description</TableHeaderColumn>
-          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.targetFun(row))}>View</TableHeaderColumn>
-          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.targetFun(row))}>Edit</TableHeaderColumn>
-          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.targetFun(row))}>Delete</TableHeaderColumn>
-
+          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.openViewMode(row))}>View</TableHeaderColumn>
+          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn>
+          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn>
         </BootstrapTable >
-
 
         <Popup
           type={POPUP_ALIGN.RIGHT}

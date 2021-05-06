@@ -469,3 +469,13 @@ ul.list-background > li:nth-of-type(odd):hover {
 .datatabletoolsButtons{
   display: flex;
 }
+
+.pointerIcon{
+  font-size: 15px;
+  cursor: pointer;
+  color: #a3b4bc;
+}
+
+.pointerIcon:hover{
+  color: $primary;
+}

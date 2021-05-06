@@ -27,7 +27,7 @@ export default class CreateRole extends Component {
   }
 
   componentDidMount() {
-    this.props.ajaxUtil.sendRequest("role/v1/getModulePermissions", {}, (response) => {
+    this.props.ajaxUtil.sendRequest(this.props.url_Roles.GET_FEATURES, {}, (response) => {
       if (!response) {
         this.onCancel();
         this.props.setNotification({

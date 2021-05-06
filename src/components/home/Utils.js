@@ -84,5 +84,5 @@ export const checkForPrivilage = (allPrivilage, privilage) => {
 
 //getIconForDataTable Button
 export const getIcon = (row, className, onClick) => {
-  return <i className={className} onClick={() => onClick(row)} />
+  return <i className={className + " pointerIcon"} onClick={() => onClick(row)} />
 }

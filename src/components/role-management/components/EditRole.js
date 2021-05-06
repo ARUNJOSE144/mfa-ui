@@ -32,31 +32,21 @@ export default class EditRole extends Component {
   }
 
   getAllPermissions() {
-    this.props.ajaxUtil.sendRequest(
-      this.props.url_Roles.GET_FEATURES,
-      {},
-      response => {
-        if (!response) {
-          this.onCancel();
-          this.props.setNotification({
-            message: "Failed to load modules",
-            hasError: true,
-            timestamp: new Date().getTime()
-          });
-        } else {
-          _.pullAll(modules, modules);
-          response.modules.forEach((module, index) => {
-            modules.push(module);
-          });
+    this.props.ajaxUtil.sendRequest(this.props.url_Roles.GET_FEATURES, {}, response => {
+      if (!response) {
+        this.onCancel();
+        this.props.setNotification({ message: "Failed to load modules", hasError: true, timestamp: new Date().getTime() });
+      } else {
+        _.pullAll(modules, modules);
+        response.list.forEach((module, index) => {
+          modules.push(module);
+        });
 
-          this.props.ajaxUtil.sendRequest(
-            this.props.url_Roles.VIEW_URL,
-            { roleId: this.props.match.params.id },
-            this.viewDataCallBack.bind(this),
-            this.props.loadingFunction, { isShowSuccess: false }
-          );
-        }
-      },
+        this.props.ajaxUtil.sendRequest(this.props.url_Roles.VIEW_URL, { roleId: this.props.match.params.id }, this.viewDataCallBack.bind(this),
+          this.props.loadingFunction, { isShowSuccess: false }
+        );
+      }
+    },
       this.props.loadingFunction, { method: "GET", isShowSuccess: false }
     );
   }
@@ -70,7 +60,7 @@ export default class EditRole extends Component {
       });
       this.onCancel();
     } else {
-      const roleDetails = response.roleMaster;
+      const roleDetails = response.data;
       const roleFeatures = roleDetails.featureList;
       const currentFeatures = [];
       roleFeatures.forEach((features, index) => {

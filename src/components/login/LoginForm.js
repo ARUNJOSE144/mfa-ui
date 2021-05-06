@@ -100,7 +100,7 @@ class LoginForm extends Component {
 
                                 </Col>
                                 <Col lg="4" md="4" className="login-backgrnd">
-                                    <img src={`${process.env.PUBLIC_URL}/images/logo/6d-logo.png`} alt="6d Technologies" style={{ marginTop: '50px', height: '30px' }} />
+                                    <img src={`${process.env.PUBLIC_URL}/images/logo/mfa-logo.png`} alt="6d Technologies" style={{ marginTop: '50px', height: '30px' }} />
                                     {/*  <div style={{ color: '#ffffff', position: 'absolute', bottom: '0px', padding: '10px 0px', fontWeight: 'lighter', fontSize: '12px' }}>
                                 powered by - <b>6d Technologies</b>
                             </div> */}

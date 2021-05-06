@@ -108,7 +108,7 @@ export class Home extends Component {
                             privilages={this.props.login.userDetails.privilages}
                             route={this.route}
                             menus={this.state.MENU_DETAILS}
-                            logo={`${process.env.PUBLIC_URL}/images/logo/6d-logo.png`}
+                            logo={`${process.env.PUBLIC_URL}/images/logo/mfa-logo.png`}
                             setHeaderOnClick={this.setHeaderOnClick.bind(this)}
                         />
                     </div>
