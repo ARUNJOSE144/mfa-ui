@@ -48,10 +48,7 @@ const AsyncRoleView = Loadable({
   loader: () => import('../../role-management/components/ViewRoles'),
   loading: Loading
 });
-const AsyncAttachSystemRole = Loadable({
-  loader: () => import('../../../components/role-management/components/AttachSystemRole/AttachSystemRole'),
-  loading: Loading
-});
+
 const AsyncRoleCreate = Loadable({
   loader: () => import('../../../components/role-management/components/CreateRole'),
   loading: Loading
@@ -127,12 +124,7 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
           previousState={previousState && previousState.obj.roles}
           previousStateKey="roles"
         />} />
-        <Route exact path="/attachSystemRole" render={(props) => <AsyncAttachSystemRole
-          {...props}
-          {...properties}
-          url_Roles={CONSTANTS.ROLES}
-          url_commission={CONSTANTS.COMMISSION}
-        />} />
+     
         <Route exact path="/Roles/create" render={() => <AsyncRoleCreate
           {...properties}
           url_Roles={CONSTANTS.ROLES}

@@ -2,13 +2,12 @@ import _ from "lodash";
 import React, { Component } from "react";
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect, Switch } from "react-router-dom";
-import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE, COLOR } from '../../generic/buttons/elements/ButtonTypes';
+import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE } from '../../generic/buttons/elements/ButtonTypes';
 import { CustomButton } from '../../generic/buttons/elements/CustomButton';
 import { POPUP_ALIGN } from '../../generic/popup/constants/Types';
 import Popup from '../../generic/popup/elements/Popup';
 import { getIcon } from "../../home/Utils";
 import RoleDetails from "./RoleDetails";
-import SearchFilter from "./SearchFilter";
 const modules = [];
 
 export default class View extends Component {
@@ -230,13 +229,6 @@ export default class View extends Component {
     onSearchFn(data);
   }
 
-  renderSearchFilter = searchFilterProps => <SearchFilter
-    {...this.state}
-    ajaxUtil={this.props.ajaxUtil}
-    onCancel={() => searchFilterProps.toggleAction(0, null)}
-    onSubmitClick={this.handleSearchFilterSubmit(searchFilterProps.onSearch)}
-    {...this.state.filterParams}
-  />
 
   render() {
 

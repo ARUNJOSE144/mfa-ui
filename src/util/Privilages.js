@@ -72,12 +72,6 @@ export const MENU_DETAILS = [
         linkTo: "/Roles",
         icon: "fa fa-users",
         privilages: _.values(PRIVILIAGES.SYSTEM_ROLES)
-      }, {
-        id: 101,
-        label: "Attach System Role",
-        linkTo: "/attachSystemRole",
-        icon: "fa fa-users",
-        privilages: _.values(PRIVILIAGES.ATTACH_SYSTRM_ROLE)
       }
     ]
   },
