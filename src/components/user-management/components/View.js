@@ -1,9 +1,10 @@
+import { forEach } from "lodash";
 import React, { Component } from "react";
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect, Switch } from "react-router-dom";
 import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE } from '../../generic/buttons/elements/ButtonTypes';
 import { CustomButton } from '../../generic/buttons/elements/CustomButton';
-import { getIcon } from "../../home/Utils";
+import { getIcon, validate } from "../../home/Utils";
 
 export default class View extends Component {
   constructor(props) {
@@ -93,10 +94,22 @@ export default class View extends Component {
       "searchKey1": this.state.searchKey,
     }
     this.props.ajaxUtil.sendRequest("/user/v1/search", request, function (resp, hasError) {
+      self.formatReponse(resp.list)
       self.setState({ dataTotalSize: resp.dataTotalSize, data: resp.list })
     }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
   }
 
+
+
+  formatReponse = (list) => {
+    if (validate(list)) {
+      list.forEach(element => {
+        element.roleId = element.role.roleId;
+        element.roleName = element.role.roleName;
+      });
+    }
+    console.log("======================list : ", list)
+  }
 
   deleteRow(obj, message, callback) {
     if (obj.userId === 1) {
@@ -116,7 +129,7 @@ export default class View extends Component {
 
   onConfirmCallBack(callback, rowId) {
     var self = this;
-    this.props.ajaxUtil.sendRequest(this.props.url_Users.DELETE_URL, { userId: rowId }, function (resp, hasError) {
+    this.props.ajaxUtil.sendRequest("/user/v1/delete", { userId: rowId }, function (resp, hasError) {
       self.getUsersList(true);
     }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
   }
@@ -146,12 +159,12 @@ export default class View extends Component {
     if (this.state.modal === 2) {
       return (
         <Switch>
-          <Redirect to="/Users/create" push />
+          <Redirect to="/User/create" push />
         </Switch>
       );
     }
     if (this.state.modal === 3) {
-      const editUrl = `/Users/edit/${this.state.userId}`;
+      const editUrl = `/User/edit/${this.state.userId}`;
       return (
         <Switch>
           <Redirect to={editUrl} />
@@ -171,10 +184,12 @@ export default class View extends Component {
           version="4"
           search
           fetchInfo={{ dataTotalSize: this.state.dataTotalSize }}        >
-          <TableHeaderColumn isKey dataField="id" className="dth" columnClassName="dtd" width={0} hidden={true}>ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="userName" className="dth" columnClassName="dtd" width={130} dataSort>User Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="createDate" className="dth" columnClassName="dtd" width={130} >Created Date</TableHeaderColumn>
-          <TableHeaderColumn dataField="description" className="dth" columnClassName="dtd" width={130}>Description</TableHeaderColumn>
+          <TableHeaderColumn isKey dataField="id" className="dth" columnClassName="dtd" /* width='0' */ hidden={true}>ID</TableHeaderColumn>
+          <TableHeaderColumn dataField="name" className="dth" columnClassName="dtd" width='220'  >Name</TableHeaderColumn>
+          <TableHeaderColumn dataField="userName" className="dth" columnClassName="dtd" width='200'  >UserName</TableHeaderColumn>
+          <TableHeaderColumn dataField="emailId" className="dth" columnClassName="dtd" width='200' >EmailId</TableHeaderColumn>
+          <TableHeaderColumn dataField="roleName" className="dth" columnClassName="dtd" width='130'  >Role</TableHeaderColumn>
+
           <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.openViewMode(row))}>View</TableHeaderColumn>
           <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn>
           <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn>

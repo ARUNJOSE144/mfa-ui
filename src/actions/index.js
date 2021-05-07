@@ -4,7 +4,7 @@ import { AUTH_KEY, AUTH_URL, LOGIN_URL, LOGOUT_URL } from '../util/Constants';
 
 
 export function logIn(payload) {
-    var url = new URL(window.location.href);
+    //var url = new URL(window.location.href);
 
     const data = {
         "username": payload.username,

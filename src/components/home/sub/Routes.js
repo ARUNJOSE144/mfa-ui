@@ -1,5 +1,3 @@
-/* import { ProductInput as ProductInputComponent } from '@6d-ui/ui-helpers'; */
-/* import { ProductInput as ProductInputComponent } from '../../generic/ui-helpers/elements/ProductInput'; */
 import React from "react";
 import Loadable from 'react-loadable';
 import { Redirect, Route, Switch } from "react-router-dom";
@@ -7,11 +5,8 @@ import { CONSTANTS, GLOBAL_CONSTANTS } from '../../../util/Constants';
 import { MESSAGE_UTILS } from '../../../util/Messages';
 import { PRIVILIAGES as MENU_PRIVILIAGES } from '../../../util/Privilages';
 import { ErrorPage, Loading as Loader } from '../../errorPage/ErrorPage';
-import { ajaxUtil, isComplexTab, saveCurrentStateUtil, setHeaderUtil, setLoadingUtil, setModalPopupUtil, setNotification } from '../Utils';
+import { ajaxUtil, saveCurrentStateUtil, setHeaderUtil, setLoadingUtil, setModalPopupUtil, setNotification } from '../Utils';
 
-
-/* const ProductInput = props => <ProductInputComponent {...props} productWithMsisdn={GLOBAL_CONSTANTS.PRODUCT_WITH_SIM_MSISDN} />
- */
 const Loading = (props) => {
   if (props.isLoading) {
     if (props.timedOut) {
@@ -61,6 +56,10 @@ const AsyncRoleEdit = Loadable({
 
 
 
+
+
+
+
 export const Routes = ({ userid, privilages, previousState, userChannelType, userEntityType, designationId, loggedInUser, typeOfUser }) => {
   const properties = {
     'userId': userid,
@@ -87,44 +86,24 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
 
         <Route exact path="/User" render={() => <AsyncUserView
           {...properties}
-          userChannelType={userChannelType}
-          userEntityType={userEntityType}
           url_User={CONSTANTS.USER_MGMNT}
-          url_SalesHierarchy={CONSTANTS.SALES_HIERARCHY}
-          url_DocType_List={CONSTANTS.DOCTYPE.LIST_URL}
-          url_ChannelPartners_SearchUrl={CONSTANTS.CHANNEL_PARTNERS.SEARCH_URL}
           menuPrivilages={MENU_PRIVILIAGES.USER_MGMNT}
-          previousState={previousState && previousState.obj.user}
-          previousStateKey="user"
-          isComplexTab={isComplexTab}
         />} />
 
 
         <Route exact path="/User/create" render={(props) => <AsyncUserCreate
           {...props}
           {...properties}
-          userChannelType={userChannelType}
-          userEntityType={userEntityType}
           url_User={CONSTANTS.USER_MGMNT}
-          url_ChannelPartners_SearchUrl={CONSTANTS.CHANNEL_PARTNERS.SEARCH_URL}
-          url_SalesHierarchy_OpNodeType={CONSTANTS.SALES_HIERARCHY.OP_NODE_TYPE}
-          url_SalesHierarchy_BuNodeType={CONSTANTS.SALES_HIERARCHY.BU_NODE_TYPE}
-          url_DocType_List={CONSTANTS.DOCTYPE.LIST_URL}
-          /* ProductInput={ProductInput} */
-          isComplexTab={isComplexTab}
-          const_Commission={CONSTANTS.COMMISSION}
           menuPrivilages={MENU_PRIVILIAGES.USER_MGMNT}
-          roleHierarchyPrivilages={MENU_PRIVILIAGES.SALES_HIERARCHY}
         />} />
 
         <Route exact path="/Roles" render={() => <AsyncRoleView
           {...properties}
           url_Roles={CONSTANTS.ROLES}
           menuPrivilages={MENU_PRIVILIAGES.SYSTEM_ROLES}
-          previousState={previousState && previousState.obj.roles}
-          previousStateKey="roles"
         />} />
-     
+
         <Route exact path="/Roles/create" render={() => <AsyncRoleCreate
           {...properties}
           url_Roles={CONSTANTS.ROLES}

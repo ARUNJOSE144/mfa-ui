@@ -2,18 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import {
-    Container,
-    Row,
-    Col,
-    Card,
+    Button, Card,
     CardBody,
-    CardHeader,
-    InputGroup,
-    InputGroupAddon,
-    Input,
-    Button
+    CardHeader, Col, Container,
+    Input, InputGroup,
+    InputGroupAddon, Row
 } from 'reactstrap';
-import { AD_URL } from '../../util/Constants';
 import { logIn, setLoading } from '../../actions';
 
 class LoginForm extends Component {
@@ -144,7 +138,7 @@ class LoginForm extends Component {
                                                             </Button>
                                                             : <Button type="submit" className="btn-signin" name="login">Login</Button>}
                                                     </div>
-                                                   {/*  <div>
+                                                    {/*  <div>
                                                         <div> <a href={AD_URL}> <span style={{ paddingLeft: "138px" }}>Login With AD</span></a></div>
                                                     </div> */}
                                                     <div>

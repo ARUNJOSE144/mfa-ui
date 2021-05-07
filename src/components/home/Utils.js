@@ -74,7 +74,7 @@ export const validate = (val) => {
 export const checkForPrivilage = (allPrivilage, privilage) => {
   if (validate(allPrivilage) && validate(privilage)) {
     for (var i = 0; i < allPrivilage.length; i++) {
-      if (allPrivilage[i] == privilage)
+      if (allPrivilage[i] === privilage)
         return true;
     }
   }
@@ -85,4 +85,16 @@ export const checkForPrivilage = (allPrivilage, privilage) => {
 //getIconForDataTable Button
 export const getIcon = (row, className, onClick) => {
   return <i className={className + " pointerIcon"} onClick={() => onClick(row)} />
+}
+
+
+//Using for creating select box options with value and label tags
+export const getSelectOptions = (data, value, label) => {
+  if (validate(data) && validate(value) && validate(label)) {
+    data.forEach(element => {
+      element.value = element[value];
+      element.label = element[label];
+    });
+  }
+  return data;
 }

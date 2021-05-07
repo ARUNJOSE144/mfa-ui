@@ -1,18 +1,19 @@
 import React, { Component } from "react";
-import { Container, Breadcrumb, BreadcrumbItem, Row, Col } from "reactstrap";
+import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
+import { connect } from "react-redux";
+import { withRouter } from 'react-router';
+import { Breadcrumb, BreadcrumbItem, Col, Container, Row } from "reactstrap";
+import { logOut, setModalPopup } from '../../actions';
+import { store } from '../../index';
+import { MENU_DETAILS } from "../../util/Privilages";
+import Header from '../generic/ui-components/components/header/Header';
+import Notification from '../generic/ui-components/components/notification/Notification';
 /* import { SideMenu, Header, Notification, Alert, Loader } from '@6d-ui/ui-components'; */
 import SideMenu from '../generic/ui-components/components/sideMenu/SideMenu';
-import Header from '../generic/ui-components/components/header/Header';
-import Loader from '../generic/ui-components/elements/loader/Loader';
-import Notification from '../generic/ui-components/components/notification/Notification';
 import Alert from '../generic/ui-components/elements/alert/Alert';
+import Loader from '../generic/ui-components/elements/loader/Loader';
+import { Routes } from './sub/Routes';
 
-import { withRouter } from 'react-router'
-import { MENU_DETAILS } from "../../util/Privilages";
-import { connect } from "react-redux";
-import { Routes } from './sub/Routes'
-import { setModalPopup, logOut } from '../../actions'
-import { store } from '../../index';
 
 
 export class Home extends Component {
