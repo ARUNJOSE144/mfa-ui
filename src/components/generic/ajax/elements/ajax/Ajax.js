@@ -20,7 +20,7 @@ export function ajax(url, request, makeCallBack, callback, loadingFunction, opti
     json: true
   };
 
-  if (method && method.trim().toUpperCase() == 'GET') {
+  if (method && method.trim().toUpperCase() === 'GET') {
     authOptions.params = request;
   }
 

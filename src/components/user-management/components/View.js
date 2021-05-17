@@ -1,11 +1,11 @@
-import { forEach } from "lodash";
 import React, { Component } from "react";
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect, Switch } from "react-router-dom";
 import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE } from '../../generic/buttons/elements/ButtonTypes';
 import { CustomButton } from '../../generic/buttons/elements/CustomButton';
-import { getIcon, validate } from "../../home/Utils";
+import { checkForPrivilage, getIcon, validate } from "../../home/Utils";
 
+/* eslint-disable */
 export default class View extends Component {
   constructor(props) {
     super(props);
@@ -73,7 +73,7 @@ export default class View extends Component {
         <div className="row">
           <div className='col-md-8 datatabletoolsButtons' >
             <h5 style={{ fontWeight: 700, fontSize: 14, marginTop: 10 }}>All Users |  {this.state.dataTotalSize}</h5>
-            <CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create" isButtonGroup={true} onClick={() => this.setState({ modal: 2 })} />
+            {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.create) ? <CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create" isButtonGroup={true} onClick={() => this.setState({ modal: 2 })} /> : null}
           </div>
           <div className='col-md-4' >
             {props.components.searchPanel}
@@ -172,6 +172,9 @@ export default class View extends Component {
       );
     }
 
+    console.log("privilages : ", this.props.privilages);
+    console.log("menuprivilages : ", this.props.menuPrivilages);
+
     return (
       <div className="custom-container">
         <BootstrapTable
@@ -186,13 +189,13 @@ export default class View extends Component {
           fetchInfo={{ dataTotalSize: this.state.dataTotalSize }}        >
           <TableHeaderColumn isKey dataField="id" className="dth" columnClassName="dtd" /* width='0' */ hidden={true}>ID</TableHeaderColumn>
           <TableHeaderColumn dataField="name" className="dth" columnClassName="dtd" width='220'  >Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="userName" className="dth" columnClassName="dtd" width='200'  >UserName</TableHeaderColumn>
+          <TableHeaderColumn dataField="username" className="dth" columnClassName="dtd" width='200'  >UserName</TableHeaderColumn>
           <TableHeaderColumn dataField="emailId" className="dth" columnClassName="dtd" width='200' >EmailId</TableHeaderColumn>
           <TableHeaderColumn dataField="roleName" className="dth" columnClassName="dtd" width='130'  >Role</TableHeaderColumn>
 
           <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.openViewMode(row))}>View</TableHeaderColumn>
-          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn>
-          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn>
+          {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.edit) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn> : null}
+          {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.delete) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn> : null}
         </BootstrapTable >
       </div>
     );

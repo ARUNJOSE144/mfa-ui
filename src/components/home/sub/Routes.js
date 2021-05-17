@@ -101,7 +101,7 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
         <Route exact path="/Roles" render={() => <AsyncRoleView
           {...properties}
           url_Roles={CONSTANTS.ROLES}
-          menuPrivilages={MENU_PRIVILIAGES.SYSTEM_ROLES}
+          menuPrivilages={MENU_PRIVILIAGES.ROLES}
         />} />
 
         <Route exact path="/Roles/create" render={() => <AsyncRoleCreate

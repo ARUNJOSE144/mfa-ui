@@ -91,7 +91,7 @@ export default class CreateUser extends Component {
 
   getRequest = () => {
     return {
-      "userName": this.state.userName,
+      "username": this.state.userName,
       "name": this.state.name,
       "emailId": this.state.emailId,
       "contactNumber": this.state.contactNumber,

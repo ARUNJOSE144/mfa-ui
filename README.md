@@ -59,3 +59,6 @@ keep below statement in package.json file
 
 ## For Running SASS files
   sass --watch in:out
+
+## For commenting warning in a file
+  /* eslint-disable */

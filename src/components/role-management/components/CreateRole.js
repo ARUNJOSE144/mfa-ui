@@ -123,7 +123,6 @@ export default class CreateRole extends Component {
        }
      }, this.props.loadingFunction, { isProceedOnError: true, isShowSuccess: false, isShowFailure: false }); */
 
-    var self = this;
     this.props.ajaxUtil.sendRequest(this.props.url_Roles.CREATE_URL, request, (response, hasError) => {
       if (!hasError)
         this.setState({ isSuccess: true })

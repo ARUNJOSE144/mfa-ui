@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-	<context-root>CoMS-UI</context-root>
+	<context-root>MFA-UI</context-root>
 </jboss-web>

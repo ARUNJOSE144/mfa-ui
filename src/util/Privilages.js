@@ -4,36 +4,17 @@ export const PRIVILIAGES = {
 
 
   USER_MGMNT: {
-    /*   view: 7000,
-     create: 7001,
-     edit: 7002,
-     delete: 7003,
-     reassign:7004 , */
-
-    createResidentialUser: 7010,
-    createCommericialUser: 7011,
-    createEMAUser: 7012,
-
-    editResidentialUser: 7020,
-    editCommericialUser: 7021,
-    editEMAUser: 7022,
-
-    deleteResidentialUser: 7030,
-    deleteCommericialUser: 7031,
-    deleteEMAUser: 7032,
-
-    viewResidentialUser: 7040,
-    viewCommericialUser: 7041,
-    viewEMAUser: 7042,
-
-
+    view: 10,
+    create: 11,
+    edit: 12,
+    delete: 13,
   },
 
-  SYSTEM_ROLES: {
-    view: 102000,
-    create: 102001,
-    edit: 102002,
-    delete: 102003,
+  ROLES: {
+    view: 20,
+    create: 21,
+    edit: 22,
+    delete: 23,
   },
 
 };
@@ -71,7 +52,7 @@ export const MENU_DETAILS = [
         label: "Roles",
         linkTo: "/Roles",
         icon: "fa fa-users",
-        privilages: _.values(PRIVILIAGES.SYSTEM_ROLES)
+        privilages: _.values(PRIVILIAGES.ROLES)
       }
     ]
   },

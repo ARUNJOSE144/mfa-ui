@@ -1,6 +1,6 @@
-import { Redirect, Switch } from "react-router-dom";
 import _ from "lodash";
 import React, { Component } from "react";
+import { Switch } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
 import FieldItem from '../../generic/fields/elements/fieldItem/FieldItem';
 import FIELD_TYPES from '../../generic/fields/elements/fieldItem/FieldTypes';

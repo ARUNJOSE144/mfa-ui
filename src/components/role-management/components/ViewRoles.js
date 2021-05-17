@@ -6,10 +6,11 @@ import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE } from '../../generic/buttons/el
 import { CustomButton } from '../../generic/buttons/elements/CustomButton';
 import { POPUP_ALIGN } from '../../generic/popup/constants/Types';
 import Popup from '../../generic/popup/elements/Popup';
-import { getIcon } from "../../home/Utils";
+import { checkForPrivilage, getIcon } from "../../home/Utils";
 import RoleDetails from "./RoleDetails";
 const modules = [];
 
+/* eslint-disable */
 export default class View extends Component {
   constructor(props) {
     super(props);
@@ -92,7 +93,7 @@ export default class View extends Component {
         <div className="row">
           <div className='col-md-8 datatabletoolsButtons' >
             <h5 style={{ fontWeight: 700, fontSize: 14, marginTop: 10 }}>All Roles |  {this.state.dataTotalSize}</h5>
-            <CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create" isButtonGroup={true} onClick={() => this.setState({ modal: 2 })} />
+            {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.create) ? <CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create" isButtonGroup={true} onClick={() => this.setState({ modal: 2 })} /> : null}
 
           </div>
           <div className='col-md-4' >
@@ -284,8 +285,8 @@ export default class View extends Component {
           <TableHeaderColumn dataField="createDate" className="dth" columnClassName="dtd" width={130} >Created Date</TableHeaderColumn>
           <TableHeaderColumn dataField="description" className="dth" columnClassName="dtd" width={130}>Description</TableHeaderColumn>
           <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.openViewMode(row))}>View</TableHeaderColumn>
-          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn>
-          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn>
+          {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.edit) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn> : null}
+          {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.delete) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn> : null}
         </BootstrapTable >
 
         <Popup
