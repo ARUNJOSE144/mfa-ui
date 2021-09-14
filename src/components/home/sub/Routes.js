@@ -55,6 +55,26 @@ const AsyncRoleEdit = Loadable({
 
 
 
+const AsyncQuestionView = Loadable({
+  loader: () => import('../../question-management/components/ViewQuestions'),
+  loading: Loading
+});
+
+const AsyncQuestionCreate = Loadable({
+  loader: () => import('../../question-management/components/CreateQuestion'),
+  loading: Loading
+});
+
+
+
+const AsyncQuestionSearchQuestion = Loadable({
+  loader: () => import('../../question-management/components/SearchQuestion'),
+  loading: Loading
+});
+
+
+
+
 
 
 
@@ -90,7 +110,6 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
           menuPrivilages={MENU_PRIVILIAGES.USER_MGMNT}
         />} />
 
-
         <Route exact path="/User/create" render={(props) => <AsyncUserCreate
           {...props}
           {...properties}
@@ -114,6 +133,23 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
           url_Roles={CONSTANTS.ROLES}
         />} />
 
+
+
+        <Route exact path="/Questions" render={() => <AsyncQuestionView
+          {...properties}
+          url_questions={CONSTANTS.QUESTIONS}
+          menuPrivilages={MENU_PRIVILIAGES.QUESTIONS}
+        />} />
+
+        <Route exact path="/Questions/create" render={() => <AsyncQuestionCreate
+          {...properties}
+          url_Roles={CONSTANTS.QUESTIONS}
+        />} />
+
+        <Route exact path="/Questions/questionSearch" render={() => <AsyncQuestionSearchQuestion
+          {...properties}
+          url_Roles={CONSTANTS.QUESTIONS}
+        />} />
 
         <Route exact path="/" render={(props) => <Redirect to="/home" />} />
         <Route path="/" render={() => <ErrorPage errorCode={404} />} />

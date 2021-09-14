@@ -385,3 +385,9 @@ ul.userNode li.entityNode:last-child:after {
     padding-top: 15px;
 }
 /***********************************************/
+
+
+
+.activeQuestion{
+    background-color: yellow !important;
+}

@@ -17,6 +17,13 @@ export const PRIVILIAGES = {
     delete: 23,
   },
 
+  QUESTIONS: {
+    view: 20,
+    create: 21,
+    edit: 22,
+    delete: 23,
+  },
+
 };
 
 export const MENU_DETAILS = [
@@ -56,6 +63,21 @@ export const MENU_DETAILS = [
       }
     ]
   },
+
+  {
+    id: 5,
+    label: "Question Management",
+    icon: "fa fa-users",
+    submenus: [
+      {
+        id: 200,
+        label: "Question",
+        linkTo: "/Questions",
+        icon: "fa fa-users",
+        privilages: _.values(PRIVILIAGES.QUESTIONS)
+      }
+    ]
+  }
 
 
 ];
