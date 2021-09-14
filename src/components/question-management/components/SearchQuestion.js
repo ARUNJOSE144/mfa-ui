@@ -72,11 +72,46 @@ export default class SearchQuestion extends Component {
     this.setState({ isSuccess: true });
   }
 
+  validate = (val) => {
+    if (val != null && val != undefined && val != "") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+  loadImageDetails = (question) => {
+    this.props.ajaxUtil.sendRequest("/question/v1/getImageDetails", { questionId: question.id }, (response, hasError) => {
+      console.log("response : ", response)
+      question.imageDetails = response;
+    }, this.props.loadingFunction, { isAutoApiMsg: true });
+  }
 
   toggleDetails = (question) => {
     question.showDetails = !question.showDetails;
+
+    if (!this.validate(question.imageDetails)) {
+      this.loadImageDetails(question);
+    }
+
     this.forceUpdate();
   }
+
+
+
+  renderImages = (question) => {
+    return (
+      <React.Fragment>
+        {this.validate(question.imageDetails) && question.imageDetails.map((image, i) => (
+          <Row style={{ margin: "15px", border: "2px solid red" }}>
+            <img src={"http://localhost:8080/mfaservices/getDownloadFiles?imagePath=" + image.image} style={{ width: 1100 }} ></img>
+          </Row>
+        ))}
+      </React.Fragment>
+    );
+  }
+
 
   renderQuestion = () => {
     return (
@@ -105,6 +140,10 @@ export default class SearchQuestion extends Component {
                 <textarea placeholder="Answer" class="form-control" style={{ height: "300px" }} >{question.answer}</textarea>
               </div>
 
+              {/*  <img src="E:/images/IMG_202109141252213180.png" style={{ width: 100 }}></img> */}
+
+              {this.renderImages(question)}
+
             </div> : null}
 
 
@@ -116,6 +155,7 @@ export default class SearchQuestion extends Component {
 
 
   render() {
+    console.log("Ststet Search : ", this.state);
     if (this.state.isSuccess) {
       return <Redirect to="/Questions" />;
     }

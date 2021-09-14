@@ -17,7 +17,8 @@ export default class CreateRole extends Component {
       permissions: '',
       modules: [],
       isSuccess: false,
-      fields: {}
+      fields: {},
+      files: [],
     };
     /*  this.getRequest = this.getRequest.bind(this);
      this.handleSwitch = this.handleSwitch.bind(this);
@@ -53,18 +54,18 @@ export default class CreateRole extends Component {
         return { hasError: false, errorMsg: '' };
     }
     let hasError = false;
-  /*   const fields = this.state.fields;
-    const that = this;
-    _.forEach(FormElements, function (value, name) {
-      const validate = validateForm(name, that.state[name], FormElements[name], preValidate, null);
-      if (validate) {
-        if (hasError === false) hasError = validate.hasError;
-        fields[name] = validate;
-      } else {
-        fields[name] = { hasError: false, errorMsg: '' };
-      }
-    });
-    this.setState({ fields }); */
+    /*   const fields = this.state.fields;
+      const that = this;
+      _.forEach(FormElements, function (value, name) {
+        const validate = validateForm(name, that.state[name], FormElements[name], preValidate, null);
+        if (validate) {
+          if (hasError === false) hasError = validate.hasError;
+          fields[name] = validate;
+        } else {
+          fields[name] = { hasError: false, errorMsg: '' };
+        }
+      });
+      this.setState({ fields }); */
 
     if (hasError === true) {
       this.props.setNotification({
@@ -96,12 +97,26 @@ export default class CreateRole extends Component {
 
   getRequest() {
 
-    return {
-      "name": this.state.questionName,
-      "key": this.state.questionKey,
-      "question": this.state.question,
-      "answer": this.state.answer,
+
+
+    var formData = new FormData();
+    formData.append('name', this.state.questionName);
+    formData.append('key', this.state.questionKey);
+    formData.append('question', this.state.question);
+    formData.append('answer', this.state.answer);
+    //formData.append('files', files)
+
+    for (var i = 0; i < this.state.files.length; i++) {
+      formData.append('file' + parseInt(i + 1), this.state.files[i].img)
     }
+
+    return formData;
+    /*  return {
+       "name": this.state.questionName,
+       "key": this.state.questionKey,
+       "question": this.state.question,
+       "answer": this.state.answer,
+     } */
   }
 
 
@@ -109,8 +124,35 @@ export default class CreateRole extends Component {
     this.setState({ isSuccess: true });
   }
 
+  onFileChange = (e) => {
+    var newImg = {}
+    newImg.img = e.target.files[0];
+    newImg.url = URL.createObjectURL(newImg.img);
+    this.state.files.push(newImg);
+    this.forceUpdate();
+  }
+
+
+  renderImages = () => {
+    return (
+      <React.Fragment>
+        {this.state.files.map((file, i) => (
+          <div className="col-md-3">
+            <img src={file.url} style={{ width: 100 }}></img>
+            <span aria-hidden="true" style={{ right: 30, position: "absolute", }} className=" default-segment-ModalCloseIcon my-2" onClick={() => this.resetImage("smallImg")}>
+              &times;
+            </span>
+          </div>
+        ))}
+      </React.Fragment>
+    );
+  }
+
+
 
   render() {
+
+    console.log("Create questions : ", this.state)
     if (this.state.isSuccess) {
       return <Redirect to="/Questions" />;
     }
@@ -158,6 +200,13 @@ export default class CreateRole extends Component {
                 error={this.state.fields.answer && this.state.fields.answer.errorMsg}
                 width="md"
               />
+
+              <input type="file" onChange={(e) => this.onFileChange(e)} />
+
+              {this.renderImages()}
+
+
+
             </Row>
           </div>
         </div>
