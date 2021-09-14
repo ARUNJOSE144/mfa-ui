@@ -19,7 +19,8 @@ export default class SearchQuestion extends Component {
       isSuccess: false,
       fields: {},
       questionList: [],
-      prevKey: ""
+      prevKey: "",
+      questionFromArray: [{ label: "Chegg", value: "1" }, { label: "Bartleby ", value: "2" }]
     };
 
     this.props.setHeader("Search Question");
@@ -45,25 +46,34 @@ export default class SearchQuestion extends Component {
     this.state[name] = value;
     this.state.fields = fields;
 
-    if (!isTouched && (name == "searchQuestionKey" || name == "searchQuestion" || name == "searchAnswer") /* && */
-     /*  value != null && value != undefined && value != "" */ /* && value.length >= 3 */ /* && */ /* this.state.prevKey != value */) {
-      this.state.prevKey = value;
-      const request = this.getRequest();
-      this.props.ajaxUtil.sendRequest("/question/v1/searchQuestion", request, (response, hasError) => {
-        console.log("response : ", response)
-        this.setState({ questionList: response })
-      }, this.props.loadingFunction, { isAutoApiMsg: true });
+    if (!isTouched && (name == "searchQuestionKey" || name == "searchQuestion" ||
+      name == "searchAnswer" || name == "searchQuestionName" || name == "searchQuestionFrom")) {
+      this.loadSearchResults();
     }
   }
 
 
+  loadSearchResults = () => {
+    const request = this.getRequest();
+    this.props.ajaxUtil.sendRequest("/question/v1/searchQuestion", request, (response, hasError) => {
+      console.log("response : ", response)
+      this.setState({ questionList: response })
+    }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
+  }
+
 
   getRequest() {
+    var searchQuestionFrom = "";
+    if (this.validate(this.state.searchQuestionFrom)) {
+      searchQuestionFrom = this.state.searchQuestionFrom.value;
+    }
 
     return {
       "key": this.state.searchQuestionKey,
       "question": this.state.searchQuestion,
       "answer": this.state.searchAnswer,
+      "name": this.state.searchQuestionName,
+      "questionFrom": searchQuestionFrom
     }
   }
 
@@ -85,7 +95,7 @@ export default class SearchQuestion extends Component {
     this.props.ajaxUtil.sendRequest("/question/v1/getImageDetails", { questionId: question.id }, (response, hasError) => {
       console.log("response : ", response)
       question.imageDetails = response;
-    }, this.props.loadingFunction, { isAutoApiMsg: true });
+    }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
   }
 
   toggleDetails = (question) => {
@@ -127,6 +137,8 @@ export default class SearchQuestion extends Component {
             </div>
 
             {question.showDetails ? <div style={{ backgroundColor: "#f8f8f8", padding: 15 }}>
+
+              <div style={{ padding: "15px" }}>Id  :  {question.id}</div>
 
               <div style={{ padding: "15px" }}>Name  :  {question.name}</div>
 
@@ -189,6 +201,21 @@ export default class SearchQuestion extends Component {
                 value={this.state.searchAnswer}
                 onChange={this.handleChange.bind(this, FormElements.searchAnswer.name)}
                 width="md"
+              />
+
+              <FieldItem
+                {...FormElements.searchQuestionName}
+                value={this.state.searchQuestionName}
+                onChange={this.handleChange.bind(this, FormElements.searchQuestionName.name)}
+                width="md"
+              />
+
+              <FieldItem
+                {...FormElements.searchQuestionFrom}
+                value={this.state.searchQuestionFrom}
+                onChange={this.handleChange.bind(this, FormElements.searchQuestionFrom.name)}
+                width="md"
+                values={this.state.questionFromArray}
               />
 
             </Row>

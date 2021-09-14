@@ -19,11 +19,8 @@ export default class CreateRole extends Component {
       isSuccess: false,
       fields: {},
       files: [],
+      questionFromArray: [{ label: "Chegg", value: "1" }, { label: "Bartleby ", value: "2" }]
     };
-    /*  this.getRequest = this.getRequest.bind(this);
-     this.handleSwitch = this.handleSwitch.bind(this);
-     this.getPermissions = this.getPermissions.bind(this);
-     this.handleDropDownChange = this.handleDropDownChange.bind(this); */
     this.props.setHeader("Create Question");
   }
 
@@ -104,6 +101,9 @@ export default class CreateRole extends Component {
     formData.append('key', this.state.questionKey);
     formData.append('question', this.state.question);
     formData.append('answer', this.state.answer);
+    formData.append('questionFrom', this.state.questionFrom.value);
+
+
     //formData.append('files', files)
 
     for (var i = 0; i < this.state.files.length; i++) {
@@ -133,18 +133,26 @@ export default class CreateRole extends Component {
   }
 
 
+  deleteImage = (files, i) => {
+    files.splice(i, 1);
+    this.forceUpdate();
+
+  }
+
   renderImages = () => {
     return (
-      <React.Fragment>
-        {this.state.files.map((file, i) => (
-          <div className="col-md-3">
-            <img src={file.url} style={{ width: 100 }}></img>
-            <span aria-hidden="true" style={{ right: 30, position: "absolute", }} className=" default-segment-ModalCloseIcon my-2" onClick={() => this.resetImage("smallImg")}>
-              &times;
-            </span>
-          </div>
-        ))}
-      </React.Fragment>
+
+
+      this.state.files.map((file, i) => (
+        <div className="col-md-3">
+          <img src={file.url} style={{ width: 100 }}></img>
+          <span aria-hidden="true" style={{ right: 30, position: "absolute", fontSize: "31px", color: "red", fontWeight: "800", cursor: "pointer" }} className=" default-segment-ModalCloseIcon my-2" onClick={() => this.deleteImage(this.state.files, i)}>
+            &times;
+          </span>
+        </div>
+      ))
+
+
     );
   }
 
@@ -201,15 +209,36 @@ export default class CreateRole extends Component {
                 width="md"
               />
 
-              <input type="file" onChange={(e) => this.onFileChange(e)} />
+              <FieldItem
+                {...FormElements.questionFrom}
+                value={this.state.questionFrom}
+                onChange={this.handleChange.bind(this, FormElements.questionFrom.name)}
+                values={this.state.questionFromArray}
+                width="md"
+              />
 
-              {this.renderImages()}
+              <div className="col-md-3">
+                <div >
+                  <label className="commonLabel"> Select Images</label>
+                </div>
+                <input type="file" onChange={(e) => this.onFileChange(e)} />
+              </div>
+
+
+
+
 
 
 
             </Row>
           </div>
         </div>
+
+        {this.state.files.length != 0 ?
+          <div className="form-Brick-body" style={{ margin: "15px" }}>
+            {this.renderImages()}
+          </div>
+          : null}
 
 
         <div className="container-fluid">

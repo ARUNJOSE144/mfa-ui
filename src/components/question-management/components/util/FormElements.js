@@ -41,6 +41,15 @@ export const ROLES = {
         width: "md",
         ismandatory: true,
         type: FIELD_TYPES.TEXT_AREA
+    },
+    "questionFrom": {
+        name: "questionFrom",
+        placeholder: "Fuestion From  ",
+        label: "Fuestion From  ",
+        width: "md",
+        ismandatory: true,
+        "type": FIELD_TYPES.DROP_DOWN,
+        "placeholder": "Select",
     }
 
 
@@ -71,24 +80,39 @@ export const ROLES = {
         width: "md",
         ismandatory: true,
         type: FIELD_TYPES.TEXT_AREA
+    },
+    "searchQuestionName": {
+        name: "searchQuestionName",
+        placeholder: "Question Name   Contains",
+        label: "Question Name  Contains",
+        width: "md",
+        ismandatory: true,
+        type: FIELD_TYPES.TEXT_AREA
+    }, "searchQuestionFrom": {
+        name: "searchQuestionFrom",
+        placeholder: "Search Question From",
+        label: "Search Question From",
+        width: "md",
+        ismandatory: true,
+        "type": FIELD_TYPES.DROP_DOWN,
+        "placeholder": "Select",
     }
 
-
-,"showQuestion": {
-    name: "showQuestion",
-    placeholder: "Question  ",
-    label: "Question  ",
-    width: "sm",
-    ismandatory: true,
-    type: FIELD_TYPES.TEXT_AREA
-},
-"showAnswer": {
-    name: "showAnswer",
-    placeholder: "answer  ",
-    label: "answer  ",
-    width: "md",
-    ismandatory: true,
-    type: FIELD_TYPES.TEXT_AREA
-}
+    , "showQuestion": {
+        name: "showQuestion",
+        placeholder: "Question  ",
+        label: "Question  ",
+        width: "sm",
+        ismandatory: true,
+        type: FIELD_TYPES.TEXT_AREA
+    },
+    "showAnswer": {
+        name: "showAnswer",
+        placeholder: "answer  ",
+        label: "answer  ",
+        width: "md",
+        ismandatory: true,
+        type: FIELD_TYPES.TEXT_AREA
+    }
 
 };

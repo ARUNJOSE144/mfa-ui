@@ -126,12 +126,9 @@ export default class View extends Component {
 
 
   deleteRow(obj, message, callback) {
-    if (obj.roleId === 1) {
-      this.props.setNotification({ message: "Can't Delete Admin Role", hasError: true, timestamp: new Date().getTime() });
-      return;
-    }
+
     this.props.setModalPopup({
-      'rowId': obj.roleId,
+      'rowId': obj.id,
       'isOpen': true,
       'onConfirmCallBack': this.onConfirmCallBack.bind(this, callback),
       'title': "Confirm Delete",
@@ -143,7 +140,7 @@ export default class View extends Component {
 
   onConfirmCallBack(callback, rowId) {
     var self = this;
-    this.props.ajaxUtil.sendRequest(this.props.url_Roles.DELETE_URL, { roleId: rowId }, function (resp, hasError) {
+    this.props.ajaxUtil.sendRequest("/question/v1/delete", { id: rowId }, function (resp, hasError) {
       self.getRolesList(true);
     }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
   }
@@ -295,7 +292,7 @@ export default class View extends Component {
           <TableHeaderColumn dataField="key" className="dth" columnClassName="dtd" width={130} >Key</TableHeaderColumn>
           <TableHeaderColumn dataField="question" className="dth" columnClassName="dtd" width={130}>Question</TableHeaderColumn>
           <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.openViewMode(row))}>View</TableHeaderColumn>
-          {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.edit) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn> : null}
+          {/* {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.edit) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn> : null} */}
           {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.delete) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn> : null}
         </BootstrapTable >
 
