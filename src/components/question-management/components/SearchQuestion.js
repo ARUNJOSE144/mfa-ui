@@ -99,15 +99,27 @@ export default class SearchQuestion extends Component {
     }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
   }
 
-  toggleDetails = (question) => {
-    question.showDetails = !question.showDetails;
 
+  loadQuestionDetails = (question) => {
+    this.props.ajaxUtil.sendRequest("/question/v1/view", { id: question.id }, (response, hasError) => {
+      question.question = response.data.question;
+      question.answer = response.data.answer;
+      this.forceUpdate();
+    }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
+  }
+  toggleDetails = (question) => {
+
+
+    this.loadQuestionDetails(question);
     if (!this.validate(question.imageDetails)) {
       this.loadImageDetails(question);
     }
+    question.showDetails = !question.showDetails;
 
     this.forceUpdate();
   }
+
+
 
 
 
@@ -128,7 +140,7 @@ export default class SearchQuestion extends Component {
     return (
       <React.Fragment>
         {this.state.questionList.map((question, i) => (
-          <div className={question.showDetails ? "activeQuestion" : ""} style={{
+          <div key={question.id} className={question.showDetails ? "activeQuestion" : ""} style={{
             backgroundColor: "white", marginTop: "15px",
             padding: "15px", fontSize: "17px", boxShadow: "3px 3px 5px 0px rgb(0 0 0 / 5%)",
           }}>
@@ -147,11 +159,11 @@ export default class SearchQuestion extends Component {
               <div style={{ padding: "15px" }}>Keys  :  {question.key}</div>
 
               <div style={{ padding: "15px" }}>Question :
-                <textarea placeholder="Question" class="form-control" style={{ height: "300px" }} >{question.question}</textarea>
+                <textarea placeholder="Question" class="form-control" style={{ height: "300px" }} value={question.question} >{/* {question.question} */}</textarea>
               </div>
 
               <div style={{ padding: "15px" }}>Answer :
-                <textarea placeholder="Answer" class="form-control" style={{ height: "300px" }} >{question.answer}</textarea>
+                <textarea placeholder="Answer" class="form-control" style={{ height: "300px" }} value={question.answer}>{/* {question.answer} */}</textarea>
               </div>
 
               {/*  <img src="E:/images/IMG_202109141252213180.png" style={{ width: 100 }}></img> */}

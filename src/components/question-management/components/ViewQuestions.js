@@ -287,7 +287,7 @@ export default class View extends Component {
           <TableHeaderColumn isKey dataField="id" className="dth" columnClassName="dtd" width={0} hidden={true}>ID</TableHeaderColumn>
           <TableHeaderColumn dataField="name" className="dth" columnClassName="dtd" width={130} dataSort>Question Name</TableHeaderColumn>
           <TableHeaderColumn dataField="key" className="dth" columnClassName="dtd" width={130} >Key</TableHeaderColumn>
-          <TableHeaderColumn dataField="question" className="dth" columnClassName="dtd" width={130}>Question</TableHeaderColumn>
+          {/* <TableHeaderColumn dataField="question" className="dth" columnClassName="dtd" width={130}>Question</TableHeaderColumn> */}
           {/* <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.openViewMode(row))}>View</TableHeaderColumn> */}
           {/* {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.edit) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn> : null} */}
           {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.delete) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn> : null}
