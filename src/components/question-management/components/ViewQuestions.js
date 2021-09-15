@@ -4,10 +4,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect, Switch } from "react-router-dom";
 import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE } from '../../generic/buttons/elements/ButtonTypes';
 import { CustomButton } from '../../generic/buttons/elements/CustomButton';
-import { POPUP_ALIGN } from '../../generic/popup/constants/Types';
-import Popup from '../../generic/popup/elements/Popup';
 import { checkForPrivilage, getIcon } from "../../home/Utils";
-import RoleDetails from "./RoleDetails";
 const modules = [];
 
 /* eslint-disable */
@@ -291,25 +288,12 @@ export default class View extends Component {
           <TableHeaderColumn dataField="name" className="dth" columnClassName="dtd" width={130} dataSort>Question Name</TableHeaderColumn>
           <TableHeaderColumn dataField="key" className="dth" columnClassName="dtd" width={130} >Key</TableHeaderColumn>
           <TableHeaderColumn dataField="question" className="dth" columnClassName="dtd" width={130}>Question</TableHeaderColumn>
-          <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.openViewMode(row))}>View</TableHeaderColumn>
+          {/* <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.openViewMode(row))}>View</TableHeaderColumn> */}
           {/* {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.edit) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn> : null} */}
           {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.delete) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn> : null}
         </BootstrapTable >
 
-        <Popup
-          type={POPUP_ALIGN.RIGHT}
-          title="View"
-          isOpen={this.state.modal === 4}
-          close={this.toggleAction}
-          minWidth="85%"
-          component={
-            <RoleDetails
-              {...this.state}
-              ajaxUtil={this.props.ajaxUtil}
-              onCancel={() => this.toggleAction(0, null)}
-            />
-          }
-        />
+       ]
       </div>
     );
   }

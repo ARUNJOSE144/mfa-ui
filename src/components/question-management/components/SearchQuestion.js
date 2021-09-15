@@ -1,13 +1,12 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { Col, Container, Row } from 'reactstrap';
+import { Redirect, Switch } from 'react-router-dom';
+import { Row } from 'reactstrap';
 import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE, COLOR } from '../../generic/buttons/elements/ButtonTypes';
 import { CustomButton } from '../../generic/buttons/elements/CustomButton';
 import FieldItem from '../../generic/fields/elements/fieldItem/FieldItem';
 import { validateForm } from '../../generic/fields/elements/formValidator/FormValidator';
-import Permissions from './Permissions';
 import { ROLES as FormElements } from './util/FormElements';
+export const { BASE_URL } = window;
 
 
 export default class SearchQuestion extends Component {
@@ -20,7 +19,9 @@ export default class SearchQuestion extends Component {
       fields: {},
       questionList: [],
       prevKey: "",
-      questionFromArray: [{ label: "Chegg", value: "1" }, { label: "Bartleby ", value: "2" }]
+      questionFromArray: [{ label: "Others", value: "1" }, { label: "Chegg", value: "2" }, { label: "Bartleby ", value: "3" }],
+      mode: "",
+      selectedQuestionId: "",
     };
 
     this.props.setHeader("Search Question");
@@ -115,7 +116,7 @@ export default class SearchQuestion extends Component {
       <React.Fragment>
         {this.validate(question.imageDetails) && question.imageDetails.map((image, i) => (
           <Row style={{ margin: "15px", border: "2px solid red" }}>
-            <img src={"http://localhost:8080/mfaservices/getDownloadFiles?imagePath=" + image.image} style={{ width: 1100 }} ></img>
+            <img src={BASE_URL + "/getDownloadFiles?imagePath=" + image.image} style={{ width: 1100 }} ></img>
           </Row>
         ))}
       </React.Fragment>
@@ -134,6 +135,7 @@ export default class SearchQuestion extends Component {
             <div className="mx-0" onClick={() => this.toggleDetails(question)} style={{ cursor: "pointer" }}>
               Name  :  <b>{question.name}  </b>   , Keys  : <b style={{ color: "yellowgreen" }}> {question.key}</b>
 
+              <i className="fa fa-edit" style={{ float: "right", color: "orange", marginTop: "5px", fontSize: "23px" }} onClick={() => this.goTo("EDIT", question)}></i>
             </div>
 
             {question.showDetails ? <div style={{ backgroundColor: "#f8f8f8", padding: 15 }}>
@@ -166,10 +168,26 @@ export default class SearchQuestion extends Component {
   }
 
 
+
+  goTo = (mode, question) => {
+    this.state.mode = mode;
+    this.state.selectedQuestionId = question.id;
+    this.forceUpdate();
+  }
+
   render() {
     console.log("Ststet Search : ", this.state);
     if (this.state.isSuccess) {
       return <Redirect to="/Questions" />;
+    }
+
+    if (this.state.mode === "EDIT") {
+      const editUrl = `/Questions/edit/${this.state.selectedQuestionId}`;
+      return (
+        <Switch>
+          <Redirect to={editUrl} />
+        </Switch>
+      );
     }
 
     return (

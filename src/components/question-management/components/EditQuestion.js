@@ -6,9 +6,10 @@ import { CustomButton } from '../../generic/buttons/elements/CustomButton';
 import FieldItem from '../../generic/fields/elements/fieldItem/FieldItem';
 import { validateForm } from '../../generic/fields/elements/formValidator/FormValidator';
 import { ROLES as FormElements } from './util/FormElements';
+export const { BASE_URL } = window;
 
 
-export default class CreateRole extends Component {
+export default class EditQuestion extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,12 +20,47 @@ export default class CreateRole extends Component {
       files: [],
       questionFromArray: [{ label: "Others ", value: "1" }, { label: "Chegg", value: "2" }, { label: "Bartleby ", value: "3" }],
       questionFrom: { label: "Others ", value: "1" },
+      existingImageDetails: []
     };
-    this.props.setHeader("Create Question");
+    this.props.setHeader("Edit Question");
   }
 
 
+  componentDidMount() {
+    this.loadQuestionDetails()
+    this.loadImageDetails()
+  }
 
+
+  loadImageDetails = () => {
+    this.props.ajaxUtil.sendRequest("/question/v1/getImageDetails", { questionId: this.props.match.params.id }, (response, hasError) => {
+      console.log("response : ", response)
+      this.state.existingImageDetails = response;
+    }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
+  }
+
+  loadQuestionDetails = () => {
+    this.props.ajaxUtil.sendRequest("/question/v1/view", { id: this.props.match.params.id }, (response, hasError) => {
+      console.log("response : ", response)
+      /*  question.existingImageDetails = response; */
+      this.state.questionKey = response.data.key;
+      this.state.questionName = response.data.name;
+      this.state.question = response.data.question;
+      this.state.answer = response.data.answer;
+      this.state.questionName = response.data.name;
+      this.state.questionFrom = this.getObjFromArray(this.state.questionFromArray, "value", response.data.questionFrom);
+
+      this.forceUpdate();
+    }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
+  }
+
+  getObjFromArray = (data, key, value) => {
+    for (var i = 0; i < data.length; i++) {
+      if (data[i][key] == value) {
+        return JSON.parse(JSON.stringify(data[i]));
+      }
+    }
+  }
 
 
   handleChange(name, value, obj) {
@@ -62,7 +98,7 @@ export default class CreateRole extends Component {
     this.state.fields.answer = this.check(validateForm("answer", this.state.answer, FormElements["answer"], preValidate, null), flag);
     this.state.fields.questionFrom = this.check(validateForm("questionFrom", this.state.questionFrom, FormElements["questionFrom"], preValidate, null), flag);
 
-   
+
     if (flag.hasError === true) {
       this.props.setNotification({
         message: this.props.messagesUtil.EMPTY_FIELD_MSG,
@@ -73,7 +109,16 @@ export default class CreateRole extends Component {
       return false;
     }
     const request = this.getRequest();
-   
+    /*  var self = this;
+     this.props.ajaxUtil.sendRequest(this.props.url_Roles.CREATE_URL, request, function (resp, hasError) {
+ 
+       if (resp && !hasError) {
+         self.props.setNotification({ message: "Role Created Successfully", hasError: false });
+         self.setState({ isSuccess: true });
+       } else {
+         self.props.setNotification({ message: resp.responseMsg, hasError: true });
+       }
+     }, this.props.loadingFunction, { isProceedOnError: true, isShowSuccess: false, isShowFailure: false }); */
 
     this.props.ajaxUtil.sendRequest("/question/v1/create", request, (response, hasError) => {
       if (!hasError)
@@ -87,6 +132,7 @@ export default class CreateRole extends Component {
 
 
     var formData = new FormData();
+    formData.append('id', this.props.match.params.id);
     formData.append('name', this.state.questionName);
     formData.append('key', this.state.questionKey);
     formData.append('question', this.state.question);
@@ -147,12 +193,25 @@ export default class CreateRole extends Component {
   }
 
 
+  renderOldImages = () => {
+    return (
+      <React.Fragment>
+        {this.state.existingImageDetails.map((image, i) => (
+          <Row style={{ margin: "15px", border: "2px solid red" }}>
+            <img src={BASE_URL + "/getDownloadFiles?imagePath=" + image.image} style={{ width: 1100 }} ></img>
+          </Row>
+        ))}
+      </React.Fragment>
+    );
+  }
+
+
 
   render() {
 
     console.log("Create questions : ", this.state)
     if (this.state.isSuccess) {
-      return <Redirect to="/Questions" />;
+      return <Redirect to="/Questions/questionSearch" />;
     }
 
     return (
@@ -206,8 +265,7 @@ export default class CreateRole extends Component {
                 values={this.state.questionFromArray}
                 touched={this.state.fields.questionFrom && this.state.fields.questionFrom.hasError}
                 error={this.state.fields.questionFrom && this.state.fields.questionFrom.errorMsg}
-                width="md"
-              />
+                width="md" />
 
               <div className="col-md-3">
                 <div >
@@ -226,9 +284,17 @@ export default class CreateRole extends Component {
           </div>
         </div>
 
+        <i style={{ margin: 15, color: "red", fontWeight: 800 }}> Note :  If You wants to Modify Images, please upload all the Images Again.</i>
+
         {this.state.files.length != 0 ?
           <div className="form-Brick-body" style={{ margin: "15px" }}>
             {this.renderImages()}
+          </div>
+          : null}
+
+        {this.state.existingImageDetails.length != 0 ?
+          <div className="form-Brick-body" style={{ margin: "15px" }}>
+            {this.renderOldImages()}
           </div>
           : null}
 
@@ -239,7 +305,7 @@ export default class CreateRole extends Component {
             type={BUTTON_TYPE.PRIMARY}
             size={BUTTON_SIZE.LARGE}
             align="right"
-            label="Create"
+            label="Modify"
             isButtonGroup={true}
             onClick={this.onSubmitClick.bind(this)}
           />

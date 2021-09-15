@@ -65,6 +65,11 @@ const AsyncQuestionCreate = Loadable({
   loading: Loading
 });
 
+const AsyncQuestionEdit = Loadable({
+  loader: () => import('../../question-management/components/EditQuestion'),
+  loading: Loading
+});
+
 
 
 const AsyncQuestionSearchQuestion = Loadable({
@@ -145,6 +150,15 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
           {...properties}
           url_Roles={CONSTANTS.QUESTIONS}
         />} />
+
+        <Route exact path="/Questions/edit/:id" render={(props) => <AsyncQuestionEdit
+          {...props}
+          {...properties}
+          url_Roles={CONSTANTS.QUESTIONS}
+        />} />
+
+
+
 
         <Route exact path="/Questions/questionSearch" render={() => <AsyncQuestionSearchQuestion
           {...properties}

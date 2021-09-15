@@ -44,8 +44,8 @@ export const ROLES = {
     },
     "questionFrom": {
         name: "questionFrom",
-        placeholder: "Fuestion From  ",
-        label: "Fuestion From  ",
+        placeholder: "Question From  ",
+        label: "Question From  ",
         width: "md",
         ismandatory: true,
         "type": FIELD_TYPES.DROP_DOWN,
