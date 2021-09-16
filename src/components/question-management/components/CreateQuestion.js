@@ -62,7 +62,7 @@ export default class CreateRole extends Component {
     this.state.fields.answer = this.check(validateForm("answer", this.state.answer, FormElements["answer"], preValidate, null), flag);
     this.state.fields.questionFrom = this.check(validateForm("questionFrom", this.state.questionFrom, FormElements["questionFrom"], preValidate, null), flag);
 
-   
+
     if (flag.hasError === true) {
       this.props.setNotification({
         message: this.props.messagesUtil.EMPTY_FIELD_MSG,
@@ -73,7 +73,7 @@ export default class CreateRole extends Component {
       return false;
     }
     const request = this.getRequest();
-   
+
 
     this.props.ajaxUtil.sendRequest("/question/v1/create", request, (response, hasError) => {
       if (!hasError)
@@ -90,7 +90,7 @@ export default class CreateRole extends Component {
     formData.append('name', this.state.questionName);
     formData.append('key', this.state.questionKey);
     formData.append('question', this.state.question);
-    formData.append('answer', this.state.answer);
+    formData.append('answer', this.validate(this.state.answer) ? this.state.answer : "");
     formData.append('questionFrom', this.state.questionFrom.value);
 
 
@@ -147,12 +147,21 @@ export default class CreateRole extends Component {
   }
 
 
+  validate = (val) => {
+    if (val != null && val != undefined && val != "")
+      return true;
+    else
+      return false;
+
+  }
+
+
 
   render() {
 
     console.log("Create questions : ", this.state)
     if (this.state.isSuccess) {
-      return <Redirect to="/Questions" />;
+      return <Redirect to="/Questions/questionSearch" />;
     }
 
     return (

@@ -20,6 +20,7 @@ export default class SearchQuestion extends Component {
       questionList: [],
       prevKey: "",
       questionFromArray: [{ label: "Others", value: "1" }, { label: "Chegg", value: "2" }, { label: "Bartleby ", value: "3" }],
+      HavingAnswerArray: [{ label: "Yes", value: "1" }, { label: "No", value: "2" }],
       mode: "",
       selectedQuestionId: "",
     };
@@ -48,7 +49,7 @@ export default class SearchQuestion extends Component {
     this.state.fields = fields;
 
     if (!isTouched && (name == "searchQuestionKey" || name == "searchQuestion" ||
-      name == "searchAnswer" || name == "searchQuestionName" || name == "searchQuestionFrom")) {
+      name == "searchAnswer" || name == "searchQuestionName" || name == "searchQuestionFrom" || name == "searchHavingAnswer")) {
       this.loadSearchResults();
     }
   }
@@ -69,12 +70,19 @@ export default class SearchQuestion extends Component {
       searchQuestionFrom = this.state.searchQuestionFrom.value;
     }
 
+    var searchHavingAnswer = "";
+    if (this.validate(this.state.searchHavingAnswer)) {
+      searchHavingAnswer = this.state.searchHavingAnswer.value;
+    }
+
+
     return {
       "key": this.state.searchQuestionKey,
       "question": this.state.searchQuestion,
       "answer": this.state.searchAnswer,
       "name": this.state.searchQuestionName,
-      "questionFrom": searchQuestionFrom
+      "questionFrom": searchQuestionFrom,
+      "havingAnswer": searchHavingAnswer
     }
   }
 
@@ -109,13 +117,13 @@ export default class SearchQuestion extends Component {
   }
   toggleDetails = (question) => {
 
-
-    this.loadQuestionDetails(question);
-    if (!this.validate(question.imageDetails)) {
-      this.loadImageDetails(question);
-    }
     question.showDetails = !question.showDetails;
-
+    if (question.showDetails) {
+      this.loadQuestionDetails(question);
+      if (!this.validate(question.imageDetails)) {
+        this.loadImageDetails(question);
+      }
+    }
     this.forceUpdate();
   }
 
@@ -141,13 +149,13 @@ export default class SearchQuestion extends Component {
       <React.Fragment>
         {this.state.questionList.map((question, i) => (
           <div key={question.id} className={question.showDetails ? "activeQuestion" : ""} style={{
-            backgroundColor: "white", marginTop: "15px",
-            padding: "15px", fontSize: "17px", boxShadow: "3px 3px 5px 0px rgb(0 0 0 / 5%)",
+            backgroundColor: "white", marginTop: "10px",
+            padding: "10px", fontSize: "17px", boxShadow: "3px 3px 5px 0px rgb(0 0 0 / 5%)",
           }}>
             <div className="mx-0" onClick={() => this.toggleDetails(question)} style={{ cursor: "pointer" }}>
               Name  :  <b>{question.name}  </b>   , Keys  : <b style={{ color: "yellowgreen" }}> {question.key}</b>
 
-              <i className="fa fa-edit" style={{ float: "right", color: "orange", marginTop: "5px", fontSize: "23px" }} onClick={() => this.goTo("EDIT", question)}></i>
+              <i className="fa fa-edit" style={{ float: "right", color: "orange", marginTop: "0px", fontSize: "23px" }} onClick={() => this.goTo("EDIT", question)}></i>
             </div>
 
             {question.showDetails ? <div style={{ backgroundColor: "#f8f8f8", padding: 15 }}>
@@ -201,16 +209,36 @@ export default class SearchQuestion extends Component {
         </Switch>
       );
     }
+    if (this.state.mode === "CREATE") {
+      return (
+        <Switch>
+          <Redirect to="/Questions/create" push />
+        </Switch>
+      );
+    }
 
     return (
       <div className="custom-container">
         <div className="form-Brick">
-          <div className="form-Brick-Head">
-            <span>Search Details</span>
+
+          <div className="form-Brick-Head" style={{ marginBottom: "10px" }}>
+
+            <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create New Question" isButtonGroup={true} onClick={() => this.setState({ mode: "CREATE" })} /></span>
+
+            <span>Search For Question </span>
+
           </div>
+
           <div className="form-Brick-body">
             <Row className="mx-0">
 
+
+              <FieldItem
+                {...FormElements.searchQuestionName}
+                value={this.state.searchQuestionName}
+                onChange={this.handleChange.bind(this, FormElements.searchQuestionName.name)}
+                width="md"
+              />
 
               <FieldItem
                 {...FormElements.searchQuestionKey}
@@ -234,18 +262,19 @@ export default class SearchQuestion extends Component {
               />
 
               <FieldItem
-                {...FormElements.searchQuestionName}
-                value={this.state.searchQuestionName}
-                onChange={this.handleChange.bind(this, FormElements.searchQuestionName.name)}
-                width="md"
-              />
-
-              <FieldItem
                 {...FormElements.searchQuestionFrom}
                 value={this.state.searchQuestionFrom}
                 onChange={this.handleChange.bind(this, FormElements.searchQuestionFrom.name)}
                 width="md"
                 values={this.state.questionFromArray}
+              />
+
+              <FieldItem
+                {...FormElements.searchHavingAnswer}
+                value={this.state.searchHavingAnswer}
+                onChange={this.handleChange.bind(this, FormElements.searchHavingAnswer.name)}
+                width="md"
+                values={this.state.HavingAnswerArray}
               />
 
             </Row>

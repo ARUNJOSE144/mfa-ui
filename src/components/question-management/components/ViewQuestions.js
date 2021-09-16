@@ -76,7 +76,7 @@ export default class View extends Component {
 
 
   openEditMode = (row) => {
-    this.setState({ modal: 3, roleId: row.roleId });
+    this.setState({ modal: 3, id: row.id });
   }
 
   openViewMode = (row) => {
@@ -90,7 +90,7 @@ export default class View extends Component {
         <div className="row">
           <div className='col-md-8 datatabletoolsButtons' >
             <h5 style={{ fontWeight: 700, fontSize: 14, marginTop: 10 }}>All Questions |  {this.state.dataTotalSize}</h5>
-            {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.create) ? <CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create" isButtonGroup={true} onClick={() => this.setState({ modal: 2 })} /> : null}
+            {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.create) ? <CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create New Question" isButtonGroup={true} onClick={() => this.setState({ modal: 2 })} /> : null}
             {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.create) ? <CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Search Question" isButtonGroup={true} onClick={() => this.setState({ modal: 4 })} /> : null}
 
           </div>
@@ -117,6 +117,11 @@ export default class View extends Component {
     }
 
     this.props.ajaxUtil.sendRequest("/question/v1/search", request, function (resp, hasError) {
+
+      for (var i = 0; i < resp.list.length; i++) {
+        resp.list[i].havingAnswer == "1" ? resp.list[i].havingAnswer = "Yes" : resp.list[i].havingAnswer = "No";
+      }
+
       self.setState({ dataTotalSize: resp.dataTotalSize, data: resp.list })
     }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
   }
@@ -129,7 +134,7 @@ export default class View extends Component {
       'isOpen': true,
       'onConfirmCallBack': this.onConfirmCallBack.bind(this, callback),
       'title': "Confirm Delete",
-      'content': "Do you want to delete the Role?",
+      'content': "Do you want to delete the Question?",
       'CancelBtnLabel': "Cancel",
       'confirmBtnLabel': "Delete"
     });
@@ -264,7 +269,7 @@ export default class View extends Component {
     }
 
     if (this.state.modal === 3) {
-      const editUrl = `/Questions/edit/${this.state.roleId}`;
+      const editUrl = `/Questions/edit/${this.state.id}`;
       return (
         <Switch>
           <Redirect to={editUrl} />
@@ -287,13 +292,16 @@ export default class View extends Component {
           <TableHeaderColumn isKey dataField="id" className="dth" columnClassName="dtd" width={0} hidden={true}>ID</TableHeaderColumn>
           <TableHeaderColumn dataField="name" className="dth" columnClassName="dtd" width={130} dataSort>Question Name</TableHeaderColumn>
           <TableHeaderColumn dataField="key" className="dth" columnClassName="dtd" width={130} >Key</TableHeaderColumn>
+          <TableHeaderColumn dataField="havingAnswer" className="dth" columnClassName="dtd" width={130} >Answered</TableHeaderColumn>
+
+
           {/* <TableHeaderColumn dataField="question" className="dth" columnClassName="dtd" width={130}>Question</TableHeaderColumn> */}
           {/* <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.openViewMode(row))}>View</TableHeaderColumn> */}
-          {/* {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.edit) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn> : null} */}
+          {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.edit) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn> : null}
           {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.delete) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn> : null}
         </BootstrapTable >
 
-       ]
+        ]
       </div>
     );
   }

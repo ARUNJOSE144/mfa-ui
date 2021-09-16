@@ -39,7 +39,7 @@ export const ROLES = {
         placeholder: "answer  ",
         label: "answer  ",
         width: "md",
-        ismandatory: true,
+        ismandatory: false,
         type: FIELD_TYPES.TEXT_AREA
     },
     "questionFrom": {
@@ -96,7 +96,18 @@ export const ROLES = {
         ismandatory: true,
         "type": FIELD_TYPES.DROP_DOWN,
         "placeholder": "Select",
+    },
+    "searchHavingAnswer": {
+        name: "searchHavingAnswer",
+        placeholder: "Having Answer",
+        label: "Having Answer",
+        width: "md",
+        ismandatory: true,
+        "type": FIELD_TYPES.DROP_DOWN,
+        "placeholder": "Select",
     }
+
+
 
     , "showQuestion": {
         name: "showQuestion",
