@@ -301,7 +301,7 @@ export default class View extends Component {
           {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.delete) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn> : null}
         </BootstrapTable >
 
-        ]
+        
       </div>
     );
   }
