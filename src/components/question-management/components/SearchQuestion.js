@@ -4,10 +4,16 @@ import { Row } from 'reactstrap';
 import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE, COLOR } from '../../generic/buttons/elements/ButtonTypes';
 import { CustomButton } from '../../generic/buttons/elements/CustomButton';
 import FieldItem from '../../generic/fields/elements/fieldItem/FieldItem';
+import { validate } from '../../generic/fields/elements/fieldItem/utils';
 import { validateForm } from '../../generic/fields/elements/formValidator/FormValidator';
 import { ROLES as FormElements } from './util/FormElements';
 export const { BASE_URL } = window;
 
+
+const infoCss = {
+  fontWeight: 900,
+  color: "orange"
+}
 
 export default class SearchQuestion extends Component {
   constructor(props) {
@@ -23,9 +29,12 @@ export default class SearchQuestion extends Component {
       HavingAnswerArray: [{ label: "Yes", value: "1" }, { label: "No", value: "2" }],
       mode: "",
       selectedQuestionId: "",
+      searchToken: 0,
+      subjects: [],
     };
 
     this.props.setHeader("Search Question");
+    this.getSubjects();
   }
 
 
@@ -47,10 +56,22 @@ export default class SearchQuestion extends Component {
     }
     this.state[name] = value;
     this.state.fields = fields;
-
+    this.forceUpdate();
     if (!isTouched && (name == "searchQuestionKey" || name == "searchQuestion" ||
-      name == "searchAnswer" || name == "searchQuestionName" || name == "searchQuestionFrom" || name == "searchHavingAnswer")) {
-      this.loadSearchResults();
+      name == "searchAnswer" || name == "searchQuestionName" || name == "searchQuestionFrom" ||
+      name == "searchHavingAnswer" || name == "searchSubject")) {
+
+      var self = this;
+      this.state.searchToken = this.state.searchToken + 1;
+      var currentPrevToken = this.state.searchToken;
+      setTimeout(function () {
+        if (self.state.searchToken === currentPrevToken) {
+          self.state.searchToken = 0;
+          self.loadSearchResults();
+        }
+      }, 500);
+
+
     }
   }
 
@@ -75,6 +96,10 @@ export default class SearchQuestion extends Component {
       searchHavingAnswer = this.state.searchHavingAnswer.value;
     }
 
+    var searchSubject = ""
+    if (this.validate(this.state.searchSubject)) {
+      searchSubject = this.state.searchSubject.value;
+    }
 
     return {
       "key": this.state.searchQuestionKey,
@@ -82,7 +107,8 @@ export default class SearchQuestion extends Component {
       "answer": this.state.searchAnswer,
       "name": this.state.searchQuestionName,
       "questionFrom": searchQuestionFrom,
-      "havingAnswer": searchHavingAnswer
+      "havingAnswer": searchHavingAnswer,
+      "subjectId": searchSubject
     }
   }
 
@@ -112,6 +138,9 @@ export default class SearchQuestion extends Component {
     this.props.ajaxUtil.sendRequest("/question/v1/view", { id: question.id }, (response, hasError) => {
       question.question = response.data.question;
       question.answer = response.data.answer;
+      question.subjectId = response.data.subjectId;
+      question.questionFrom = response.data.questionFrom;
+
       this.forceUpdate();
     }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
   }
@@ -129,7 +158,13 @@ export default class SearchQuestion extends Component {
 
 
 
-
+  getObjFromArray = (data, key, value) => {
+    for (var i = 0; i < data.length; i++) {
+      if (data[i][key] == value) {
+        return JSON.parse(JSON.stringify(data[i]));
+      }
+    }
+  }
 
   renderImages = (question) => {
     return (
@@ -160,7 +195,13 @@ export default class SearchQuestion extends Component {
 
             {question.showDetails ? <div style={{ backgroundColor: "#f8f8f8", padding: 15 }}>
 
-              <div style={{ padding: "15px" }}>Id  :  {question.id}</div>
+              <div style={{ padding: "15px" }}>Id  :  <span style={infoCss}>{question.id}</span>
+                ||  Subject :   <span style={infoCss}>{validate(this.getObjFromArray(this.state.subjects, "value", question.subjectId)) ?
+                  this.getObjFromArray(this.state.subjects, "value", question.subjectId).label : "Not Mentioned"}</span>
+                || Question From :   <span style={infoCss}>{validate(this.getObjFromArray(this.state.questionFromArray, "value", question.questionFrom)) ?
+                  this.getObjFromArray(this.state.questionFromArray, "value", question.questionFrom).label : "Not Mentioned"}</span>
+
+              </div>
 
               <div style={{ padding: "15px" }}>Name  :  {question.name}</div>
 
@@ -188,11 +229,36 @@ export default class SearchQuestion extends Component {
   }
 
 
+  getSubjects = () => {
+    this.props.ajaxUtil.sendRequest("/question/v1/getSubjectCategories", "", (response, hasError) => {
+      if (!hasError)
+        for (var i = 0; i < response.list.length; i++) {
+          response.list[i].value = response.list[i].id;
+          response.list[i].label = response.list[i].name;
+        }
+      this.setState({ subjects: response.list })
+    }, this.props.loadingFunction, { method: "GET", isAutoApiMsg: true });
+  }
+
+
 
   goTo = (mode, question) => {
     this.state.mode = mode;
     this.state.selectedQuestionId = question.id;
     this.forceUpdate();
+  }
+
+  resetFrom = () => {
+    this.state.searchQuestionKey = ""
+    this.state.searchQuestion = ""
+    this.state.searchAnswer = ""
+    this.state.searchQuestionName = ""
+    this.state.searchQuestionFrom = null;
+    this.state.searchHavingAnswer = null;
+    this.state.searchSubject = null;
+    this.state.questionList = [];
+    this.forceUpdate();
+
   }
 
   render() {
@@ -224,6 +290,7 @@ export default class SearchQuestion extends Component {
           <div className="form-Brick-Head" style={{ marginBottom: "10px" }}>
 
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create New Question" isButtonGroup={true} onClick={() => this.setState({ mode: "CREATE" })} /></span>
+            <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Reset" isButtonGroup={true} onClick={() => this.resetFrom()} /></span>
 
             <span>Search For Question </span>
 
@@ -259,6 +326,14 @@ export default class SearchQuestion extends Component {
                 value={this.state.searchAnswer}
                 onChange={this.handleChange.bind(this, FormElements.searchAnswer.name)}
                 width="md"
+              />
+
+              <FieldItem
+                {...FormElements.searchSubject}
+                value={this.state.searchSubject}
+                onChange={this.handleChange.bind(this, FormElements.searchSubject.name)}
+                width="md"
+                values={this.state.subjects}
               />
 
               <FieldItem

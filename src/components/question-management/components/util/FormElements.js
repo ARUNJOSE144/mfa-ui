@@ -51,6 +51,16 @@ export const ROLES = {
         "type": FIELD_TYPES.DROP_DOWN,
         "placeholder": "Select",
     }
+    ,
+    "subject": {
+        name: "subject",
+        placeholder: "Subject",
+        label: "Subject",
+        width: "md",
+        ismandatory: false,
+        "type": FIELD_TYPES.DROP_DOWN,
+        "placeholder": "Select",
+    }
 
 
 
@@ -63,7 +73,7 @@ export const ROLES = {
         label: "Question Keys  Contains",
         width: "md",
         ismandatory: true,
-        type: FIELD_TYPES.TEXT_AREA
+        type: FIELD_TYPES.TEXT
     },
     "searchQuestion": {
         name: "searchQuestion",
@@ -71,7 +81,7 @@ export const ROLES = {
         label: "Question   Contains",
         width: "md",
         ismandatory: true,
-        type: FIELD_TYPES.TEXT_AREA
+        type: FIELD_TYPES.TEXT
     },
     "searchAnswer": {
         name: "searchAnswer",
@@ -79,15 +89,28 @@ export const ROLES = {
         label: "Answer   Contains",
         width: "md",
         ismandatory: true,
-        type: FIELD_TYPES.TEXT_AREA
+        type: FIELD_TYPES.TEXT
     },
+    "searchSubject": {
+        name: "searchSubject",
+        placeholder: "Search Subject",
+        label: "Search Subject",
+        width: "md",
+        ismandatory: true,
+        type: FIELD_TYPES.DROP_DOWN
+    },
+
+
+    
+
+
     "searchQuestionName": {
         name: "searchQuestionName",
         placeholder: "Question Name   Contains",
         label: "Question Name  Contains",
         width: "md",
         ismandatory: true,
-        type: FIELD_TYPES.TEXT_AREA
+        type: FIELD_TYPES.TEXT
     }, "searchQuestionFrom": {
         name: "searchQuestionFrom",
         placeholder: "Search Question From",

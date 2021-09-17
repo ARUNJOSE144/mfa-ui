@@ -4,6 +4,7 @@ import { Row } from 'reactstrap';
 import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE, COLOR } from '../../generic/buttons/elements/ButtonTypes';
 import { CustomButton } from '../../generic/buttons/elements/CustomButton';
 import FieldItem from '../../generic/fields/elements/fieldItem/FieldItem';
+import { validate } from '../../generic/fields/elements/fieldItem/utils';
 import { validateForm } from '../../generic/fields/elements/formValidator/FormValidator';
 import { ROLES as FormElements } from './util/FormElements';
 export const { BASE_URL } = window;
@@ -20,14 +21,15 @@ export default class EditQuestion extends Component {
       files: [],
       questionFromArray: [{ label: "Others ", value: "1" }, { label: "Chegg", value: "2" }, { label: "Bartleby ", value: "3" }],
       questionFrom: { label: "Others ", value: "1" },
-      existingImageDetails: []
+      existingImageDetails: [],
+      subjects: [],
     };
     this.props.setHeader("Edit Question");
+    this.getSubjects();
   }
 
 
   componentDidMount() {
-    this.loadQuestionDetails()
     this.loadImageDetails()
   }
 
@@ -49,6 +51,10 @@ export default class EditQuestion extends Component {
       this.state.answer = response.data.answer;
       this.state.questionName = response.data.name;
       this.state.questionFrom = this.getObjFromArray(this.state.questionFromArray, "value", response.data.questionFrom);
+
+      if (validate(response.data.subjectId) && response.data.subjectId != 0) {
+        this.state.subject = this.getObjFromArray(this.state.subjects, "value", response.data.subjectId);
+      }
 
       this.forceUpdate();
     }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
@@ -138,6 +144,7 @@ export default class EditQuestion extends Component {
     formData.append('question', this.state.question);
     formData.append('answer', this.state.answer);
     formData.append('questionFrom', this.state.questionFrom.value);
+    formData.append('subjectId', validate(this.state.subject) ? this.state.subject.value : 0);
 
 
     //formData.append('files', files)
@@ -167,6 +174,22 @@ export default class EditQuestion extends Component {
     this.state.files.push(newImg);
     this.forceUpdate();
   }
+
+
+  getSubjects = () => {
+    this.props.ajaxUtil.sendRequest("/question/v1/getSubjectCategories", "", (response, hasError) => {
+      if (!hasError)
+        for (var i = 0; i < response.list.length; i++) {
+          response.list[i].value = response.list[i].id;
+          response.list[i].label = response.list[i].name;
+        }
+      this.state.subjects = response.list;
+      this.loadQuestionDetails()
+      this.forceUpdate()
+    }, this.props.loadingFunction, { method: "GET", isAutoApiMsg: true });
+  }
+
+
 
 
   deleteImage = (files, i) => {
@@ -255,6 +278,14 @@ export default class EditQuestion extends Component {
                 onChange={this.handleChange.bind(this, FormElements.answer.name)}
                 touched={this.state.fields.answer && this.state.fields.answer.hasError}
                 error={this.state.fields.answer && this.state.fields.answer.errorMsg}
+                width="md"
+              />
+
+              <FieldItem
+                {...FormElements.subject}
+                value={this.state.subject}
+                onChange={this.handleChange.bind(this, FormElements.subject.name)}
+                values={this.state.subjects}
                 width="md"
               />
 

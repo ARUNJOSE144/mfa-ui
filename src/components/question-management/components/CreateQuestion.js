@@ -19,8 +19,10 @@ export default class CreateRole extends Component {
       files: [],
       questionFromArray: [{ label: "Others ", value: "1" }, { label: "Chegg", value: "2" }, { label: "Bartleby ", value: "3" }],
       questionFrom: { label: "Others ", value: "1" },
+      subjects: [],
     };
     this.props.setHeader("Create Question");
+    this.getSubjects();
   }
 
 
@@ -82,16 +84,30 @@ export default class CreateRole extends Component {
   }
 
 
+
+  getSubjects = () => {
+    this.props.ajaxUtil.sendRequest("/question/v1/getSubjectCategories", "", (response, hasError) => {
+      if (!hasError)
+        for (var i = 0; i < response.list.length; i++) {
+          response.list[i].value = response.list[i].id;
+          response.list[i].label = response.list[i].name;
+        }
+      this.setState({ subjects: response.list })
+    }, this.props.loadingFunction, { method: "GET", isAutoApiMsg: true });
+  }
+
+
+
+
+
   getRequest() {
-
-
-
     var formData = new FormData();
     formData.append('name', this.state.questionName);
     formData.append('key', this.state.questionKey);
     formData.append('question', this.state.question);
     formData.append('answer', this.validate(this.state.answer) ? this.state.answer : "");
     formData.append('questionFrom', this.state.questionFrom.value);
+    formData.append('subjectId', this.validate(this.state.subject) ? this.state.subject.value : 0);
 
 
     //formData.append('files', files)
@@ -205,6 +221,14 @@ export default class CreateRole extends Component {
                 onChange={this.handleChange.bind(this, FormElements.answer.name)}
                 touched={this.state.fields.answer && this.state.fields.answer.hasError}
                 error={this.state.fields.answer && this.state.fields.answer.errorMsg}
+                width="md"
+              />
+
+              <FieldItem
+                {...FormElements.subject}
+                value={this.state.subject}
+                onChange={this.handleChange.bind(this, FormElements.subject.name)}
+                values={this.state.subjects}
                 width="md"
               />
 
