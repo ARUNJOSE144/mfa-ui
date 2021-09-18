@@ -25,7 +25,7 @@ export default class SearchQuestion extends Component {
       fields: {},
       questionList: [],
       prevKey: "",
-      questionFromArray: [{ label: "Others", value: "1" }, { label: "Chegg", value: "2" }, { label: "Bartleby ", value: "3" }],
+      questionFromArray: [{ label: "Others", value: "1" }, { label: "Chegg", value: "2" }, { label: "Bartleby ", value: "3" }, { label: "File Load ", value: "4" }],
       HavingAnswerArray: [{ label: "Yes", value: "1" }, { label: "No", value: "2" }],
       mode: "",
       selectedQuestionId: "",

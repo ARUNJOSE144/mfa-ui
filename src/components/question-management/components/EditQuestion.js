@@ -19,7 +19,7 @@ export default class EditQuestion extends Component {
       isSuccess: false,
       fields: {},
       files: [],
-      questionFromArray: [{ label: "Others ", value: "1" }, { label: "Chegg", value: "2" }, { label: "Bartleby ", value: "3" }],
+      questionFromArray: [{ label: "Others ", value: "1" }, { label: "Chegg", value: "2" }, { label: "Bartleby ", value: "3" }, { label: "File Load ", value: "4" }],
       questionFrom: { label: "Others ", value: "1" },
       existingImageDetails: [],
       subjects: [],
