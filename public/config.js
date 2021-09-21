@@ -1,4 +1,6 @@
 var BASE_URL = "http://localhost:8080/mfaservices";
+//var BASE_URL = "http://localhost:8081/MfaServices";
+
 //var BASE_URL = "http://10.0.0.95:9095/CoMSTesting";
 //var BASE_URL = "http://10.0.0.95:9094/CoMS";
 var AD_URL = "http://localhost:8080/CoMS-1.12.1.0/AD/login";

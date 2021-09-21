@@ -69,65 +69,51 @@ export const ROLES = {
     ,
     "searchQuestionKey": {
         name: "searchQuestionKey",
-        placeholder: "Question Keys Contains",
         label: "Question Keys  Contains",
         width: "md",
-        ismandatory: true,
+        ismandatory: false,
         type: FIELD_TYPES.TEXT
     },
     "searchQuestion": {
         name: "searchQuestion",
-        placeholder: "Question   Contains",
         label: "Question   Contains",
         width: "md",
-        ismandatory: true,
+        ismandatory: false,
         type: FIELD_TYPES.TEXT
     },
     "searchAnswer": {
         name: "searchAnswer",
-        placeholder: "Answer   Contains",
         label: "Answer   Contains",
         width: "md",
-        ismandatory: true,
+        ismandatory: false,
         type: FIELD_TYPES.TEXT
     },
     "searchSubject": {
         name: "searchSubject",
-        placeholder: "Search Subject",
-        label: "Search Subject",
+        label: "Subject",
         width: "md",
-        ismandatory: true,
+        ismandatory: false,
         type: FIELD_TYPES.DROP_DOWN
     },
-
-
-    
-
-
     "searchQuestionName": {
         name: "searchQuestionName",
-        placeholder: "Question Name   Contains",
         label: "Question Name  Contains",
         width: "md",
-        ismandatory: true,
+        ismandatory: false,
         type: FIELD_TYPES.TEXT
     }, "searchQuestionFrom": {
         name: "searchQuestionFrom",
-        placeholder: "Search Question From",
-        label: "Search Question From",
+        label: "Question From",
         width: "md",
-        ismandatory: true,
+        ismandatory: false,
         "type": FIELD_TYPES.DROP_DOWN,
-        "placeholder": "Select",
     },
     "searchHavingAnswer": {
         name: "searchHavingAnswer",
-        placeholder: "Having Answer",
         label: "Having Answer",
         width: "md",
-        ismandatory: true,
+        ismandatory: false,
         "type": FIELD_TYPES.DROP_DOWN,
-        "placeholder": "Select",
     }
 
 

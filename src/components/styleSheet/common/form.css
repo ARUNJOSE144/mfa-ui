@@ -391,3 +391,15 @@ ul.userNode li.entityNode:last-child:after {
 .activeQuestion{
     background-color: yellow !important;
 }
+
+
+.activeSearch input:focus{
+    background-color: #d3f6d4;
+}
+.activeSearch input{
+    background-color: #d3f6d4;
+}
+
+.activeSearch .Select__control{
+    background-color: #d3f6d4;
+}

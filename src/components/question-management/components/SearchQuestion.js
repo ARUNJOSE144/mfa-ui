@@ -212,8 +212,8 @@ export default class SearchQuestion extends Component {
             <div className="mx-0" onClick={() => this.toggleDetails(question)} style={{ cursor: "pointer" }}>
               Name  :  <b>{question.name}  </b>   , Keys  : <b style={{ color: "yellowgreen" }}> {question.key}</b>
 
-              <i className="fa fa-trash" style={{ float: "right", color: "red", marginTop: "0px", fontSize: "23px" }}  onClick={() => this.deleteRow(question)}></i>
-              <i className="fa fa-edit" style={{ marginRight: 15, float: "right", color: "green", marginTop: "3px", fontSize: "23px" }}  onClick={() => this.goTo("EDIT", question)} ></i>
+              <i className="fa fa-trash" style={{ float: "right", color: "red", marginTop: "0px", fontSize: "23px" }} onClick={() => this.deleteRow(question)}></i>
+              <i className="fa fa-edit" style={{ marginRight: 15, float: "right", color: "green", marginTop: "3px", fontSize: "23px" }} onClick={() => this.goTo("EDIT", question)} ></i>
             </div>
 
             {question.showDetails ? <div style={{ backgroundColor: "#f8f8f8", padding: 15 }}>
@@ -328,6 +328,7 @@ export default class SearchQuestion extends Component {
                 value={this.state.searchQuestionName}
                 onChange={this.handleChange.bind(this, FormElements.searchQuestionName.name)}
                 width="md"
+                className={validate(this.state.searchQuestionName) ? "activeSearch" : ""}
               />
 
               <FieldItem
@@ -335,6 +336,7 @@ export default class SearchQuestion extends Component {
                 value={this.state.searchQuestionKey}
                 onChange={this.handleChange.bind(this, FormElements.searchQuestionKey.name)}
                 width="md"
+                className={validate(this.state.searchQuestionKey) ? "activeSearch" : ""}
               />
 
               <FieldItem
@@ -342,6 +344,7 @@ export default class SearchQuestion extends Component {
                 value={this.state.searchQuestion}
                 onChange={this.handleChange.bind(this, FormElements.searchQuestion.name)}
                 width="md"
+                className={validate(this.state.searchQuestion) ? "activeSearch" : ""}
               />
 
               <FieldItem
@@ -349,6 +352,7 @@ export default class SearchQuestion extends Component {
                 value={this.state.searchAnswer}
                 onChange={this.handleChange.bind(this, FormElements.searchAnswer.name)}
                 width="md"
+                className={validate(this.state.searchAnswer) ? "activeSearch" : ""}
               />
 
               <FieldItem
@@ -357,6 +361,7 @@ export default class SearchQuestion extends Component {
                 onChange={this.handleChange.bind(this, FormElements.searchSubject.name)}
                 width="md"
                 values={this.state.subjects}
+                className={validate(this.state.searchSubject) ? "activeSearch" : ""}
               />
 
               <FieldItem
@@ -365,6 +370,7 @@ export default class SearchQuestion extends Component {
                 onChange={this.handleChange.bind(this, FormElements.searchQuestionFrom.name)}
                 width="md"
                 values={this.state.questionFromArray}
+                className={validate(this.state.searchQuestionFrom) ? "activeSearch" : ""}
               />
 
               <FieldItem
@@ -373,6 +379,7 @@ export default class SearchQuestion extends Component {
                 onChange={this.handleChange.bind(this, FormElements.searchHavingAnswer.name)}
                 width="md"
                 values={this.state.HavingAnswerArray}
+                className={validate(this.state.searchHavingAnswer) ? "activeSearch" : ""}
               />
 
             </Row>
