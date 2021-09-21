@@ -179,6 +179,28 @@ export default class SearchQuestion extends Component {
   }
 
 
+  deleteRow(obj, message, callback) {
+
+    this.props.setModalPopup({
+      'rowId': obj.id,
+      'isOpen': true,
+      'onConfirmCallBack': this.onConfirmCallBack.bind(this, callback),
+      'title': "Confirm Delete",
+      'content': "Do you want to delete the Question?",
+      'CancelBtnLabel': "Cancel",
+      'confirmBtnLabel': "Delete"
+    });
+  }
+
+  onConfirmCallBack(callback, rowId) {
+    var self = this;
+    this.props.ajaxUtil.sendRequest("/question/v1/delete", { id: rowId }, function (resp, hasError) {
+      self.loadSearchResults();
+    }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
+  }
+
+
+
   renderQuestion = () => {
     return (
       <React.Fragment>
@@ -190,7 +212,8 @@ export default class SearchQuestion extends Component {
             <div className="mx-0" onClick={() => this.toggleDetails(question)} style={{ cursor: "pointer" }}>
               Name  :  <b>{question.name}  </b>   , Keys  : <b style={{ color: "yellowgreen" }}> {question.key}</b>
 
-              <i className="fa fa-edit" style={{ float: "right", color: "orange", marginTop: "0px", fontSize: "23px" }} onClick={() => this.goTo("EDIT", question)}></i>
+              <i className="fa fa-trash" style={{ float: "right", color: "red", marginTop: "0px", fontSize: "23px" }}  onClick={() => this.deleteRow(question)}></i>
+              <i className="fa fa-edit" style={{ marginRight: 15, float: "right", color: "green", marginTop: "3px", fontSize: "23px" }}  onClick={() => this.goTo("EDIT", question)} ></i>
             </div>
 
             {question.showDetails ? <div style={{ backgroundColor: "#f8f8f8", padding: 15 }}>
