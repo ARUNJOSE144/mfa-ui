@@ -31,6 +31,8 @@ export default class SearchQuestion extends Component {
       selectedQuestionId: "",
       searchToken: 0,
       subjects: [],
+      /* rowCounts: [{ label: "10", value: "10" }, { label: "50", value: "50" }, { label: "100", value: "100" }, { label: "All", value: "-1" }], */
+      rowCount: 10
     };
 
     this.props.setHeader("Search Question");
@@ -59,7 +61,7 @@ export default class SearchQuestion extends Component {
     this.forceUpdate();
     if (!isTouched && (name == "searchQuestionKey" || name == "searchQuestion" ||
       name == "searchAnswer" || name == "searchQuestionName" || name == "searchQuestionFrom" ||
-      name == "searchHavingAnswer" || name == "searchSubject")) {
+      name == "searchHavingAnswer" || name == "searchSubject" || name == "rowCount")) {
 
       var self = this;
       this.state.searchToken = this.state.searchToken + 1;
@@ -80,7 +82,7 @@ export default class SearchQuestion extends Component {
     const request = this.getRequest();
     this.props.ajaxUtil.sendRequest("/question/v1/searchQuestion", request, (response, hasError) => {
       console.log("response : ", response)
-      this.setState({ questionList: response })
+      this.setState({ questionList: response.data, dataTotalSize: response.dataTotalSize })
     }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
   }
 
@@ -108,12 +110,13 @@ export default class SearchQuestion extends Component {
       "name": this.state.searchQuestionName,
       "questionFrom": searchQuestionFrom,
       "havingAnswer": searchHavingAnswer,
-      "subjectId": searchSubject
+      "subjectId": searchSubject,
+      "rowCount": this.state.rowCount
     }
   }
 
 
-  onCancel() {
+  onCancel=()=> {
     this.setState({ isSuccess: true });
   }
 
@@ -280,6 +283,7 @@ export default class SearchQuestion extends Component {
     this.state.searchHavingAnswer = null;
     this.state.searchSubject = null;
     this.state.questionList = [];
+    this.state.rowCount = 10;
     this.forceUpdate();
 
   }
@@ -314,6 +318,7 @@ export default class SearchQuestion extends Component {
 
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create New Question" isButtonGroup={true} onClick={() => this.setState({ mode: "CREATE" })} /></span>
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Reset" isButtonGroup={true} onClick={() => this.resetFrom()} /></span>
+            <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Cancel" isButtonGroup={true} onClick={() => this.onCancel()} /></span>
 
             <span>Search For Question </span>
 
@@ -386,7 +391,7 @@ export default class SearchQuestion extends Component {
           </div>
 
 
-          <span> <b style={{ color: 'green' }}>{this.state.questionList.length}</b> Questions Found </span>
+          <span> <b style={{ color: 'green' }}>{this.state.questionList.length}</b> Questions  {this.state.questionList.length != 0 ? "Out of " + this.state.dataTotalSize : ""}</span>
           {this.renderQuestion()}
 
 
@@ -395,16 +400,18 @@ export default class SearchQuestion extends Component {
 
         <div className="container-fluid">
 
-          <CustomButton
-            style={BUTTON_STYLE.BRICK}
-            type={BUTTON_TYPE.SECONDARY}
-            size={BUTTON_SIZE.LARGE}
-            color={COLOR.PRIMARY}
-            align="right"
-            label="Cancel"
-            isButtonGroup={true}
-            onClick={this.onCancel.bind(this)}
-          />
+          {this.state.questionList.length != 0 ?
+            <FieldItem
+              {...FormElements.rowCount}
+              value={this.state.rowCount}
+              onChange={this.handleChange.bind(this, FormElements.rowCount.name)}
+              width="md"
+              className="rowcountForQuestionSearch"
+
+            /> : null}
+
+
+         
         </div>
         <div style={{ height: "100px" }}></div>
       </div>

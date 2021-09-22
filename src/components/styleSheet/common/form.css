@@ -403,3 +403,7 @@ ul.userNode li.entityNode:last-child:after {
 .activeSearch .Select__control{
     background-color: #d3f6d4;
 }
+
+.rowcountForQuestionSearch input{
+    width: 100px;
+}

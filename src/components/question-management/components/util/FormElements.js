@@ -133,6 +133,13 @@ export const ROLES = {
         width: "md",
         ismandatory: true,
         type: FIELD_TYPES.TEXT_AREA
+    }, "rowCount": {
+        name: "rowCount",
+        label: "Max No.Of Questions",
+        customWidth: true,
+        width: "xs:3",
+        ismandatory: false,
+        "type": FIELD_TYPES.TEXT
     }
 
 };
