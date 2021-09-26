@@ -25,14 +25,15 @@ export default class SearchQuestion extends Component {
       fields: {},
       questionList: [],
       prevKey: "",
-      questionFromArray: [{ label: "Others", value: "1" }, { label: "Chegg", value: "2" }, { label: "Bartleby ", value: "3" }, { label: "File Load ", value: "4" }],
+      questionFromArray: [{ label: "Others", value: 1 }, { label: "Chegg", value: 2 }, { label: "Bartleby ", value: 3 }, { label: "File Load ", value: 4 }],
       HavingAnswerArray: [{ label: "Yes", value: "1" }, { label: "No", value: "2" }],
       mode: "",
       selectedQuestionId: "",
       searchToken: 0,
       subjects: [],
       /* rowCounts: [{ label: "10", value: "10" }, { label: "50", value: "50" }, { label: "100", value: "100" }, { label: "All", value: "-1" }], */
-      rowCount: 10
+      rowCount: 10,
+      bookMarks: [{ label: "No", value: "0" }, { label: "Yes", value: "1" },],
     };
 
     this.props.setHeader("Search Question");
@@ -87,10 +88,37 @@ export default class SearchQuestion extends Component {
   }
 
 
+
+  setBookMark = (name, parent, value, obj) => {
+
+    const { isTouched } = obj || { isTouched: false };
+    if (isTouched) {
+      return;
+    }
+    console.log("Name : ", name);
+    console.log("value : ", value);
+    console.log("parent : ", parent);
+    console.log("obj : ", obj);
+
+
+    if (validate(value) /* && validate(value.value) */) {
+      parent.bookmark = value.value;
+      var self = this;
+      this.props.ajaxUtil.sendRequest("/bookMark?id=" + parent.id + "&value=" + value.value, "", (response, hasError) => {
+        console.log("response : ", response)
+        parent.bookmark = value.value;
+        self.forceUpdate();
+      }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true, method: 'GET' });
+    }
+    this.forceUpdate();
+  }
+
   getRequest() {
-    var searchQuestionFrom = "";
+    var searchQuestionFrom = [];
     if (this.validate(this.state.searchQuestionFrom)) {
-      searchQuestionFrom = this.state.searchQuestionFrom.value;
+      for (var i = 0; i < this.state.searchQuestionFrom.length; i++) {
+        searchQuestionFrom.push(this.state.searchQuestionFrom[i].value);
+      }
     }
 
     var searchHavingAnswer = "";
@@ -98,9 +126,12 @@ export default class SearchQuestion extends Component {
       searchHavingAnswer = this.state.searchHavingAnswer.value;
     }
 
-    var searchSubject = ""
+    var searchSubjects = [];
     if (this.validate(this.state.searchSubject)) {
-      searchSubject = this.state.searchSubject.value;
+      for (var i = 0; i < this.state.searchSubject.length; i++) {
+        searchSubjects.push(this.state.searchSubject[i].value)
+      }
+      // searchSubject = this.state.searchSubject.value;
     }
 
     return {
@@ -108,15 +139,15 @@ export default class SearchQuestion extends Component {
       "question": this.state.searchQuestion,
       "answer": this.state.searchAnswer,
       "name": this.state.searchQuestionName,
-      "questionFrom": searchQuestionFrom,
+      "questionsFromIds": searchQuestionFrom,
       "havingAnswer": searchHavingAnswer,
-      "subjectId": searchSubject,
+      "subjectIds": searchSubjects,
       "rowCount": this.state.rowCount
     }
   }
 
 
-  onCancel=()=> {
+  onCancel = () => {
     this.setState({ isSuccess: true });
   }
 
@@ -215,8 +246,9 @@ export default class SearchQuestion extends Component {
             <div className="mx-0" onClick={() => this.toggleDetails(question)} style={{ cursor: "pointer" }}>
               Name  :  <b>{question.name}  </b>   , Keys  : <b style={{ color: "yellowgreen" }}> {question.key}</b>
 
-              <i className="fa fa-trash" style={{ float: "right", color: "red", marginTop: "0px", fontSize: "23px" }} onClick={() => this.deleteRow(question)}></i>
-              <i className="fa fa-edit" style={{ marginRight: 15, float: "right", color: "green", marginTop: "3px", fontSize: "23px" }} onClick={() => this.goTo("EDIT", question)} ></i>
+              {question.bookmark != "1" ? <i className="fa fa-trash" style={{  marginLeft: 15, float: "right", color: "red", marginTop: "0px", fontSize: "23px" }} onClick={() => this.deleteRow(question)}></i> : null}
+              <i className="fa fa-edit" style={{ marginLeft: 15, float: "right", color: "green", marginTop: "3px", fontSize: "23px" }} onClick={() => this.goTo("EDIT", question)} ></i>
+              {question.bookmark == "1" ? <i className="fa fa-star" style={{ marginLeft: 15, float: "right", color: "blueviolet", marginTop: "3px", fontSize: "23px" }} /* onClick={() => this.goTo("EDIT", question)} */ ></i> : null}
             </div>
 
             {question.showDetails ? <div style={{ backgroundColor: "#f8f8f8", padding: 15 }}>
@@ -244,6 +276,13 @@ export default class SearchQuestion extends Component {
               {/*  <img src="E:/images/IMG_202109141252213180.png" style={{ width: 100 }}></img> */}
 
               {this.renderImages(question)}
+
+              <FieldItem
+                {...FormElements.bookmark}
+                value={this.getObjFromArray(this.state.bookMarks, "value", question.bookmark)}
+                onChange={this.setBookMark.bind(this, FormElements.bookmark.name, question)}
+                values={this.state.bookMarks}
+              />
 
             </div> : null}
 
@@ -318,7 +357,7 @@ export default class SearchQuestion extends Component {
 
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create New Question" isButtonGroup={true} onClick={() => this.setState({ mode: "CREATE" })} /></span>
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Reset" isButtonGroup={true} onClick={() => this.resetFrom()} /></span>
-            <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Cancel" isButtonGroup={true} onClick={() => this.onCancel()} /></span>
+            <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Go Back" isButtonGroup={true} onClick={() => this.onCancel()} /></span>
 
             <span>Search For Question </span>
 
@@ -366,7 +405,7 @@ export default class SearchQuestion extends Component {
                 onChange={this.handleChange.bind(this, FormElements.searchSubject.name)}
                 width="md"
                 values={this.state.subjects}
-                className={validate(this.state.searchSubject) ? "activeSearch" : ""}
+                className={validate(this.state.searchSubject) && this.state.searchSubject.length > 0 ? "activeSearch" : ""}
               />
 
               <FieldItem
@@ -375,7 +414,7 @@ export default class SearchQuestion extends Component {
                 onChange={this.handleChange.bind(this, FormElements.searchQuestionFrom.name)}
                 width="md"
                 values={this.state.questionFromArray}
-                className={validate(this.state.searchQuestionFrom) ? "activeSearch" : ""}
+                className={validate(this.state.searchQuestionFrom) && this.state.searchQuestionFrom.length > 0 ? "activeSearch" : ""}
               />
 
               <FieldItem
@@ -395,6 +434,8 @@ export default class SearchQuestion extends Component {
           {this.renderQuestion()}
 
 
+
+
         </div>
 
 
@@ -411,7 +452,7 @@ export default class SearchQuestion extends Component {
             /> : null}
 
 
-         
+
         </div>
         <div style={{ height: "100px" }}></div>
       </div>

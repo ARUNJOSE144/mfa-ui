@@ -398,12 +398,22 @@ ul.userNode li.entityNode:last-child:after {
 }
 .activeSearch input{
     background-color: #d3f6d4;
+    font-weight: 900;
+    color: #049716;
 }
 
-.activeSearch .Select__control{
+.activeSearch .Select__control,.activeSearch .Select__single-value {
     background-color: #d3f6d4;
+    font-weight: 900;
+    color: #049716 !important;
 }
 
 .rowcountForQuestionSearch input{
     width: 100px;
+}
+
+ .activeSearch .Select__multi-value__label{
+    color: white !important;
+    background: #049716;
+    font-weight: bold;
 }

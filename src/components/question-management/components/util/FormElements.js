@@ -93,7 +93,7 @@ export const ROLES = {
         label: "Subject",
         width: "md",
         ismandatory: false,
-        type: FIELD_TYPES.DROP_DOWN
+        type: FIELD_TYPES.MUTLI_SELECT
     },
     "searchQuestionName": {
         name: "searchQuestionName",
@@ -106,7 +106,7 @@ export const ROLES = {
         label: "Question From",
         width: "md",
         ismandatory: false,
-        "type": FIELD_TYPES.DROP_DOWN,
+        "type": FIELD_TYPES.MUTLI_SELECT,
     },
     "searchHavingAnswer": {
         name: "searchHavingAnswer",
@@ -140,6 +140,12 @@ export const ROLES = {
         width: "xs:3",
         ismandatory: false,
         "type": FIELD_TYPES.TEXT
+    }, "bookmark": {
+        name: "bookmark",
+        label: "Bookmarked",
+        width: "md",
+        ismandatory: false,
+        "type": FIELD_TYPES.DROP_DOWN,
     }
 
 };

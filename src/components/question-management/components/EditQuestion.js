@@ -50,6 +50,8 @@ export default class EditQuestion extends Component {
       this.state.question = response.data.question;
       this.state.answer = response.data.answer;
       this.state.questionName = response.data.name;
+      this.state.bookmark = response.data.bookmark;
+
       this.state.questionFrom = this.getObjFromArray(this.state.questionFromArray, "value", response.data.questionFrom);
 
       if (validate(response.data.subjectId) && response.data.subjectId != 0) {
@@ -145,6 +147,7 @@ export default class EditQuestion extends Component {
     formData.append('answer', this.state.answer);
     formData.append('questionFrom', this.state.questionFrom.value);
     formData.append('subjectId', validate(this.state.subject) ? this.state.subject.value : 0);
+    formData.append('bookmark', this.state.bookmark);
 
 
     //formData.append('files', files)
