@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+
+    <label style="font-weight:bold;font-size: larger;"> Auto Question checking for bartleby</label>
+    <textarea style="margin: 0px; width: 716px; height: 391px;">
+        var bTags = document.getElementsByTagName("button");
+        var searchText = "View Primary Question";
+        //In seconds
+        var pollInterval = 10
+    
+        setInterval(function () {
+            console.log("----Polling----")
+            for (var i = 0; i < bTags.length; i++) {
+                if (bTags[i].textContent == searchText) {
+                    console.log("----Button Present----")
+                    bTags[i].click()
+                    setTimeout(function () { playBeep(); }, 5000);
+                    break;
+                }
+            }
+        }, pollInterval * 1000);
+		
+		setInterval(function () {
+			var buttonTags = document.getElementsByClassName("ViewSubmitOrDeclineButton");
+			var searchButtonText = "Accept";
+            console.log("----Polling for Selected Question----")
+            for (var i = 0; i < buttonTags.length; i++) {
+                if (buttonTags[i].textContent == searchButtonText) {
+                    var audio = new Audio('https://www.soundjay.com/door/sounds/doorbell-2.mp3');
+					audio.play();
+                    break;
+                }
+            }
+        },60000);
+		
+		
+
+    
+        function playBeep() {
+            var url = window.location.href;
+             if (url.includes("/questions/") && url.includes("/review")) { 
+                console.log("-----Question Available----")
+                var audio = new Audio('https://www.soundjay.com/door/sounds/doorbell-2.mp3');
+                audio.play();
+             } 
+        }  </textarea>
+    <p></p>
+
+</body>
+
+
+
+</html>
