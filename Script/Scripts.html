@@ -12,10 +12,12 @@
 
     <label style="font-weight:bold;font-size: larger;"> Auto Question checking for bartleby</label>
     <textarea style="margin: 0px; width: 716px; height: 391px;">
-        var bTags = document.getElementsByTagName("button");
+    
+	    var bTags = document.getElementsByTagName("button");
         var searchText = "View Primary Question";
         //In seconds
-        var pollInterval = 8
+        var pollInterval = 8;
+		var audio = new Audio('https://www.soundjay.com/door/sounds/doorbell-2.mp3');
     
         setInterval(function () {
             console.log("----Polling----")
@@ -35,7 +37,6 @@
             console.log("----Polling for Selected Question----")
             for (var i = 0; i < buttonTags.length; i++) {
                 if (buttonTags[i].textContent == searchButtonText) {
-                    var audio = new Audio('https://www.soundjay.com/door/sounds/doorbell-2.mp3');
 					audio.play();
                     break;
                 }
@@ -49,10 +50,56 @@
             var url = window.location.href;
              if (url.includes("/questions/") && url.includes("/review")) { 
                 console.log("-----Question Available----")
-                var audio = new Audio('https://www.soundjay.com/door/sounds/doorbell-2.mp3');
                 audio.play();
+                AddSkipButton();
              } 
-        }  </textarea>
+        }  
+
+		function AddSkipButton(){
+		let btn = document.createElement("button");
+		btn.innerHTML = "Skip";
+		btn.className  = "sc-VigVT sc-jzJRlG sc-kAzzGY sc-kTUwUJ eTABfT ViewSubmitOrDeclineButton";
+		btn.onclick=function cliked(){
+			var obj1=document.getElementsByClassName("ViewSubmitOrDeclineButton");
+			for(var i=0;i<obj1.length;i++){
+				if(obj1[i].innerHTML=="Decline"){
+					obj1[i].click();
+					setTimeout(function(){
+						var radio=document.getElementsByClassName("FormRadioLabel");
+						for(var k=0;k<radio.length;k++){
+							if(radio[k].innerHTML=="Insufficient Subject Knowledge"){
+								radio[k].click();
+								setTimeout(function(){
+									var x = document.getElementsByTagName("button");
+									for(var j=0;j<x.length;j++){
+										if(x[j].innerHTML=="Confirm Decline"){
+											x[j].click();
+											setTimeout(function(){
+												var okbutton = document.getElementsByTagName("button");
+												for(var q=0;q<okbutton.length;q++){
+													if(okbutton[q].innerHTML=="OK"){
+														okbutton[q].click();
+													}
+												}
+											}, 1000);
+										}
+									}
+								}, 500);
+							}
+						}
+						
+					
+					}, 500);
+				}	
+			}
+		}
+		var obj=document.getElementsByClassName("ViewButtonsContainer"); 
+		obj[0].append(btn);
+
+		}
+
+	
+	</textarea>
     <p></p>
 
 </body>
