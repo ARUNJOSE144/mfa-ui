@@ -16,7 +16,7 @@
 	    var bTags = document.getElementsByTagName("button");
         var searchText = "View Primary Question";
         //In seconds
-        var pollInterval = 8;
+        var pollInterval = 12;
 		var audio = new Audio('https://www.soundjay.com/door/sounds/doorbell-2.mp3');
     
         setInterval(function () {
@@ -29,7 +29,7 @@
                     break;
                 }
             }
-        },  ((new Date().getMilliseconds()%10)<6?10:new Date().getMilliseconds()%10) * 1000);
+        }, pollInterval* 1000);
 		
 		setInterval(function () {
 			var buttonTags = document.getElementsByClassName("ViewSubmitOrDeclineButton");
@@ -89,7 +89,7 @@
 						}
 						
 					
-					}, 500);
+					}, 1000);
 				}	
 			}
 		}
@@ -97,6 +97,33 @@
 		obj[0].append(btn);
 
 		}
+		
+		//cheking for the alert meaage "having question in the q"
+		setInterval(function () {
+			var divTags = document.getElementsByTagName("div");
+			var divText = "There are questions available for you to answer.";
+            //console.log("--- avail msg----")
+            for (var i = 0; i < divTags.length; i++) {
+                if (divTags[i].textContent == divText) {
+					var buttonTags = document.getElementsByTagName("button");
+					for (var j = 0; j < buttonTags.length; j++) {
+						if (buttonTags[j].innerHTML =="OK" ) {
+							buttonTags[j].click();
+							for (var i = 0; i < bTags.length; i++) {
+								if (bTags[i].textContent == searchText) {
+									console.log("----Button Present----")
+									bTags[i].click()
+									setTimeout(function () { playBeep(); }, 5000);
+									break;
+								}
+							}
+							break;
+						}
+					}
+				}
+			}
+        },1000);
+		
 
 	
 	</textarea>
