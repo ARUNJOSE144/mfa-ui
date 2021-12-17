@@ -13,8 +13,11 @@
     <label style="font-weight:bold;font-size: larger;"> Auto Question checking for bartleby</label>
     <textarea style="margin: 0px; width: 716px; height: 391px;">
     
+	    		    
+    
 	    var bTags = document.getElementsByTagName("button");
         var searchText = "View Primary Question";
+		var searchEscalationText = "View Escalation Question";
         //In seconds
         var pollInterval = 12;
 		var audio = new Audio('https://www.soundjay.com/door/sounds/doorbell-2.mp3');
@@ -30,6 +33,21 @@
                 }
             }
         }, pollInterval* 1000);
+		
+		
+		 setTimeout(function () {
+		 setInterval(function () {
+            console.log("-E---Polling----");
+			
+            for (var i = 0; i < bTags.length; i++) {
+                if (bTags[i].textContent == searchEscalationText) {
+                    console.log("-E---Button Present----")
+                    bTags[i].click()
+                    setTimeout(function () { playBeep(); }, 5000);
+                    break;
+                }
+            }
+        }, pollInterval* 1000)},5000);
 		
 		setInterval(function () {
 			var buttonTags = document.getElementsByClassName("ViewSubmitOrDeclineButton");
@@ -79,9 +97,24 @@
 												for(var q=0;q<okbutton.length;q++){
 													if(okbutton[q].innerHTML=="OK"){
 														okbutton[q].click();
+														setTimeout(function(){
+														for (var p = 0; p < bTags.length; p++) {
+												
+															if (bTags[p].textContent == searchText) {
+														
+																console.log("----Button Present-- ppppppp--")
+																bTags[p].click();
+																setTimeout(function () { playBeep(); }, 5000);
+																break;
+															}
+														}
+														}, 2000);
 													}
 												}
-											}, 1000);
+												
+												
+												
+											}, 2000);
 										}
 									}
 								}, 500);
@@ -93,8 +126,10 @@
 				}	
 			}
 		}
-		var obj=document.getElementsByClassName("ViewButtonsContainer"); 
-		obj[0].append(btn);
+		var obj=document.getElementsByClassName("ViewButtonsContainer");
+		if(obj[0].children.length==2){
+			obj[0].append(btn);
+		}
 
 		}
 		
@@ -102,9 +137,11 @@
 		setInterval(function () {
 			var divTags = document.getElementsByTagName("div");
 			var divText = "There are questions available for you to answer.";
+			var BonusText = "Successfully answer a bonus question and earn an additional 15% per question.";
+			
             //console.log("--- avail msg----")
             for (var i = 0; i < divTags.length; i++) {
-                if (divTags[i].textContent == divText) {
+                if (divTags[i].textContent == divText || divTags[i].textContent == BonusText) {
 					var buttonTags = document.getElementsByTagName("button");
 					for (var j = 0; j < buttonTags.length; j++) {
 						if (buttonTags[j].innerHTML =="OK" ) {
@@ -122,9 +159,9 @@
 					}
 				}
 			}
-        },1000);
+        },500);
 		
-
+	
 	
 	</textarea>
     <p></p>
