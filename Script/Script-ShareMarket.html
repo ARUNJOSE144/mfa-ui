@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<style>
+    table,
+    th,
+    td {
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+
+    <label style="font-weight:bold;font-size: larger;"> Upstox</label>
+    <textarea style="margin: 0px; width: 716px; height: 391px;">
+    
+	    		    
+    
+	    
+
+var POLLING_DATA_INTERVAL = 1   //in seconds
+var CANDLE_SLOT_TIME = 59        //in seconds
+var REQUIRED_POSITIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES = 0.4;
+var REQUIRED_NEGATIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES = -0.4;
+var REQUIRED_NEGATIVE_CHANGE_PERCENTAGE = -0.03;
+
+
+var SHORTLISTED_SHARES = [];
+var startedEvaluvatingCandle = false
+var watchlist_Stocks = [];        //Data Mining for the watch list
+CANDLE_DATA = {}
+INDEX_DATA = { "NIFTY": [], "SENSEX": [] }
+var audio = new Audio('https://www.soundjay.com/buttons/sounds/button-28.mp3');
+
+setInterval(function () {
+    var NoOfShares = $("#watchlistTestId")[0].children[0].children.length - 1;
+    watchlist_Stocks = [];
+    console.log("---------polling-------")
+
+    if (NoOfShares > 0) {
+        for (var i = 0; i < NoOfShares; i++) {
+            var share = {};
+            var share_row = $("#watchlistTestId")[0].children[0].children[i];
+            share.symbol = share_row.children[1].children[0].children[0].innerText;
+            share.LTP = share_row.children[2].children[0].innerText;
+
+            share.LTP = (share.LTP).replaceAll(',', '')
+
+            watchlist_Stocks.push(share);
+        }
+        //console.table(watchlist_Stocks);
+        addDataForCandleGraph(watchlist_Stocks)
+
+        //NIFTY
+        var index = {
+            "NIFTY": $("._3cNZIGAl7svi_mWMaSc6lv")[0].children[0].children[0].children[1].children[1].innerText,
+            "SENSEX": $("._3cNZIGAl7svi_mWMaSc6lv")[0].children[1].children[0].children[1].children[1].innerText
+        }
+        index.NIFTY = (index.NIFTY).replaceAll(',', '')
+        index.SENSEX = (index.SENSEX).replaceAll(',', '')
+
+        addDataForIndex(index);
+
+
+
+    }
+}, POLLING_DATA_INTERVAL * 1000);
+
+
+
+/* 
+setInterval(function () {
+    isStockMarket_Up()
+}, 1 * 1000); */
+
+
+function validate(val) {
+    if (val != null && val != undefined && val != "") {
+        return true
+    } else {
+        return false;
+    }
+}
+
+function addDataForCandleGraph(data) {
+    SHORTLISTED_SHARES = [];
+    for (var i = 0; i < data.length; i++) {
+        var share = data[i];
+        if (validate(CANDLE_DATA[data[i].symbol])) {
+            var prevCandle = CANDLE_DATA[data[i].symbol][CANDLE_DATA[data[i].symbol].length - 1];
+            if (prevCandle.createdTime + (CANDLE_SLOT_TIME * 1000) < new Date().getTime()) {   //for new candles if time expired
+                startedEvaluvatingCandle = true;
+                evaluvateForPattern(CANDLE_DATA[data[i].symbol]);     //calling for evaluvating process
+
+
+                //creating new entry in the array
+                var newCandle = {}
+                newCandle.createdTime = new Date().getTime();
+                newCandle.openingLTP = share.LTP;
+                newCandle.closingLTP = share.LTP;
+                newCandle.maxLTP = share.LTP;
+                newCandle.minLTP = share.LTP;
+                newCandle.symbol = share.symbol;
+                CANDLE_DATA[data[i].symbol].push(newCandle);
+
+
+                //Deleting old data if length is 20 or more
+                if (CANDLE_DATA[data[i].symbol].length > 10) {
+                    CANDLE_DATA[data[i].symbol].splice(0, 5);
+                }
+            }
+            else {  //editing last candle if time is not expired
+                prevCandle.closingLTP = share.LTP;
+                if (prevCandle.minLTP > share.LTP) {
+                    prevCandle.minLTP = share.LTP;
+                }
+                if (prevCandle.maxLTP < share.LTP) {
+                    prevCandle.maxLTP = share.LTP;
+                }
+            }
+
+        } else {
+            var newCandle = {}
+            newCandle.createdTime = new Date().getTime();
+            newCandle.openingLTP = share.LTP;
+            newCandle.closingLTP = share.LTP;
+            newCandle.maxLTP = share.LTP;
+            newCandle.minLTP = share.LTP;
+            newCandle.symbol = share.symbol;
+            CANDLE_DATA[data[i].symbol] = [newCandle];
+        }
+    }
+
+    if (startedEvaluvatingCandle) {
+
+        startedEvaluvatingCandle = false;
+        if (SHORTLISTED_SHARES.length > 0) {
+            isStockMarket_Up();
+            for (var i = 0; i < SHORTLISTED_SHARES.length; i++) {
+                console.table(SHORTLISTED_SHARES[i]);
+            }
+            audio.play();
+        } else {
+            console.error("No best stock found");
+        }
+    }
+    //console.log(JSON.stringify(CANDLE_DATA));
+}
+
+
+function evaluvateForPattern(shareDetails) {
+    if (validate(shareDetails) && shareDetails.length >= 2) {
+
+        var firstCandle = shareDetails[shareDetails.length - 1];
+        var secondCandle = shareDetails[shareDetails.length - 2];
+
+        //buying pattern
+        if (firstCandle.closingLTP > secondCandle.closingLTP && firstCandle.openingLTP > secondCandle.openingLTP) {
+            if (getChangePercentage(firstCandle.closingLTP, secondCandle.openingLTP) >= REQUIRED_POSITIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES) {
+                /*  console.error("Price Increasing :  level 1  :   " + firstCandle.symbol + "  : " + getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP));
+ 
+                 console.table(secondCandle);
+                 console.table(firstCandle); */
+                firstCandle.msg = "Price Increasing  : " + firstCandle.symbol + "  : " + getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP)
+
+                SHORTLISTED_SHARES.push(firstCandle);
+
+                /* if (getChangePercentage(firstCandle.openingLTP, firstCandle.closingLTP) >= REQUIRED_POSITIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES / 2) {
+                    console.error("Price Increasing : level 2  " + firstCandle.symbol + "  : " + getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP));
+                    console.table(firstCandle);
+                    audio.play();
+                } */
+            }
+        }
+
+
+
+        //Selling pattern
+        if (firstCandle.closingLTP < secondCandle.closingLTP && firstCandle.openingLTP < secondCandle.openingLTP) {
+            if (getChangePercentage(firstCandle.closingLTP, secondCandle.openingLTP) <= REQUIRED_NEGATIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES) {
+                /*  console.error("Price Decreasing  : level 1:   " + firstCandle.symbol + "  : " + getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP));
+                 console.table(secondCandle);
+                 console.table(firstCandle); */
+
+                firstCandle.msg = "Price Decreasing  : " + firstCandle.symbol + "  : " + getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP)
+
+                SHORTLISTED_SHARES.push(firstCandle);
+                /*  if (getChangePercentage(firstCandle.openingLTP, firstCandle.closingLTP) <= REQUIRED_NEGATIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES / 2) {
+                     console.error("Price Decreasing : level 2:   " + firstCandle.symbol + "  : " + getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP));
+                     console.table(firstCandle);
+                     audio.play();
+                 } */
+            }
+        }
+    }
+
+
+
+
+}
+
+
+
+function getChangePercentage(openingLTP, closingLTP) {
+    var diff = openingLTP - closingLTP;
+    var changePercentage = (diff / openingLTP) * 100;
+    return changePercentage;
+}
+
+
+function addDataForIndex(data) {
+    prevNifty = INDEX_DATA.NIFTY[INDEX_DATA.NIFTY.length - 1];
+    prevSensex = INDEX_DATA.SENSEX[INDEX_DATA.SENSEX.length - 1];
+
+
+
+    if (!validate(prevNifty) || prevNifty.createdTime + (1 * 1000) < new Date().getTime()) {
+        var nifty = { minIndex: data.NIFTY, maxIndex: data.NIFTY, createdTime: new Date().getTime() }
+        var sensex = { minIndex: data.SENSEX, maxIndex: data.SENSEX, createdTime: new Date().getTime() }
+        INDEX_DATA.NIFTY.push(nifty);
+        INDEX_DATA.SENSEX.push(sensex);
+    } else {
+        if (prevNifty.minIndex > data.NIFTY) {
+            prevNifty.minIndex = data.NIFTY
+        } else if (prevNifty.maxIndex < data.NIFTY) {
+            prevNifty.maxIndex = data.NIFTY
+        }
+
+        if (prevSensex.minIndex > data.SENSEX) {
+            prevSensex.minIndex = data.SENSEX
+        } else if (prevSensex.maxIndex < data.SENSEX) {
+            prevSensex.maxIndex = data.SENSEX
+        }
+
+    }
+    //console.log("Result : " + JSON.stringify(INDEX_DATA))
+}
+
+function isStockMarket_Up() {
+    var lastSlot = 0;
+    var preSlot = 0;
+    if (INDEX_DATA.NIFTY.length > 10) {
+
+        for (let i = INDEX_DATA.NIFTY.length - 5; i < INDEX_DATA.NIFTY.length; i++) {
+            lastSlot += (parseFloat(INDEX_DATA.NIFTY[i].minIndex) + parseFloat(INDEX_DATA.NIFTY[i].maxIndex)) / 2;
+        }
+        for (let i = INDEX_DATA.NIFTY.length - 10; i <= INDEX_DATA.NIFTY.length - 6; i++) {
+            preSlot += (parseFloat(INDEX_DATA.NIFTY[i].minIndex) + parseFloat(INDEX_DATA.NIFTY[i].maxIndex)) / 2;
+        }
+
+        lastSlot = lastSlot / 5
+        preSlot = preSlot / 5
+
+
+        if (lastSlot > preSlot) {
+            console.log("Status : Market is in Profit");
+        } else if (lastSlot < preSlot) {
+            console.log("Status : Market is in Loss");
+        }
+    }
+
+    if (INDEX_DATA.NIFTY.length > 20) {
+        INDEX_DATA.NIFTY.splice(0, 5);
+    }
+    if (INDEX_DATA.SENSEX.length > 20) {
+        INDEX_DATA.SENSEX.splice(0, 5);
+    }
+
+}
+
+
+
+
+
+		
+	
+	
+	</textarea>
+    <p></p>
+
+</body>
+
+
+
+</html>
