@@ -1,0 +1,169 @@
+//This script is used for finding the pattern based on marubozu
+// It is not working as expected
+
+
+var POLLING_DATA_INTERVAL = 1   //in seconds
+var CANDLE_SLOT_TIME = 60        //in seconds
+var REQUIRED_POSITIVE_CHANGE_PERCENTAGE = 0.15;
+var REQUIRED_NEGATIVE_CHANGE_PERCENTAGE = -0.15;
+
+
+var SHORTLISTED_SHARES = [];
+var startedEvaluvatingCandle = false
+var watchlist_Stocks = [];        //Data Mining for the watch list
+CANDLE_DATA = {}
+var audio = new Audio('https://www.soundjay.com/door/sounds/doorbell-2.mp3');
+
+setInterval(function () {
+    var NoOfShares = $("#watchlistTestId")[0].children[0].children.length - 1;
+    watchlist_Stocks = [];
+    console.log("---------polling-------")
+
+    if (NoOfShares > 0) {
+        for (var i = 0; i < NoOfShares; i++) {
+            var share = {};
+            var share_row = $("#watchlistTestId")[0].children[0].children[i];
+            share.symbol = share_row.children[1].children[0].children[0].innerText;
+            share.LTP = share_row.children[2].children[0].innerText;
+
+            share.LTP = (share.LTP).replaceAll(',', '')
+
+            watchlist_Stocks.push(share);
+        }
+        //console.table(watchlist_Stocks);
+        addDataForCandleGraph(watchlist_Stocks)
+    }
+}, POLLING_DATA_INTERVAL * 1000);
+
+
+function validate(val) {
+    if (val != null && val != undefined && val != "") {
+        return true
+    } else {
+        return false;
+    }
+}
+
+function addDataForCandleGraph(data) {
+    SHORTLISTED_SHARES = [];
+    for (var i = 0; i < data.length; i++) {
+        var share = data[i];
+        if (validate(CANDLE_DATA[data[i].symbol])) {
+            var prevCandle = CANDLE_DATA[data[i].symbol][CANDLE_DATA[data[i].symbol].length - 1];
+            if (prevCandle.createdTime + (CANDLE_SLOT_TIME * 1000) < new Date().getTime()) {   //for new candles if time expired
+
+                startedEvaluvatingCandle = true;
+                evaluvateForCableTypes(prevCandle);     //calling for evaluvating process
+
+                //creating new entry in the array
+                var newCandle = {}
+                newCandle.createdTime = new Date().getTime();
+                newCandle.openingLTP = share.LTP;
+                newCandle.closingLTP = share.LTP;
+                newCandle.maxLTP = share.LTP;
+                newCandle.minLTP = share.LTP;
+                newCandle.symbol = share.symbol;
+                CANDLE_DATA[data[i].symbol].push(newCandle);
+
+
+                //Deleting old data if length is 20 or more
+                if (CANDLE_DATA[data[i].symbol].length > 10) {
+                    CANDLE_DATA[data[i].symbol].splice(0, 5);
+                }
+            }
+            else {  //editing last candle if time is not expired
+                prevCandle.closingLTP = share.LTP;
+                if (prevCandle.minLTP > share.LTP) {
+                    prevCandle.minLTP = share.LTP;
+                }
+                if (prevCandle.maxLTP < share.LTP) {
+                    prevCandle.maxLTP = share.LTP;
+                }
+            }
+
+        } else {
+            var newCandle = {}
+            newCandle.createdTime = new Date().getTime();
+            newCandle.openingLTP = share.LTP;
+            newCandle.closingLTP = share.LTP;
+            newCandle.maxLTP = share.LTP;
+            newCandle.minLTP = share.LTP;
+            newCandle.symbol = share.symbol;
+            CANDLE_DATA[data[i].symbol] = [newCandle];
+        }
+    }
+
+    if (startedEvaluvatingCandle) {
+
+        startedEvaluvatingCandle = false;
+        if (SHORTLISTED_SHARES.length > 0) {
+            findTheBestShareTOByOrCell();
+        } else {
+            console.error("No best stock found");
+        }
+    }
+    //console.log(JSON.stringify(CANDLE_DATA));
+}
+
+
+function evaluvateForCableTypes(candle) {
+    if (candle.openingLTP != candle.closingLTP) {
+        if (candle.minLTP == candle.openingLTP && candle.maxLTP == candle.closingLTP && isHaveingChangePercentage(candle)) {
+            //console.error("buying Marubozu  :   " + candle.symbol + "  : " + getChangePercentage(candle));
+            //console.table(candle);
+            //audio.play();
+            SHORTLISTED_SHARES.push(candle);
+        }
+
+        if (candle.maxLTP == candle.openingLTP && candle.minLTP == candle.closingLTP && isHaveingChangePercentage(candle)) {
+            // console.error("Selling Marubozu  :   " + candle.symbol + "  : " + getChangePercentage(candle));
+            // console.table(candle);
+            // audio.play();
+            SHORTLISTED_SHARES.push(candle);
+        }
+    }
+
+}
+
+
+function isHaveingChangePercentage(candle) {
+
+    var changePercentage = getChangePercentage(candle)
+    candle.changePercentage = changePercentage;
+    if (changePercentage > 0 && changePercentage >= REQUIRED_POSITIVE_CHANGE_PERCENTAGE) {
+        return true
+    } else if (changePercentage < 0 && changePercentage <= REQUIRED_NEGATIVE_CHANGE_PERCENTAGE) {
+        return true
+    }
+    else {
+        return false;
+    }
+}
+
+function getChangePercentage(candle) {
+    var diff = candle.openingLTP - candle.closingLTP;
+    var changePercentage = (diff / candle.openingLTP) * 100;
+    return changePercentage;
+}
+
+function findTheBestShareTOByOrCell() {
+    var bestShare = SHORTLISTED_SHARES[0];
+
+    for (var i = 1; i < SHORTLISTED_SHARES.length; i++) {
+        if (bestShare.changePercentage < SHORTLISTED_SHARES[i].changePercentage) {
+            bestShare = SHORTLISTED_SHARES[i];
+        }
+
+    }
+    if (bestShare.openingLTP > bestShare.closingLTP) {
+        console.error("Selling Marubozu  :   " + bestShare.symbol + "  : " + bestShare.changePercentage);
+        console.table(bestShare);
+    } else {
+        console.error("Buying Marubozu  :   " + bestShare.symbol + "  : " + bestShare.changePercentage);
+        console.table(bestShare);
+    }
+
+}
+
+
+
