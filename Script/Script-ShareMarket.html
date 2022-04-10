@@ -11,30 +11,48 @@
 <body>
 
     <label style="font-weight:bold;font-size: larger;"> Upstox</label>
-    <textarea style="margin: 0px; width: 716px; height: 391px;">
+    <textarea style="margin: 0px; width: 1500px; height: 391px;">
     
 	    		    
     
-	    
+	    //Version Upstox PRO v1.72.0(PROD)
 
 var POLLING_DATA_INTERVAL = 1   //in seconds
 var CANDLE_SLOT_TIME = 59        //in seconds
 var REQUIRED_POSITIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES = 0.4;
 var REQUIRED_NEGATIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES = -0.4;
-var REQUIRED_NEGATIVE_CHANGE_PERCENTAGE = -0.03;
+var PROFIT_LOSS_PERCENTAGE = 0.30;
+var LOGS_REQUIRED = true;
+var TOTAL_TRADING_AMOUNT = 50000;
+var STOP_LOSS_PERCENTAGE = .25;
+
 
 
 var SHORTLISTED_SHARES = [];
 var startedEvaluvatingCandle = false
-var watchlist_Stocks = [];        //Data Mining for the watch list
+var monitoring_List = [];
+//var watchlist_Stocks = [{ symbol: "TATAMOTORS", high: 73.59, low: 70.35 }];        //Data Mining for the watch list
 CANDLE_DATA = {}
 INDEX_DATA = { "NIFTY": [], "SENSEX": [] }
+var TRADED_SHARES = [];
+//TRADED_SHARES = [{ "symbol": "IRCTC", "TP": 746, "profitLimit": 746.308, "type": "BUY", "isAutomatic": true, "qty": "200" }]
+var LTP_DATA = {}
+//var HIGH_PRICE_CHANGE_LIST = []
+var HIGH_PRICE_CHANGE_LIST = [{ symbol: "ITC", change: 2.1, time: "11:30" }]
+
+
+
+//W
 var audio = new Audio('https://www.soundjay.com/buttons/sounds/button-28.mp3');
+renderTheControlPanel();
 
 setInterval(function () {
     var NoOfShares = $("#watchlistTestId")[0].children[0].children.length - 1;
-    watchlist_Stocks = [];
-    console.log("---------polling-------")
+    var watchlist_Stocks = [];
+
+    if (LOGS_REQUIRED) {
+        console.log("---------polling-------")
+    }
 
     if (NoOfShares > 0) {
         for (var i = 0; i < NoOfShares; i++) {
@@ -45,7 +63,13 @@ setInterval(function () {
 
             share.LTP = (share.LTP).replaceAll(',', '')
 
+            LTP_DATA[share.symbol] = share.LTP
+
             watchlist_Stocks.push(share);
+
+            //For monitoring the traded stocks in the POSITIONS tab
+            //AnalyseThePositions(share)
+            //analyzeNR7Sticks(share)
         }
         //console.table(watchlist_Stocks);
         addDataForCandleGraph(watchlist_Stocks)
@@ -60,6 +84,11 @@ setInterval(function () {
 
         addDataForIndex(index);
 
+        renderTradingList();
+
+        renderMonitoringList();
+
+        //highPriceChangeList();
 
 
     }
@@ -135,15 +164,12 @@ function addDataForCandleGraph(data) {
         startedEvaluvatingCandle = false;
         if (SHORTLISTED_SHARES.length > 0) {
             isStockMarket_Up();
-            for (var i = 0; i < SHORTLISTED_SHARES.length; i++) {
-                console.table(SHORTLISTED_SHARES[i]);
-            }
+            getBestStock()
             audio.play();
         } else {
             console.error("No best stock found");
         }
     }
-    //console.log(JSON.stringify(CANDLE_DATA));
 }
 
 
@@ -160,7 +186,8 @@ function evaluvateForPattern(shareDetails) {
  
                  console.table(secondCandle);
                  console.table(firstCandle); */
-                firstCandle.msg = "Price Increasing  : " + firstCandle.symbol + "  : " + getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP)
+                firstCandle.change = getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP);
+                firstCandle.msg = "Price Increasing  : " + firstCandle.symbol + "  : " + firstCandle.change
 
                 SHORTLISTED_SHARES.push(firstCandle);
 
@@ -177,11 +204,12 @@ function evaluvateForPattern(shareDetails) {
         //Selling pattern
         if (firstCandle.closingLTP < secondCandle.closingLTP && firstCandle.openingLTP < secondCandle.openingLTP) {
             if (getChangePercentage(firstCandle.closingLTP, secondCandle.openingLTP) <= REQUIRED_NEGATIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES) {
-                /*  console.error("Price Decreasing  : level 1:   " + firstCandle.symbol + "  : " + getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP));
-                 console.table(secondCandle);
-                 console.table(firstCandle); */
+                /*   console.error("Price Decreasing  : level 1:   " + firstCandle.symbol + "  : " + getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP));
+                  console.table(secondCandle);
+                  console.table(firstCandle); */
 
-                firstCandle.msg = "Price Decreasing  : " + firstCandle.symbol + "  : " + getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP)
+                firstCandle.change = getChangePercentage(secondCandle.openingLTP, firstCandle.closingLTP)
+                firstCandle.msg = "Price Decreasing  : " + firstCandle.symbol + "  : " + firstCandle.change
 
                 SHORTLISTED_SHARES.push(firstCandle);
                 /*  if (getChangePercentage(firstCandle.openingLTP, firstCandle.closingLTP) <= REQUIRED_NEGATIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES / 2) {
@@ -269,13 +297,700 @@ function isStockMarket_Up() {
 
 
 
+function getBestStock() {
+    var selectedStock = SHORTLISTED_SHARES[0];
+    var highestChange = 0;
+    var change;
+
+    for (var i = 0; i < SHORTLISTED_SHARES.length; i++) {
+        change = SHORTLISTED_SHARES[i].change;
+        if (change < 0) {
+            change = change * 1;
+        }
+
+        if (highestChange < change) {
+            highestChange = change;
+            selectedStock = SHORTLISTED_SHARES[i]
+        }
+    }
+    selectedStock.time = new Date().getHours() + ":" + new Date().getMinutes();
+    HIGH_PRICE_CHANGE_LIST.push(selectedStock);
+    console.table(selectedStock);
+}
+
+function getObjFromArray(list, name, value) {
+    if (validate(list) && validate(name) && validate(value)) {
+        for (var i = 0; i < list.length; i++) {
+            if (list[i][name] == value) {
+                return list[i];
+            }
+        }
+    }
+    return null;
+}
 
 
-		
+//Analysing the positions
+function AnalyseThePositions(shareObj) {
+
+    if (TRADED_SHARES.length > 0) {
+        var share = getObjFromArray(TRADED_SHARES, "symbol", shareObj.symbol)
+        if (validate(share)) {
+
+            if (share.type == "BUY") {
+                var lossDiff = (PROFIT_LOSS_PERCENTAGE / 100) * share.TP;
+                var stopLoss = share.TP - ((PROFIT_LOSS_PERCENTAGE / 100) * share.TP);
+
+                if (shareObj.LTP <= stopLoss) {     // For Stop Loss
+                    SquareOff(share.symbol)
+                } else if (validate(share.profitLimit) && shareObj.LTP <= share.profitLimit) {   // For Stop Profit Limit
+                    SquareOff(share.symbol)
+                } else if ((share.profitLimit + lossDiff) < shareObj.LTP) {                //Increasing the profit limit
+                    share.profitLimit = shareObj.LTP - lossDiff;
+                }
+            } else if (share.type == "SELL") {
+                var lossDiff = (PROFIT_LOSS_PERCENTAGE / 100) * share.TP;
+                var stopLoss = share.TP + ((PROFIT_LOSS_PERCENTAGE / 100) * share.TP);
+
+                if (!validate(share.profitLimit)) {
+                    share.profitLimit = stopLoss;
+                }
+
+                if (shareObj.LTP >= stopLoss) {     // For Stop Loss
+                    SquareOff(share.symbol)
+                } else if (validate(share.profitLimit) && shareObj.LTP >= share.profitLimit) {   // For Stop Profit Limit
+                    SquareOff(share.symbol)
+                } else if ((share.profitLimit - lossDiff) > shareObj.LTP) {                //Increasing the profit limit
+                    share.profitLimit = parseFloat(shareObj.LTP) + lossDiff;
+                }
+            }
+        }
+    }
+}
+
+
+function SquareOff(symbolFrom, isManualClick) {
+    audio.play();
+
+    //Clicking on the position tab
+    for (var i = 0; i < $("._1Gw8sEUaMGLN6Yi9cf4Rak").length; i++) {
+        var tab = $("._1Gw8sEUaMGLN6Yi9cf4Rak")[i];
+        if ($(tab).attr("data-id") == "PositionsTab") {
+            $(tab).click();
+        }
+    }
+
+    setTimeout(function () {
+        var obj = getObjFromArray(TRADED_SHARES, "symbol", symbolFrom);
+        console.table(obj);
+        if (validate(obj) && (isManualClick || obj.isAutomatic)) {
+            console.log("===========SquareOff==================");
+            var table = $("._2gBsI0Pn-M0HshjejfVXxl")[0].children[0].children[0].children[1];
+            if (validate(table)) {
+                for (var i = 0; i < $(table)[0].children.length; i = i + 2) {
+                    var row = $(table)[0].children[i];
+
+                    var symbol = $(row)[0].children[1].children[0].children[0].getAttribute("data-position-name-id");
+                    if (symbol == symbolFrom) {
+                        $(row)[0].children[0].children[0].children[0].click();
+                        setTimeout(function () {
+                            document.getElementById("Square off").click();
+                            setTimeout(function () {
+                                $("button:contains(Yes)")[0].click();
+
+                                deleteTrade(symbolFrom);
+                            }, 500);
+                        }, 500);
+                    }
+                }
+            }
+        }
+    }, 500);
+
+
+
+}
+
+
+
+/* 
+function analyzeNR7Sticks(candle) {
+    var obj = getObjFromArray(watchlist_Stocks, "symbol", candle.symbol)
+    if (validate(obj)) {
+        if (obj.buyPrice <= candle.LTP) {
+            console.error("BUY Candidate ::  LTP :" + candle.LTP);
+            candle.table(obj);
+            audio.play();
+        } else if (obj.sellPrice >= candle.LTP) {
+            console.error("Sell Candidate ::  LTP :" + candle.LTP);
+            candle.table(obj);
+            audio.play();
+        }
+    }
+ 
+} */
+
+
+function addNewStockToWatchList() {
+    $("#formValidateMsgForWatchForm").text("");
+    if (validateForNewWatchlist()) {
+        var symbol = $("#monitoringFrom_symbol").val().trim();
+        var high = $("#monitoringFrom_high").val().trim();
+        var low = $("#monitoringFrom_low").val().trim();
+
+        if ($("#addNewStockForWatchlistButton").text() == "Monitor") {
+            monitoring_List.push({ symbol: symbol, high: high, low: low })
+        } else {
+            var obj = getObjFromArray(monitoring_List, "symbol", symbol);
+            if (validate(obj)) {
+                obj.symbol = symbol;
+                obj.high = high;
+                obj.low = low;
+
+
+            }
+        }
+        resetWatchlistForm();
+    }
+}
+
+function resetWatchlistForm() {
+    $("#monitoringFrom_symbol").val("");
+    $("#monitoringFrom_high").val("");
+    $("#monitoringFrom_low").val("");
+    $("#formValidateMsgForWatchForm").text("");
+    $("#addNewStockForWatchlistButton").text("Monitor");
+    $("#monitoringFrom_symbol").removeAttr("disabled");
+
+}
+
+function validateForNewWatchlist() {
+    if (!validate($("#monitoringFrom_symbol").val())) {
+        $("#formValidateMsgForWatchForm").text("Stock Name is Mandatory")
+        return false;
+    }
+    if (!validate($("#monitoringFrom_high").val())) {
+        $("#formValidateMsgForWatchForm").text("High is Mandatory")
+        return false;
+    }
+    if (!validate($("#monitoringFrom_low").val())) {
+        $("#formValidateMsgForWatchForm").text("Low is Mandatory")
+        return false;
+    }
+
+    return true;
+}
+
+function poppulateDataForWatchlistEdit(symbol) {
+    var obj = getObjFromArray(monitoring_List, "symbol", symbol);
+
+    $("#monitoringFrom_symbol").val(obj.symbol);
+    $("#monitoringFrom_high").val(obj.high);
+    $("#monitoringFrom_low").val(obj.low);
+    $("#addNewStockForWatchlistButton").text("Edit");
+    $("#formValidateMsgForWatchForm").text("");
+    $("#monitoringFrom_symbol").attr("disabled", 'disabled')
+
+
+}
+
+
+
+function renderTheControlPanel() {
+    var pop = $("#watchlistTestId")[0];
+    $(pop).append("<div id='controlPanelForShareControl'><label style=' font-weight: bold;    color: #087fee;    padding: 10px;'> Control Tab </label> <hr>" +
+        "<div id='high_price_change_list'  style='background-color:white'></div>" +
+        "<div id='monitoringFrom' style='margin-bottom:5px'>" +
+        "<input type='text' placeholder='Symbol' id='monitoringFrom_symbol' style='width: 44%; margin: 10px;height: 35px;padding-left: 10px;'> " +
+        "<input type='number' placeholder='High' id='monitoringFrom_high' style='width: 40%; margin: 10px;height: 35px;padding-left: 10px;'> " +
+        "<input type='number' placeholder='Low' id='monitoringFrom_low' style='width: 44%; margin: 10px;height: 35px;padding-left: 10px;'> " +
+        "<label id='formValidateMsgForWatchForm' style='color: red;font-weight: 400;padding-left: 30px;'></label><br>" +
+        "<button onclick='addNewStockToWatchList()'  id='addNewStockForWatchlistButton' class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left: 26%; width: 23%;'>Monitor</button>" +
+        "<button onclick='resetWatchlistForm()' class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left: 1%; width: 23%;'>Reset</button>" +
+        "</div><hr style='margin: 0px;'>" +
+        "<div id='monitoringList_List'  style='background-color:white'>" +
+        "</div>" +
+
+        "<div id='controlPanel_Form' style='margin-bottom:5px'>" +
+        "<input type='text' placeholder='Symbol' id='controlPanel_symbol' style='width: 44%; margin: 10px;height: 35px;padding-left: 10px;'> " +
+        "<input type='number' placeholder='Price' id='controlPanel_price' style='width: 40%; margin: 10px;height: 35px;padding-left: 10px;'> " +
+        "<input type='number' placeholder='Quantity' id='controlPanel_qty' style='width: 44%; margin: 10px;height: 35px;padding-left: 10px;'> " +
+        "<select id='controlPanel_type' style='width: 40%; margin: 10px;height: 35px;padding-left: 10px;'>  <option value='BUY'>BUY</option>  <option value='SELL'>SELL</option></select>" +
+        "<input type='number' placeholder='Stop Loss' id='controlPanel_sl' style='width: 44%; margin: 10px;height: 35px;padding-left: 10px;'> " +
+        "<input type='number' placeholder='Profit Booking' id='controlPanel_pb' style='width: 40%; margin: 10px;height: 35px;padding-left: 10px;'> " +
+        "<label id='formValidateMsg' style='color: red;font-weight: 400;padding-left: 30px;'></label><br>" +
+        "<button onclick='addNewStockForTrading()'  id='addNewStockForTradingButton' class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left: 26%; width: 23%;'>Add</button>" +
+        "<button onclick='resetForm()' class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left: 1%; width: 23%;'>Reset</button>" +
+        "</div><hr style='margin: 0px;'>" +
+        "<div id='controlPanel_List'  style='background-color:white'>" +
+        "</div>" +
+        "</div>")
+}
+
+function resetForm() {
+    $("#controlPanel_symbol").val("");
+    $("#controlPanel_price").val("");
+    $("#controlPanel_type").val("BUY");
+    $("#controlPanel_qty").val("");
+
+    $("#controlPanel_sl").val("");
+    $("#controlPanel_pb").val("");
+    $("#formValidateMsg").text("");
+
+    $("#addNewStockForTradingButton").text("Add");
+    $("#controlPanel_symbol").removeAttr("disabled");
+}
+
+function validateForNewStock() {
+    if (!validate($("#controlPanel_symbol").val())) {
+        $("#formValidateMsg").text("Stock Name is Mandatory")
+        return false;
+    }
+    if (!validate($("#controlPanel_price").val())) {
+        $("#formValidateMsg").text("Price is Mandatory")
+        return false;
+    }
+    if (!validate($("#controlPanel_qty").val())) {
+        $("#formValidateMsg").text("Quantity is Mandatory")
+        return false;
+    }
+
+    return true;
+}
+
+
+function addNewStockForTrading() {
+    $("#formValidateMsg").text("");
+    if (validateForNewStock()) {
+        var symbol = $("#controlPanel_symbol").val().trim();
+        var price = $("#controlPanel_price").val().trim();
+        var type = $("#controlPanel_type").val();
+        var qty = $("#controlPanel_qty").val().trim();
+        var sl = $("#controlPanel_sl").val().trim();
+        var pb = $("#controlPanel_pb").val().trim();
+
+        if ($("#addNewStockForTradingButton").text() == "Add") {
+            TRADED_SHARES.push({ symbol: symbol, TP: parseFloat(price), profitLimit: "", type: type, isAutomatic: false, qty: qty, sl: sl, pb: pb })
+        } else {
+            var obj = getObjFromArray(TRADED_SHARES, "symbol", symbol);
+            if (validate(obj)) {
+                obj.symbol = symbol;
+                obj.TP = parseFloat(price);
+                obj.type = type;
+                obj.isAutomatic = false;
+                obj.qty = qty;
+                obj.sl = sl;
+                obj.pb = pb;
+
+            }
+        }
+        resetForm();
+    }
+}
+
+
+function poppulateDataForEdit(symbol) {
+    var obj = getObjFromArray(TRADED_SHARES, "symbol", symbol);
+
+    $("#controlPanel_symbol").val(obj.symbol);
+    $("#controlPanel_price").val(obj.TP);
+    $("#controlPanel_type").val(obj.type);
+    $("#controlPanel_qty").val(obj.qty);
+
+    $("#controlPanel_sl").val(obj.sl);
+    $("#controlPanel_pb").val(obj.pb);
+
+
+
+
+    $("#addNewStockForTradingButton").text("Edit");
+    $("#formValidateMsg").text("");
+    $("#controlPanel_symbol").attr("disabled", 'disabled')
+
+
+}
+
+
+function renderTradingList() {
+    var html = "";
+    $("#controlPanel_List").empty();
+    if (TRADED_SHARES.length > 0) {
+        for (var i = 0; i < TRADED_SHARES.length; i++) {
+            var value = calculateTheActualProfitAfterDeductions(TRADED_SHARES[i].symbol)
+
+            if (validate(TRADED_SHARES[i].sl) && parseFloat(value) <= parseFloat(TRADED_SHARES[i].sl)) {
+                console.error("Stop Loss Hit");
+                SquareOff(TRADED_SHARES[i].symbol);
+
+            } else if (validate(TRADED_SHARES[i].pb) && parseFloat(value) >= parseFloat(TRADED_SHARES[i].pb)) {
+                console.error("Stop Loss Hit");
+                SquareOff(TRADED_SHARES[i].symbol);
+            }
+
+            var color = value <= 0 ? 'orange' : 'green';
+            var profit = value <= 0 ? 'Loss' : 'Profit';
+            var profitPer = ((value / (TRADED_SHARES[i].TP * TRADED_SHARES[i].qty)) * 100);
+            profitPer = profitPer.toFixed(2);
+            html += "<div onclick=openShareInfoPage('" + TRADED_SHARES[i].symbol + "') style='padding: 10px;background-color:" + color + ";cursor:pointer;'> <label style='padding:10px;color:white;margin-top:20px;font-weight: 500;cursor:pointer;'>  " + TRADED_SHARES[i].symbol + " : " + TRADED_SHARES[i].type + " : " + TRADED_SHARES[i].TP + " : " + TRADED_SHARES[i].qty + "</label> " +
+                "<div style='margin-top: 10px;color: white;font-weight: 600; padding-left: 10px;'><label >" + profit + " : " + value + "</label></div>" +
+                "<div style='margin-top: 10px;color: white;font-weight: 600; padding-left: 10px;'><label>" + profit + " % : " + profitPer + "</label></div>" +
+                "<div style='margin-top: 10px;color: white;font-weight: 600; padding-left: 10px;'><label> Charges : " + TRADED_SHARES[i].changes + "</label></div>" +
+                "<div style='margin-top: 10px;color: white;font-weight: 600; padding-left: 10px;'><label> SL : " + TRADED_SHARES[i].sl + ", PB : " + TRADED_SHARES[i].pb + "</label></div>" +
+
+                "<button onclick=SquareOff('" + TRADED_SHARES[i].symbol + "',true) class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-top: 10px;'>Sq.Off</button>" + "      "
+            if (TRADED_SHARES[i].isAutomatic) {
+                html += "<button onclick=toggleMode('" + TRADED_SHARES[i].symbol + "') class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_'>Auto</button>"
+            } else {
+                html += "<button onclick=toggleMode('" + TRADED_SHARES[i].symbol + "') class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='background-color: red;'>Manual</button>"
+            }
+            html += "<button onclick=deleteTrade('" + TRADED_SHARES[i].symbol + "') class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left:5px'>Delete</button>"
+            html += "<button onclick=poppulateDataForEdit('" + TRADED_SHARES[i].symbol + "') class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left:5px'>Edit</button>"
+            html += "<hr style='margin: 0px;margin-top: 10px;'></div>"
+        }
+        $("#controlPanel_List").append(html);
+    }
+}
+
+function renderMonitoringList() {
+    var html = "";
+    $("#monitoringList_List").empty();
+    if (monitoring_List.length > 0) {
+        for (var i = 0; i < monitoring_List.length; i++) {
+            var buySellText = ""
+            var backgroundColor = "white";
+            var LTP = LTP_DATA[monitoring_List[i].symbol];
+            if (LTP >= monitoring_List[i].high) {
+                buySellText = "BUY";
+                backgroundColor = "green";
+            } else if (LTP <= monitoring_List[i].low) {
+                buySellText = "SELL"
+                backgroundColor = "orange";
+            }
+
+            html += "<div onclick=openShareInfoPage('" + monitoring_List[i].symbol + "') style='padding: 10px;background-color:" + backgroundColor + ";cursor:pointer'> <label style='padding:10px;color:black;margin-top:20px;font-weight: 500;cursor:pointer;'>  " + monitoring_List[i].symbol + " : " + monitoring_List[i].high + " : " + monitoring_List[i].low + "</label> "
+            html += "<div>"
+            if (validate(buySellText)) {
+                audio.play()
+                html += "<button onclick=buyStock('" + monitoring_List[i].symbol + "','" + buySellText + "') class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left:5px,'>" + buySellText + "</button>"
+            }
+            html += "<button onclick=deleteWatchlist('" + monitoring_List[i].symbol + "') class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left:5px'>Delete</button>"
+            html += "<button onclick=poppulateDataForWatchlistEdit('" + monitoring_List[i].symbol + "') class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left:5px'>Edit</button>"
+            html += "</div>"
+            html += "<hr style='margin: 0px;margin-top: 10px;'></div>"
+        }
+        $("#monitoringList_List").append(html);
+    }
+}
+
+function highPriceChangeList() {
+    var html = "";
+    $("#high_price_change_list").empty();
+    if (HIGH_PRICE_CHANGE_LIST.length > 0) {
+        for (var i = 0; i < HIGH_PRICE_CHANGE_LIST.length; i++) {
+            var backgroundColor = "green";
+            if (HIGH_PRICE_CHANGE_LIST[i].change > 0) {
+                backgroundColor = "orange";
+            }
+            html += "<div onclick=openShareInfoPage('" + HIGH_PRICE_CHANGE_LIST[i].symbol + "') style='padding: 10px;background-color:" + backgroundColor + ";cursor:pointer'> <label style='padding:10px;color:black;margin-top:20px;font-weight: 500;cursor:pointer;'>  " + HIGH_PRICE_CHANGE_LIST[i].symbol + " : " + parseFloat(HIGH_PRICE_CHANGE_LIST[i].change).toFixed(3) + "</label> "
+            html += "<label style='padding:10px;color:black;margin-top:20px;font-weight: 500;cursor:pointer;'> Time : " + HIGH_PRICE_CHANGE_LIST[i].time + "</label> "
+            html += "<div>"
+            html += "<button onclick=deleteFromHighPriceChangeList('" + HIGH_PRICE_CHANGE_LIST[i].symbol + "') class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left:5px'>Delete</button>"
+            html += "</div>"
+            html += "<hr style='margin: 0px;margin-top: 10px;'></div>"
+        }
+        $("#high_price_change_list").append(html);
+    }
+}
+
+
+function buyStock(symbol, type) {
+    var obj = getObjFromArray(TRADED_SHARES, "symbol", symbol);
+    var share = {};
+    share.symbol = symbol;
+    share.TP = LTP_DATA[symbol];
+    share.type = type;
+    share.isAutomatic = false;
+    share.qty = 1;
+
+    TRADED_SHARES.push(share);
+
+    for (var i = 0; i < monitoring_List.length; i++) {
+        if (monitoring_List[i].symbol == symbol) {
+            monitoring_List.splice(i, 1);
+        }
+    }
+
+    doBuyThroughUI(symbol, type, 1)
+}
+
+function calculateTheActualProfitAfterDeductions(symbol) {
+    var traded = getObjFromArray(TRADED_SHARES, "symbol", symbol);
+
+    var BROKERAGE_PER = 0.05;
+    var BROKERAGE_MAX_VAL = 20;
+    var STT_PER = 0.025;
+    var TRANS_PER = 0.00345;
+    var GST_PER = 18;
+    var STAMP_DUTY = 0.003;
+
+    var LTP = LTP_DATA[symbol];
+
+    if (traded.type == "BUY") {
+        var total_amount_buy = traded.qty * traded.TP;
+        var total_amount_sell = traded.qty * LTP;
+    } else if (traded.type == "SELL") {
+        var total_amount_sell = traded.qty * traded.TP;
+        var total_amount_buy = traded.qty * LTP;
+    }
+
+
+    if (LOGS_REQUIRED) {
+        /*  console.log("total_amount_buy : " + total_amount_buy);
+         console.log("total_amount_sell : " + total_amount_sell) */
+    }
+
+    var brokerage_buy = (BROKERAGE_PER / 100 * total_amount_buy);
+    if (BROKERAGE_MAX_VAL < brokerage_buy) {
+        brokerage_buy = BROKERAGE_MAX_VAL;
+    }
+
+    var brokerage_sell = (BROKERAGE_PER / 100 * total_amount_sell);
+    if (BROKERAGE_MAX_VAL < brokerage_sell) {
+        brokerage_sell = BROKERAGE_MAX_VAL;
+    }
+
+    var brokerage = brokerage_buy + brokerage_sell;
+    var stt = STT_PER / 100 * total_amount_sell;
+    var transactionCharge = TRANS_PER / 100 * (total_amount_buy + total_amount_sell);
+    var gst = GST_PER / 100 * (brokerage + transactionCharge);
+    var stamp_duty = STAMP_DUTY / 100 * (total_amount_buy + total_amount_sell);
+
+    var totalCharges = brokerage + stt + transactionCharge + gst + stamp_duty;
+    traded.changes = totalCharges.toFixed(2);
+
+    var profit = total_amount_sell - total_amount_buy - totalCharges;
+    profit = profit.toFixed(2);
+
+    if (LOGS_REQUIRED) {
+        /*  console.error("brokerage : " + brokerage);
+         console.error("stt : " + stt)
+         console.error("transactionCharge : " + transactionCharge)
+         console.error("gst : " + gst)
+         console.error("stamp_duty : " + stamp_duty)
+ 
+         console.error("totalCharges : " + totalCharges)
+ 
+         console.error("profit : " + profit) */
+    }
+
+    return profit;
+}
+
+function toggleMode(symbol) {
+    var traded = getObjFromArray(TRADED_SHARES, "symbol", symbol);
+    traded.isAutomatic = !traded.isAutomatic;
+}
+
+function deleteTrade(symbol) {
+    for (var i = 0; i < TRADED_SHARES.length; i++) {
+        if (symbol == TRADED_SHARES[i].symbol) {
+            TRADED_SHARES.splice(i, 1);
+            console.error(symbol + " Removed From Trading List")
+        }
+    }
+}
+
+
+
+function deleteFromHighPriceChangeList(symbol) {
+    for (var i = 0; i < HIGH_PRICE_CHANGE_LIST.length; i++) {
+        if (symbol == HIGH_PRICE_CHANGE_LIST[i].symbol) {
+            HIGH_PRICE_CHANGE_LIST.splice(i, 1);
+            i--;
+            console.error(symbol + " Removed from High Price Change List")
+        }
+    }
+}
+
+
+function deleteWatchlist(symbol) {
+    for (var i = 0; i < monitoring_List.length; i++) {
+        if (symbol == monitoring_List[i].symbol) {
+            monitoring_List.splice(i, 1);
+            console.error(symbol + " Removed from Watchlist")
+        }
+    }
+}
+
+
+function doBuyThroughUI(symbol, type, qty) {
+
+    var mainListDiv = $("#watchlistTestId")[0].children[0];
+    for (var i = 0; i < $("#watchlistTestId")[0].children[0].children.length - 1; i++) {
+        var symbolFromList = $("#watchlistTestId")[0].children[0].children[i].children[1].children[0].children[0].innerText;
+        if (symbol == symbolFromList) {
+            var index = 0;
+            if (type == "SELL") {
+                index = 1;
+            }
+            $("#watchlistTestId")[0].children[0].children[i].children[1].children[1].children[0].children[index].children[0].click();
+
+            /*   setTimeout(function () {
+                  $("#quantity").val(10);
+                  $("#quantity").click()
+                  document.getElementById("quantity").value = 11
+  
+                  var bTags = document.getElementsByTagName("button");
+                  for (var j = 0; j < bTags.length; j++) {
+                      if (bTags[j].textContent == "Review Buy Order") {
+                          bTags[j].click();
+                      }
+                  }
+  
+                  $("button").attr("data-id", "ReviewSellOrder").click();
+              }, 3000); */
+        }
+    }
+}
+
+
+
+function openShareInfoPage(symbol) {
+
+    for (var i = 0; i < $("#watchlistTestId")[0].children[0].children.length - 1; i++) {
+        var share = $("#watchlistTestId")[0].children[0].children[i].children[1].children[0].children[0];
+        if (share.textContent == symbol) {
+            $("#watchlistTestId")[0].children[0].children[i].click();
+        }
+
+    }
+}
+
+
+setInterval(function () {
+
+    if ($(".IrDZS6QnFbUmyzjQs57VF").length == 1) {
+        var isInCreateOrder = false;
+
+        var scriptDiv = $(".am36REkWXiVCIYjl6If4x")[0];
+        var symbol = scriptDiv.textContent;
+
+
+        for (var i = 0; i < $("._1dlfTVZ7hMc4Ooo-p5Utr0 button").length; i++) {
+            var button = $("._1dlfTVZ7hMc4Ooo-p5Utr0 button")[i];
+            if ($(button).attr("data-id") == "ReviewBuyOrder" || $(button).attr("data-id") == "ReviewSellOrder") {
+
+                for (var j = 0; j < $("._1dlfTVZ7hMc4Ooo-p5Utr0 ._2o0ppdgpyVYTLIOQy6lowk span").length; j++) {
+                    var spanObj = $("._1dlfTVZ7hMc4Ooo-p5Utr0 ._2o0ppdgpyVYTLIOQy6lowk span")[j];
+                    if (spanObj.textContent == "Quantity*") {
+                        var qty5 = ((TOTAL_TRADING_AMOUNT * 5) - (TOTAL_TRADING_AMOUNT * 5 * 2 / 100)) / LTP_DATA[symbol]
+                        var qty4 = ((TOTAL_TRADING_AMOUNT * 4) - (TOTAL_TRADING_AMOUNT * 4 * 2 / 100)) / LTP_DATA[symbol]
+                        var qty3 = ((TOTAL_TRADING_AMOUNT * 3) - (TOTAL_TRADING_AMOUNT * 3 * 2 / 100)) / LTP_DATA[symbol]
+
+                        console.log("TOTAL_TRADING_AMOUNT * 3 : " + TOTAL_TRADING_AMOUNT * 3);
+                        console.log("TOTAL_TRADING_AMOUNT * 3 * 2 / 100 : " + TOTAL_TRADING_AMOUNT * 3 * 2 / 100);
+                        console.log("LTP_DATA[symbol] : " + LTP_DATA[symbol]);
+                        console.log("qty3 : " + qty3);
+
+
+                        spanObj.textContent = "Quantity* " + (qty5 - 1).toFixed(0) + "*" + (qty4 - 1).toFixed(0) + "*" + (qty3 - 1).toFixed(0)
+                    } else if (spanObj.textContent.includes("Stoploss*")) {
+                        var stopLoss = "";
+                        if ($(button).attr("data-id") == "ReviewBuyOrder") {
+                            stopLoss = parseFloat(LTP_DATA[symbol]) - (LTP_DATA[symbol] * STOP_LOSS_PERCENTAGE / 100)
+                        } else if ($(button).attr("data-id") == "ReviewSellOrder") {
+                            stopLoss = parseFloat(LTP_DATA[symbol]) + (LTP_DATA[symbol] * STOP_LOSS_PERCENTAGE / 100)
+                        }
+                        spanObj.textContent = "Stoploss* " + stopLoss.toFixed(1)
+                    }
+                }
+                isInCreateOrder = true;
+                break;
+            }
+        }
+
+        if (!isInCreateOrder) {
+            var trade = {};
+
+            for (var i = 0; i < 6; i++) {
+                var row = $("._2jBClUn_2UxJyGrDjqEx--")[0].children[i];
+
+                trade.symbol = symbol;
+                trade.TP = LTP_DATA[symbol]
+                if (row.children[0].children[0].textContent == "Side") {
+                    trade.type = row.children[0].children[1].textContent == "Buy" ? "BUY" : "SELL";
+                }
+                if (row.children[0].children[0].textContent == "Quantity") {
+                    trade.qty = row.children[0].children[1].textContent;
+                }
+                trade.sl = "";
+                trade.pb = "";
+            }
+            console.log(trade)
+
+
+            var isPresent = false;
+            for (var i = 0; i < TRADED_SHARES.length; i++) {
+                if (TRADED_SHARES[i].symbol == symbol) {
+                    TRADED_SHARES[i] = trade;
+                    isPresent = true;
+                    break;
+                }
+            }
+
+            if (!isPresent) {
+                TRADED_SHARES.push(trade);
+            }
+        }
+    }
+
+}, 1 * 1000);		
 	
 	
 	</textarea>
     <p></p>
+	
+	 <label style="font-weight:bold;font-size: larger;"> NSE Script For OHL</label>
+    <textarea style="margin: 0px; width: 1500px; height: 200px;">
+	
+	
+
+
+var date = new Date();
+RESULT = {
+    time: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + ":" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
+    open_is_low: [],
+    open_is_high: [],
+
+}
+
+
+var table = $("#equityStockTable")[0];
+var rows = $("#equityStockTable")[0].children[1];
+console.log(rows);
+
+var open, high, low;
+for (var i = 1; i < rows.children.length; i++) {
+    var row = rows.children[i];
+    open = row.children[1].textContent;
+    high = row.children[2].textContent;
+    low = row.children[3].textContent;
+
+    var symbol = row.children[0].children[0].textContent;
+    if (open == high) {
+        RESULT.open_is_high.push(symbol)
+    }
+
+    if (open == low) {
+        RESULT.open_is_low.push(symbol)
+    }
+
+}
+
+console.log(JSON.stringify(RESULT))
+
+
+	</textarea>
 
 </body>
 
