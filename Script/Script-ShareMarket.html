@@ -13,9 +13,7 @@
     <label style="font-weight:bold;font-size: larger;"> Upstox</label>
     <textarea style="margin: 0px; width: 1500px; height: 391px;">
     
-	    		    
-    
-	    //Version Upstox PRO v1.72.0(PROD)
+	    		    //Version Upstox PRO v1.72.0(PROD)
 
 var POLLING_DATA_INTERVAL = 1   //in seconds
 var CANDLE_SLOT_TIME = 59        //in seconds
@@ -35,7 +33,7 @@ var monitoring_List = [];
 CANDLE_DATA = {}
 INDEX_DATA = { "NIFTY": [], "SENSEX": [] }
 var TRADED_SHARES = [];
-//TRADED_SHARES = [{ "symbol": "IRCTC", "TP": 746, "profitLimit": 746.308, "type": "BUY", "isAutomatic": true, "qty": "200" }]
+TRADED_SHARES = [{ "symbol": "TITAN", "TP": 746, "profitLimit": 746.308, "type": "BUY", "isAutomatic": true, "qty": "200" }]
 var LTP_DATA = {}
 //var HIGH_PRICE_CHANGE_LIST = []
 var HIGH_PRICE_CHANGE_LIST = [{ symbol: "ITC", change: 2.1, time: "11:30" }]
@@ -518,6 +516,8 @@ function renderTheControlPanel() {
         "<select id='controlPanel_type' style='width: 40%; margin: 10px;height: 35px;padding-left: 10px;'>  <option value='BUY'>BUY</option>  <option value='SELL'>SELL</option></select>" +
         "<input type='number' placeholder='Stop Loss' id='controlPanel_sl' style='width: 44%; margin: 10px;height: 35px;padding-left: 10px;'> " +
         "<input type='number' placeholder='Profit Booking' id='controlPanel_pb' style='width: 40%; margin: 10px;height: 35px;padding-left: 10px;'> " +
+        "<label id='profitLossValue' style='color: red;font-weight: 400;padding-left: 30px;'>" + ((1 * TOTAL_TRADING_AMOUNT) / 100) + ", " + ((2 * TOTAL_TRADING_AMOUNT) / 100) + ", " + ((3 * TOTAL_TRADING_AMOUNT) / 100) + ", " + ((4 * TOTAL_TRADING_AMOUNT) / 100) + "</label><br>" +
+
         "<label id='formValidateMsg' style='color: red;font-weight: 400;padding-left: 30px;'></label><br>" +
         "<button onclick='addNewStockForTrading()'  id='addNewStockForTradingButton' class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left: 26%; width: 23%;'>Add</button>" +
         "<button onclick='resetForm()' class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-left: 1%; width: 23%;'>Reset</button>" +
@@ -627,6 +627,23 @@ function renderTradingList() {
                 SquareOff(TRADED_SHARES[i].symbol);
             }
 
+            if (validate(LTP_DATA[TRADED_SHARES[i].symbol])) {
+                var LTP = LTP_DATA[TRADED_SHARES[i].symbol];
+                if (!validate(TRADED_SHARES[i].low)) {
+                    TRADED_SHARES[i].low = value
+                }
+                if (!validate(TRADED_SHARES[i].high)) {
+                    TRADED_SHARES[i].high = value
+                }
+
+                if (parseFloat(TRADED_SHARES[i].low) > parseFloat(value)) {
+                    TRADED_SHARES[i].low = value
+                }
+                if (parseFloat(TRADED_SHARES[i].high) < parseFloat(value)) {
+                    TRADED_SHARES[i].high = value
+                }
+            }
+
             var color = value <= 0 ? 'orange' : 'green';
             var profit = value <= 0 ? 'Loss' : 'Profit';
             var profitPer = ((value / (TRADED_SHARES[i].TP * TRADED_SHARES[i].qty)) * 100);
@@ -634,7 +651,8 @@ function renderTradingList() {
             html += "<div onclick=openShareInfoPage('" + TRADED_SHARES[i].symbol + "') style='padding: 10px;background-color:" + color + ";cursor:pointer;'> <label style='padding:10px;color:white;margin-top:20px;font-weight: 500;cursor:pointer;'>  " + TRADED_SHARES[i].symbol + " : " + TRADED_SHARES[i].type + " : " + TRADED_SHARES[i].TP + " : " + TRADED_SHARES[i].qty + "</label> " +
                 "<div style='margin-top: 10px;color: white;font-weight: 600; padding-left: 10px;'><label >" + profit + " : " + value + "</label></div>" +
                 "<div style='margin-top: 10px;color: white;font-weight: 600; padding-left: 10px;'><label>" + profit + " % : " + profitPer + "</label></div>" +
-                "<div style='margin-top: 10px;color: white;font-weight: 600; padding-left: 10px;'><label> Charges : " + TRADED_SHARES[i].changes + "</label></div>" +
+                "<div style='margin-top: 10px;color: white;font-weight: 600; padding-left: 10px;'><label> Charges : " + TRADED_SHARES[i].changes + ",  LTP : " + LTP_DATA[TRADED_SHARES[i].symbol] + "</label></div>" +
+                "<div style='margin-top: 10px;color: white;font-weight: 600; padding-left: 10px;'><label> Low : " + TRADED_SHARES[i].low + ", High : " + TRADED_SHARES[i].high + "</label></div>" +
                 "<div style='margin-top: 10px;color: white;font-weight: 600; padding-left: 10px;'><label> SL : " + TRADED_SHARES[i].sl + ", PB : " + TRADED_SHARES[i].pb + "</label></div>" +
 
                 "<button onclick=SquareOff('" + TRADED_SHARES[i].symbol + "',true) class='_2HpU8omQhEG7sYXwd0Eh1l _1efTygUb8YnuX4L2gG7L_n _2STh4jPLw7LjGdHlklSQNp _2g1NiIOWXXrwNbjHtDkyld eL3kGQ_m0exIeJqAWkwM_' style='margin-top: 10px;'>Sq.Off</button>" + "      "
@@ -944,7 +962,7 @@ setInterval(function () {
         }
     }
 
-}, 1 * 1000);		
+}, 1 * 1000);	
 	
 	
 	</textarea>
@@ -956,11 +974,17 @@ setInterval(function () {
 	
 
 
+
+var MAX_CHANGE_PERCENTAGE = 0.7;
+var OUT = [];
+
+
 var date = new Date();
 RESULT = {
     time: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + ":" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
-    open_is_low: [],
-    open_is_high: [],
+    /* open_is_low: [],
+    open_is_high: [], */
+    data: []
 
 }
 
@@ -975,18 +999,30 @@ for (var i = 1; i < rows.children.length; i++) {
     open = row.children[1].textContent;
     high = row.children[2].textContent;
     low = row.children[3].textContent;
+    LTP = row.children[5].textContent;
 
-    var symbol = row.children[0].children[0].textContent;
-    if (open == high) {
-        RESULT.open_is_high.push(symbol)
+    var diff = open - LTP;
+
+    diff = diff * -1;
+
+
+    var changePer = (diff * 100) / open;
+    if (changePer <= MAX_CHANGE_PERCENTAGE && changePer >= (MAX_CHANGE_PERCENTAGE * -1)) {
+        OUT.push({ "symbol": row.children[0].textContent, "changePer": changePer.toFixed(2) })
     }
-
-    if (open == low) {
-        RESULT.open_is_low.push(symbol)
-    }
-
 }
 
+for (var i = 0; i < OUT.length; i++) {
+    for (var j = 0; j < OUT.length - 1; j++) {
+        if (parseFloat(OUT[j].changePer) < parseFloat(OUT[j + 1].changePer)) {
+            var temp = OUT[j];
+            OUT[j] = OUT[j + 1];
+            OUT[j + 1] = temp;
+        }
+    }
+}
+
+RESULT.data = OUT;
 console.log(JSON.stringify(RESULT))
 
 
