@@ -1,0 +1,196 @@
+
+Pending R&D or Features
+===============================
+1. avarage of 5 last price needs to take for the square off
+2. Needs to check the feasibility for the trading between 3.00 to 3.30
+
+
+OHL Strategy
+===============================
+1. Go to NSE website after 9.30 and download the file with NIFTY50.
+2. Filter the stocks in the sheet based on OHL strategy.
+3. Select the stocks follows the NIFTY
+4. Select the stocks which follows the trade indices too.
+5. Graph should be in 5-min candle
+6. The first candle open and close should not swallow the second and third candle.
+
+
+
+Strategys
+===============================
+1.buy or sell at 9.15 to 9.20 based on the nifty and the primary indication of the stock. 
+Buy the stock if nifty start up, and stock start up, else sell if both are start down
+
+Chart- Candle, 1-min
+
+
+21-03-2022
+===============================
+
+Join Conditions
+1. Script to find out the stock having rapid change.(% change needs to configure on monday)
+2. Wait till the reversal in  candlestick
+3. RSI should almost 70 above or 30 below
+4. MACD should have upper high's or lower low's
+5. Stocastics and RSI should be very high or low.
+
+Strategy
+===============
+9.30  List all the NIFTY50 stockes based on OHL(both low and hight)
+Remove the non- trending stocks
+10.00 Trade against the current trend
+
+
+
+Updgraded Strategy-08-04-2022
+=============================
+
+Strategy: 1
+================
+9.30:  List all the NIFTY50 stockes based on OHL(both low and hight)
+       Remove the non- trending stocks
+       trade @9.30 Against the initial trend
+
+10.00 :  Exit (set the profit 2% of the capital)
+
+10.30 : take a reverse position.. and set the profit as 1%
+
+
+
+strategy 2:
+======================
+12:00    Find the trades very high or low against the nifty trend
+		Find a patteren 'M' 'triple top'
+		
+		trade for the reversal Profit 2%
+
+
+
+Updgraded Strategy-01-04-2022
+=============================
+
+Strategy: 1
+================
+9.30:  	List all the NIFTY50 stocks based on OHL(both low and hight)
+       	Remove the stocks against the NIFTY50 trend.
+       	Remove the stock its not satisfying the OHL exactly.	
+      	trade the stocks in the same direction with nifty and that particular stock.
+	The first 3 candles should be in the same color
+	set 1% Profit.
+	set 2% Stop Loss.
+
+Hot Trade: Tric
+=================
+9.30: 	List all the NIFTY50 stocks based on OHL(both low and hight)
+       	Select the stocks against the NIFTY50 trend in the first 3 candle.
+      	trade the stocks in the against the direction with nifty.
+	don't trade @ 9:30.. Wait till the first reversal
+	Trade start @ 9.40-9.45 
+	set 1% Profit.
+	set 2% Stop Loss(SL Not correct becz of high volatility)
+
+
+
+Trade in Nutral Stocks- 14-04-2022
+=============================
+
+if(Clear uptrend or down trend in NIFTY_50(Wait till the opposite color candle)){
+	9:30  	List all the  Nutral stocks NIFTY50 (No loss and profit).
+        	If nifty moved up=> Then select the stock less than 0.00
+		Else nifty moved down=> Then elect the stock greater than 0.00
+
+        	Trade only if the expected reversal is not yet happened
+	9:49    Trade aginst the Nifty trend 
+		Profit - 1%	
+		SL: 2%	
+
+}else(Not have a clear trend){
+	9:30  	List all the  Nutral stocks NIFTY50 (No loss and profit).
+        	If nifty(Last two candles) moved up=> Then select the stock less than 0.00
+		Else nifty moved down (Last two candles)  => Then select the stock greater than 0.00
+
+        	Trade only if the expected reversal is not yet happened
+	9:49    Trade aginst the Nifty trend of last two candles
+		Profit - 1%
+		SL: 2%	
+
+}
+
+psycology Behind : In market opening time there will be a high change either selling or buying. 
+But these nutral stocks will be nutral only bcz of the market is moving agaist the trend of the nutral stocks. 
+So once market retraces of reversal these nutral stocks will perform well against the initial market trend.
+			
+
+SELECT SUM(PROFIT) FROM MARKET_ANALYSER WHERE IS_PROFIT=1 AND STOP_LOSS=-500 AND PROFIT=500
+SELECT SUM(STOP_LOSS) FROM MARKET_ANALYSER WHERE IS_PROFIT=0 AND STOP_LOSS=-500 AND PROFIT=500
+
+<-------------------Insert Query--------------->
+INSERT  INTO `MARKET_ANALYSER`(`SYMBOL`,`DATE`,`STOP_LOSS`,`PROFIT`,`IS_PROFIT`,`TRADE_TYPE`) VALUES 
+('ICICI',NULL,-500,500,1,1),
+('ICICI',NULL,-500,1000,0,1),
+('ICICI',NULL,-1000,1000,1,1),
+('ICICI',NULL,-500,500,1,1),
+('ICICI',NULL,-500,500,1,1);
+
+
+<-------------------Query for the reports--------------->
+	
+<-------- SL:1%, Profit:1%------------>
+SELECT 
+(SELECT SUM(PROFIT) FROM MARKET_ANALYSER WHERE IS_PROFIT=1 AND STOP_LOSS=-500 AND PROFIT=500 AND TRADE_TYPE=1) +
+(SELECT SUM(STOP_LOSS) FROM MARKET_ANALYSER WHERE IS_PROFIT=0 AND STOP_LOSS=-500 AND PROFIT=500 AND TRADE_TYPE=1) 
+AS "Profit/Loss" FROM DUAL
+
+<-------- SL:1%, Profit:2%------------>
+SELECT 
+(SELECT SUM(PROFIT) FROM MARKET_ANALYSER WHERE IS_PROFIT=1 AND STOP_LOSS=-500 AND PROFIT=1000 AND TRADE_TYPE=1) +
+(SELECT SUM(STOP_LOSS) FROM MARKET_ANALYSER WHERE IS_PROFIT=0 AND STOP_LOSS=-500 AND PROFIT=1000 AND TRADE_TYPE=1) 
+AS "Profit/Loss" FROM DUAL
+
+<-------- SL:1%, Profit:3%------------>
+SELECT 
+(SELECT SUM(PROFIT) FROM MARKET_ANALYSER WHERE IS_PROFIT=1 AND STOP_LOSS=-500 AND PROFIT=1500 AND TRADE_TYPE=1) +
+(SELECT SUM(STOP_LOSS) FROM MARKET_ANALYSER WHERE IS_PROFIT=0 AND STOP_LOSS=-500 AND PROFIT=1500 AND TRADE_TYPE=1) 
+AS "Profit/Loss" FROM DUAL
+
+==========================================================================================================================
+
+<-------- SL:2%, Profit:1%------------>
+SELECT 
+(SELECT SUM(PROFIT) FROM MARKET_ANALYSER WHERE IS_PROFIT=1 AND STOP_LOSS=-1000 AND PROFIT=500 AND TRADE_TYPE=1) +
+(SELECT SUM(STOP_LOSS) FROM MARKET_ANALYSER WHERE IS_PROFIT=0 AND STOP_LOSS=-1000 AND PROFIT=500 AND TRADE_TYPE=1) 
+AS "Profit/Loss" FROM DUAL
+
+
+
+<-------- SL:2%, Profit:2%------------>
+SELECT 
+(SELECT SUM(PROFIT) FROM MARKET_ANALYSER WHERE IS_PROFIT=1 AND STOP_LOSS=-1000 AND PROFIT=1000 AND TRADE_TYPE=1) +
+(SELECT SUM(STOP_LOSS) FROM MARKET_ANALYSER WHERE IS_PROFIT=0 AND STOP_LOSS=-1000 AND PROFIT=1000 AND TRADE_TYPE=1) 
+AS "Profit/Loss" FROM DUAL
+
+<-------- SL:2%, Profit:3%------------>
+SELECT 
+(SELECT SUM(PROFIT) FROM MARKET_ANALYSER WHERE IS_PROFIT=1 AND STOP_LOSS=-1000 AND PROFIT=1500 AND TRADE_TYPE=1) +
+(SELECT SUM(STOP_LOSS) FROM MARKET_ANALYSER WHERE IS_PROFIT=0 AND STOP_LOSS=-1000 AND PROFIT=1500 AND TRADE_TYPE=1) 
+AS "Profit/Loss" FROM DUAL
+
+
+Create Date(18-05-2022)
+
+If(Method-1)(All the first three candles are in same color and in a clear trend){
+	9.30 :  List stock from NIFTY-50 having a small trend in the same trend of NIFTY-50.
+		Trade in the same direction of the NIFTY-50 Trend.
+		Profit - 2%
+		SL: 2%	
+}else if(Method-2)(Clear trend  present but, all the candles are in not in the same color){
+	9.30 :  List the stock having no change from NIFTy-50
+		Trade Against the initial trend of the NIFTY-50.
+		Profit - 2%
+		SL: 2%	
+
+}else if(Method-3)(No trend in the first three candles){
+	wait till a clear trend and trade based on the Method-2.
+}
+
+
