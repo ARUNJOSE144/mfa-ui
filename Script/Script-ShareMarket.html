@@ -973,8 +973,6 @@ setInterval(function () {
 	
 	
 
-
-
 var MAX_CHANGE_PERCENTAGE = 0.7;
 var OUT = [];
 
@@ -996,10 +994,10 @@ console.log(rows);
 var open, high, low;
 for (var i = 1; i < rows.children.length; i++) {
     var row = rows.children[i];
-    open = row.children[1].textContent;
-    high = row.children[2].textContent;
-    low = row.children[3].textContent;
-    LTP = row.children[5].textContent;
+    open = (row.children[1].textContent).replaceAll(',', '');
+    high = (row.children[2].textContent).replaceAll(',', '');
+    low = (row.children[3].textContent).replaceAll(',', '');
+    LTP = (row.children[5].textContent).replaceAll(',', '');
 
     var diff = open - LTP;
 

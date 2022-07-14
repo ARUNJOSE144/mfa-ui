@@ -12,152 +12,193 @@
 
     <label style="font-weight:bold;font-size: larger;"> Auto Question checking for bartleby</label>
     <textarea style="margin: 0px; width: 1200px; height: 391px;">    		    
-    
-	    var bTags = document.getElementsByTagName("button");
-        var searchText = "View Primary Question";
-		var searchEscalationText = "View Escalation Question";
-        //In seconds
-        var pollInterval = 12;
-		var audio = new Audio('https://www.soundjay.com/door/sounds/doorbell-2.mp3');
-    
-        setInterval(function () {
-            console.log("----Polling----")
-            for (var i = 0; i < bTags.length; i++) {
-                if (bTags[i].textContent == searchText) {
-                    console.log("----Button Present----")
-                    bTags[i].click()
-                    setTimeout(function () { playBeep(); }, 5000);
+       
+var bTags = document.getElementsByTagName("button");
+var searchText = "View Primary Question";
+var searchEscalationText = "View Escalation Question";
+var searchThreadedText = "View Follow up Question";
+//In seconds
+var pollInterval = 12;
+var audio = new Audio('https://www.soundjay.com/buttons/sounds/button-3.mp3');
+audio.play();
+
+
+
+// Primary Queue Polling start Here
+setInterval(function () {
+    console.log("----Polling----")
+    for (var i = 0; i < bTags.length; i++) {
+        if (bTags[i].textContent == searchText) {
+            console.log("----Button Present----")
+            bTags[i].click()
+            setTimeout(function () { playBeep(); }, 5000);
+            break;
+        }
+    }
+}, pollInterval * 1000);
+// Primary Queue Polling end Here
+
+
+
+
+// Escalation Queue Polling start Here
+setTimeout(function () {
+    setInterval(function () {
+        console.log("-E---Polling----");
+
+        for (var i = 0; i < bTags.length; i++) {
+            if (bTags[i].textContent == searchEscalationText) {
+                console.log("-E---Button Present----")
+                bTags[i].click()
+                setTimeout(function () { playBeep(); }, 5000);
+                break;
+            }
+        }
+    }, pollInterval * 1000)
+}, 3000);
+// Escalation Queue Polling end Here
+
+
+
+
+
+// Threaded Queue Polling start Here
+setTimeout(function () {
+    setInterval(function () {
+        console.log("-T---Polling----");
+
+        for (var i = 0; i < bTags.length; i++) {
+            if (bTags[i].textContent == searchThreadedText) {
+                console.log("-T---Button Present----")
+                bTags[i].click()
+                setTimeout(function () { playBeep(); }, 5000);
+                break;
+            }
+        }
+    }, pollInterval * 1000)
+}, 6000);
+// Threaded Queue Polling end Here
+
+
+
+
+
+
+
+setInterval(function () {
+    var buttonTags = document.getElementsByClassName("ViewSubmitOrDeclineButton");
+    var searchButtonText = "Accept";
+    console.log("----Polling for Selected Question----")
+    for (var i = 0; i < buttonTags.length; i++) {
+        if (buttonTags[i].textContent == searchButtonText) {
+            audio.play();
+            break;
+        }
+    }
+}, 120000);
+
+
+
+
+function playBeep() {
+    var url = window.location.href;
+    if (url.includes("/questions/") && url.includes("/review")) {
+        console.log("-----Question Available----")
+        audio.play();
+        AddSkipButton();
+    }
+}
+
+function AddSkipButton() {
+    let btn = document.createElement("button");
+    btn.innerHTML = "Skip";
+    btn.className = "sc-VigVT sc-jzJRlG sc-kAzzGY sc-kTUwUJ eTABfT ViewSubmitOrDeclineButton";
+    btn.onclick = function cliked() {
+        var obj1 = document.getElementsByClassName("ViewSubmitOrDeclineButton");
+        for (var i = 0; i < obj1.length; i++) {
+            if (obj1[i].innerHTML == "Decline") {
+                obj1[i].click();
+                setTimeout(function () {
+                    var radio = document.getElementsByClassName("FormRadioLabel");
+                    for (var k = 0; k < radio.length; k++) {
+                        if (radio[k].innerHTML == "Insufficient Subject Knowledge") {
+                            radio[k].click();
+                            setTimeout(function () {
+                                var x = document.getElementsByTagName("button");
+                                for (var j = 0; j < x.length; j++) {
+                                    if (x[j].innerHTML == "Confirm Decline") {
+                                        x[j].click();
+                                        setTimeout(function () {
+                                            var okbutton = document.getElementsByTagName("button");
+                                            for (var q = 0; q < okbutton.length; q++) {
+                                                if (okbutton[q].innerHTML == "OK") {
+                                                    okbutton[q].click();
+                                                    setTimeout(function () {
+                                                        for (var p = 0; p < bTags.length; p++) {
+
+                                                            if (bTags[p].textContent == searchText) {
+
+                                                                console.log("----Button Present-- ppppppp--")
+                                                                bTags[p].click();
+                                                                setTimeout(function () { playBeep(); }, 5000);
+                                                                break;
+                                                            }
+                                                        }
+                                                    }, 2000);
+                                                }
+                                            }
+
+
+
+                                        }, 2000);
+                                    }
+                                }
+                            }, 500);
+                        }
+                    }
+
+
+                }, 1000);
+            }
+        }
+    }
+    var obj = document.getElementsByClassName("ViewButtonsContainer");
+    if (obj[0].children.length == 2) {
+        obj[0].append(btn);
+    }
+
+}
+
+//cheking for the alert meaage "having question in the q"
+setInterval(function () {
+    var divTags = document.getElementsByTagName("div");
+    var divText = "There are questions available for you to answer.";
+    var BonusText = "Successfully answer a bonus question and earn an additional 15% per question.";
+
+    //console.log("--- avail msg----")
+    for (var i = 0; i < divTags.length; i++) {
+        if (divTags[i].textContent == divText || divTags[i].textContent == BonusText) {
+            var buttonTags = document.getElementsByTagName("button");
+            for (var j = 0; j < buttonTags.length; j++) {
+                if (buttonTags[j].innerHTML == "OK") {
+                    buttonTags[j].click();
+                    for (var i = 0; i < bTags.length; i++) {
+                        if (bTags[i].textContent == searchText) {
+                            console.log("----Button Present----")
+                            bTags[i].click()
+                            setTimeout(function () { playBeep(); }, 5000);
+                            break;
+                        }
+                    }
                     break;
                 }
             }
-        }, pollInterval* 1000);
-		
-		
-		 setTimeout(function () {
-		 setInterval(function () {
-            console.log("-E---Polling----");
-			
-            for (var i = 0; i < bTags.length; i++) {
-                if (bTags[i].textContent == searchEscalationText) {
-                    console.log("-E---Button Present----")
-                    bTags[i].click()
-                    setTimeout(function () { playBeep(); }, 5000);
-                    break;
-                }
-            }
-        }, pollInterval* 1000)},5000);
-		
-		setInterval(function () {
-			var buttonTags = document.getElementsByClassName("ViewSubmitOrDeclineButton");
-			var searchButtonText = "Accept";
-            console.log("----Polling for Selected Question----")
-            for (var i = 0; i < buttonTags.length; i++) {
-                if (buttonTags[i].textContent == searchButtonText) {
-					audio.play();
-                    break;
-                }
-            }
-        },120000);
-		
-		
+        }
+    }
+}, 500);
 
-    
-        function playBeep() {
-            var url = window.location.href;
-             if (url.includes("/questions/") && url.includes("/review")) { 
-                console.log("-----Question Available----")
-                audio.play();
-                AddSkipButton();
-             } 
-        }  
 
-		function AddSkipButton(){
-		let btn = document.createElement("button");
-		btn.innerHTML = "Skip";
-		btn.className  = "sc-VigVT sc-jzJRlG sc-kAzzGY sc-kTUwUJ eTABfT ViewSubmitOrDeclineButton";
-		btn.onclick=function cliked(){
-			var obj1=document.getElementsByClassName("ViewSubmitOrDeclineButton");
-			for(var i=0;i<obj1.length;i++){
-				if(obj1[i].innerHTML=="Decline"){
-					obj1[i].click();
-					setTimeout(function(){
-						var radio=document.getElementsByClassName("FormRadioLabel");
-						for(var k=0;k<radio.length;k++){
-							if(radio[k].innerHTML=="Insufficient Subject Knowledge"){
-								radio[k].click();
-								setTimeout(function(){
-									var x = document.getElementsByTagName("button");
-									for(var j=0;j<x.length;j++){
-										if(x[j].innerHTML=="Confirm Decline"){
-											x[j].click();
-											setTimeout(function(){
-												var okbutton = document.getElementsByTagName("button");
-												for(var q=0;q<okbutton.length;q++){
-													if(okbutton[q].innerHTML=="OK"){
-														okbutton[q].click();
-														setTimeout(function(){
-														for (var p = 0; p < bTags.length; p++) {
-												
-															if (bTags[p].textContent == searchText) {
-														
-																console.log("----Button Present-- ppppppp--")
-																bTags[p].click();
-																setTimeout(function () { playBeep(); }, 5000);
-																break;
-															}
-														}
-														}, 2000);
-													}
-												}
-												
-												
-												
-											}, 2000);
-										}
-									}
-								}, 500);
-							}
-						}
-						
-					
-					}, 1000);
-				}	
-			}
-		}
-		var obj=document.getElementsByClassName("ViewButtonsContainer");
-		if(obj[0].children.length==2){
-			obj[0].append(btn);
-		}
-
-		}
-		
-		//cheking for the alert meaage "having question in the q"
-		setInterval(function () {
-			var divTags = document.getElementsByTagName("div");
-			var divText = "There are questions available for you to answer.";
-			var BonusText = "Successfully answer a bonus question and earn an additional 15% per question.";
-			
-            //console.log("--- avail msg----")
-            for (var i = 0; i < divTags.length; i++) {
-                if (divTags[i].textContent == divText || divTags[i].textContent == BonusText) {
-					var buttonTags = document.getElementsByTagName("button");
-					for (var j = 0; j < buttonTags.length; j++) {
-						if (buttonTags[j].innerHTML =="OK" ) {
-							buttonTags[j].click();
-							for (var i = 0; i < bTags.length; i++) {
-								if (bTags[i].textContent == searchText) {
-									console.log("----Button Present----")
-									bTags[i].click()
-									setTimeout(function () { playBeep(); }, 5000);
-									break;
-								}
-							}
-							break;
-						}
-					}
-				}
-			}
-        },500);
+	   
 			
 	</textarea>
 	<p></p>
