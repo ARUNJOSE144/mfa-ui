@@ -194,3 +194,55 @@ If(Method-1)(All the first three candles are in same color and in a clear trend)
 }
 
 
+
+
+Trade Strategy after 10:00(Stocks r selected with 9.30 strategy)
+======================================
+Time :   10:00 -   Identify the  trend (trade only the direction of the trend)
+Tools : Candle Graph, Stoch RSI, RSI, Stoch 
+Strategy :  If atleast two is more than 80 then trade against, or If atleast two is below 20 then trade against
+
+
+
+Sector based Trading
+====================
+1. Get the immediate crossing of Moving Average of 5 over Moving average of 20. That sector considered as trending sector
+2. Find the most movement stock in the same sector and trade along with the trend(Wait for a reversal to take the position)
+3. Use the Min max tracker in the script to get the propper position
+
+
+
+Strategy: Trade with Sector trend.
+
+Time : 9.45 : Select the sector having the strongest opposite trend of the nifty.
+	      Select the stocks in the same sector having the most contributed stocks in the Sector 
+	      and trade with the same direction of the stock.
+
+		Conider the 20-5 Moving Avarage for selecting the best trending stocks and trade with trend.
+
+
+
+
+Latest Trending Strategy
+==================================
+*  5 min Candle
+*  Sectorial based stock trading
+*  Select the sector having highest % of change in the same direction of NIFTY 50.
+*  Select the stock having highest % of change in the same direction of NIFTY 50 and sector.
+*  Exponential Moving Average(EMA) 100 (Trade based on Trend)
+*  Super Trend- 1, 10
+*  Pivot Traditional
+*  Moving Average(SMA) 20
+*  Volume osilator
+*  sell only if in downtrend(above MA)
+*  buy if uptrend(Below EMA)
+
+
+
+27-07-2022 Strategy
+===========================
+* 15 min candle
+* if  and first to can candles r in same color then trade with trend 
+* else if the first 2 candles are in different color, then trade against the current trend.
+
+

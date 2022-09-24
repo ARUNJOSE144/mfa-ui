@@ -6,8 +6,8 @@ var REQUIRED_POSITIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES = 0.4;
 var REQUIRED_NEGATIVE_CHANGE_PERCENTAGE_FOR_TWO_CANDLES = -0.4;
 var PROFIT_LOSS_PERCENTAGE = 0.30;
 var LOGS_REQUIRED = true;
-var TOTAL_TRADING_AMOUNT = 50000;
-var STOP_LOSS_PERCENTAGE = .25;
+var TOTAL_TRADING_AMOUNT = 100000;
+var STOP_LOSS_PERCENTAGE = 1;
 
 
 
@@ -18,7 +18,7 @@ var monitoring_List = [];
 CANDLE_DATA = {}
 INDEX_DATA = { "NIFTY": [], "SENSEX": [] }
 var TRADED_SHARES = [];
-TRADED_SHARES = [{ "symbol": "TITAN", "TP": 746, "profitLimit": 746.308, "type": "BUY", "isAutomatic": true, "qty": "200" }]
+//TRADED_SHARES = [{ "symbol": "TITAN", "TP": 746, "profitLimit": 746.308, "type": "BUY", "isAutomatic": true, "qty": "200" }]
 var LTP_DATA = {}
 //var HIGH_PRICE_CHANGE_LIST = []
 var HIGH_PRICE_CHANGE_LIST = [{ symbol: "ITC", change: 2.1, time: "11:30" }]
@@ -55,7 +55,7 @@ setInterval(function () {
             //analyzeNR7Sticks(share)
         }
         //console.table(watchlist_Stocks);
-        addDataForCandleGraph(watchlist_Stocks)
+        //addDataForCandleGraph(watchlist_Stocks)
 
         //NIFTY
         var index = {
@@ -65,7 +65,7 @@ setInterval(function () {
         index.NIFTY = (index.NIFTY).replaceAll(',', '')
         index.SENSEX = (index.SENSEX).replaceAll(',', '')
 
-        addDataForIndex(index);
+        //addDataForIndex(index);
 
         renderTradingList();
 
@@ -146,9 +146,9 @@ function addDataForCandleGraph(data) {
 
         startedEvaluvatingCandle = false;
         if (SHORTLISTED_SHARES.length > 0) {
-            isStockMarket_Up();
-            getBestStock()
-            audio.play();
+            //isStockMarket_Up();
+            //getBestStock()
+            //audio.play();
         } else {
             console.error("No best stock found");
         }
@@ -617,14 +617,14 @@ function renderTradingList() {
     if (TRADED_SHARES.length > 0) {
         for (var i = 0; i < TRADED_SHARES.length; i++) {
             var value = calculateTheActualProfitAfterDeductions(TRADED_SHARES[i].symbol)
-            var profitPer = ((value / (TRADED_SHARES[i].TP * TRADED_SHARES[i].qty)) * 100 * TRADED_SHARES[i].leverage);
+            var profitPer = ((value / ((TRADED_SHARES[i].TP * TRADED_SHARES[i].qty) / TRADED_SHARES[i].leverage)) * 100);
             profitPer = profitPer.toFixed(2);
 
-            if (validate(TRADED_SHARES[i].sl) && profitPer <= parseFloat(TRADED_SHARES[i].sl)) {
+            if (validate(TRADED_SHARES[i].sl) && profitPer <= parseFloat(TRADED_SHARES[i].sl) && TRADED_SHARES[i].status != "Not-Active") {
                 console.error("Stop Loss Hit");
                 SquareOff(TRADED_SHARES[i].symbol);
 
-            } else if (validate(TRADED_SHARES[i].pb) && profitPer >= parseFloat(TRADED_SHARES[i].pb)) {
+            } else if (validate(TRADED_SHARES[i].pb) && profitPer >= parseFloat(TRADED_SHARES[i].pb) && TRADED_SHARES[i].status != "Not-Active") {
                 console.error("Stop Loss Hit");
                 SquareOff(TRADED_SHARES[i].symbol);
             }
@@ -648,9 +648,15 @@ function renderTradingList() {
 
             if (TRADED_SHARES[i].status == "Not-Active") {
                 if (TRADED_SHARES[i].type == "BUY" && LTP_DATA[TRADED_SHARES[i].symbol] <= TRADED_SHARES[i].TP) {
-                    TRADED_SHARES[i].status = "Active"
+                    TRADED_SHARES[i].status = "Active";
+                    TRADED_SHARES[i].low = 0;
+                    TRADED_SHARES[i].high = 0;
+                    audio.play();
                 } else if (TRADED_SHARES[i].type == "SELL" && LTP_DATA[TRADED_SHARES[i].symbol] >= TRADED_SHARES[i].TP) {
                     TRADED_SHARES[i].status = "Active"
+                    TRADED_SHARES[i].low = 0;
+                    TRADED_SHARES[i].high = 0;
+                    audio.play();
                 }
             }
 
@@ -929,13 +935,9 @@ setInterval(function () {
                         var qty4 = ((TOTAL_TRADING_AMOUNT * 4) - (TOTAL_TRADING_AMOUNT * 4 * 2 / 100)) / LTP_DATA[symbol]
                         var qty3 = ((TOTAL_TRADING_AMOUNT * 3) - (TOTAL_TRADING_AMOUNT * 3 * 2 / 100)) / LTP_DATA[symbol]
 
-                        /*   console.log("TOTAL_TRADING_AMOUNT * 3 : " + TOTAL_TRADING_AMOUNT * 3);
-                          console.log("TOTAL_TRADING_AMOUNT * 3 * 2 / 100 : " + TOTAL_TRADING_AMOUNT * 3 * 2 / 100);
-                          console.log("LTP_DATA[symbol] : " + LTP_DATA[symbol]);
-                          console.log("qty3 : " + qty3); */
+                        var tradeAmount = TOTAL_TRADING_AMOUNT - (TOTAL_TRADING_AMOUNT * 2 / 100);
 
-
-                        spanObj.textContent = "Quantity* " + (qty5 - 1).toFixed(0) + "*" + (qty4 - 1).toFixed(0) + "*" + (qty3 - 1).toFixed(0)
+                        spanObj.textContent = "Quantity* " + (qty5 - 1).toFixed(0) + "*" + (qty4 - 1).toFixed(0) + "*" + (qty3 - 1).toFixed(0) + "*- " + tradeAmount.toFixed(0)
                     } else if (spanObj.textContent.includes("Stoploss*")) {
                         var stopLoss = "";
                         if ($(button).attr("data-id") == "ReviewBuyOrder") {
@@ -946,11 +948,22 @@ setInterval(function () {
                         spanObj.textContent = "Stoploss* " + stopLoss.toFixed(1)
                     }
                     else if (spanObj.textContent.includes("Price*")) {
-                        var price1 = LTP_DATA[symbol] - (.5 / 100 * LTP_DATA[symbol])
-                        var price2 = LTP_DATA[symbol] - (.4 / 100 * LTP_DATA[symbol])
-                        var price3 = LTP_DATA[symbol] - (.3 / 100 * LTP_DATA[symbol])
-                        var price4 = LTP_DATA[symbol] - (.2 / 100 * LTP_DATA[symbol])
-                        spanObj.textContent = "Price * " + price4.toFixed(1) + "*" + price3.toFixed(1) + "*" + price2.toFixed(1) + "*" + price1.toFixed(1);
+                        var price1 = 0, price2 = 0, price3 = 0, price4 = 0;
+                        if ($(button).attr("data-id") == "ReviewBuyOrder") {
+                            console.log("ReviewBuyOrder : ")
+                            price1 = parseFloat(LTP_DATA[symbol]) - (.2 / 100 * parseFloat(LTP_DATA[symbol]))
+                            price2 = parseFloat(LTP_DATA[symbol]) - (.1 / 100 * parseFloat(LTP_DATA[symbol]))
+                            price3 = parseFloat(LTP_DATA[symbol]) - (.05 / 100 * parseFloat(LTP_DATA[symbol]))
+                            price4 = parseFloat(LTP_DATA[symbol]) - (.025 / 100 * parseFloat(LTP_DATA[symbol]))
+                        } else if ($(button).attr("data-id") == "ReviewSellOrder") {
+                            console.log("ReviewSellOrder : ")
+                            price1 = parseFloat(LTP_DATA[symbol]) + (.2 / 100 * parseFloat(LTP_DATA[symbol]))
+                            price2 = parseFloat(LTP_DATA[symbol]) + (.1 / 100 * parseFloat(LTP_DATA[symbol]))
+                            price3 = parseFloat(LTP_DATA[symbol]) + (.05 / 100 * parseFloat(LTP_DATA[symbol]))
+                            price4 = parseFloat(LTP_DATA[symbol]) + (.025 / 100 * parseFloat(LTP_DATA[symbol]))
+                        }
+                        console.log("price4 : " + price4)
+                        spanObj.textContent = "Price* " + price4.toFixed(1) + "*" + price3.toFixed(1) + "*" + price2.toFixed(1) + "*" + price1.toFixed(1);
                     }
                 }
                 isInCreateOrder = true;
@@ -978,7 +991,7 @@ setInterval(function () {
                     predefinedPrice = row.children[0].children[1].textContent;
                 }
 
-                trade.sl = -2.00;
+                trade.sl = -1.00;
                 trade.pb = 2.00;
                 trade.leverage = 5;
             }

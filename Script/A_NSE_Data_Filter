@@ -1,0 +1,50 @@
+
+var MAX_CHANGE_PERCENTAGE = 0.7;
+var OUT = [];
+
+
+var date = new Date();
+RESULT = {
+    time: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + ":" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds(),
+    /* open_is_low: [],
+    open_is_high: [], */
+    data: []
+
+}
+
+
+var table = $("#equityStockTable")[0];
+var rows = $("#equityStockTable")[0].children[1];
+console.log(rows);
+
+var open, high, low;
+for (var i = 1; i < rows.children.length; i++) {
+    var row = rows.children[i];
+    open = (row.children[1].textContent).replaceAll(',', '');
+    high = (row.children[2].textContent).replaceAll(',', '');
+    low = (row.children[3].textContent).replaceAll(',', '');
+    LTP = (row.children[5].textContent).replaceAll(',', '');
+
+    var diff = open - LTP;
+
+    diff = diff * -1;
+
+
+    var changePer = (diff * 100) / open;
+    if (changePer <= MAX_CHANGE_PERCENTAGE && changePer >= (MAX_CHANGE_PERCENTAGE * -1)) {
+        OUT.push({ "symbol": row.children[0].textContent, "changePer": changePer.toFixed(2) })
+    }
+}
+
+for (var i = 0; i < OUT.length; i++) {
+    for (var j = 0; j < OUT.length - 1; j++) {
+        if (parseFloat(OUT[j].changePer) < parseFloat(OUT[j + 1].changePer)) {
+            var temp = OUT[j];
+            OUT[j] = OUT[j + 1];
+            OUT[j + 1] = temp;
+        }
+    }
+}
+
+RESULT.data = OUT;
+console.log(JSON.stringify(RESULT))
