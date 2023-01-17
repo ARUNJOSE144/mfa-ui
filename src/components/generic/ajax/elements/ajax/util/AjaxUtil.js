@@ -31,7 +31,7 @@ export default class AjaxUtil {
         //Start => Generic Messages By Arun
         if (isAutoApiMsg) {
           if (!hasError) {
-            if (response && response.data.resultCode && response.data.resultCode === "0") { //Custom Success Message
+            if (response && response.data.resultCode && response.data.resultCode == "0") { //Custom Success Message
               if (response.data.responseMsg) {
                 this.setNotification({ "message": response.data.responseMsg, "hasError": hasError, "timestamp": new Date().getTime() });
               } else {
@@ -41,7 +41,7 @@ export default class AjaxUtil {
           }
 
           else if (hasError) {
-            if (response && response.data.resultCode && response.data.resultCode === "100") {//Custom service side messages
+            if (response && response.data.resultCode && response.data.resultCode == "100") {//Custom service side messages
               if (response.data.responseMsg) {
                 this.setNotification({ "message": response.data.responseMsg, "hasError": hasError, "timestamp": new Date().getTime() });
               } else {

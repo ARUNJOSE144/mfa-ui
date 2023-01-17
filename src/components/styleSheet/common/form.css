@@ -1,4 +1,3 @@
-
 /* form Elements */
 .custom-container {
     padding: 15px;
@@ -372,6 +371,7 @@ ul.userNode li.entityNode:last-child:after {
 .route-user-select .Select .Select-control {
     border: none;
 }
+
 .home-main-div {
     display: -ms-flexbox;
     display: flex;
@@ -381,39 +381,53 @@ ul.userNode li.entityNode:last-child:after {
     overflow: hidden;
 }
 
-.top-padding{
+.top-padding {
     padding-top: 15px;
 }
+
 /***********************************************/
 
 
 
-.activeQuestion{
+.activeQuestion {
     background-color: yellow !important;
 }
 
 
-.activeSearch input:focus{
+.activeSearch input:focus {
     background-color: #d3f6d4;
 }
-.activeSearch input{
+
+.activeSearch input {
     background-color: #d3f6d4;
     font-weight: 900;
     color: #049716;
 }
 
-.activeSearch .Select__control,.activeSearch .Select__single-value {
+.activeSearch .Select__control,
+.activeSearch .Select__single-value {
     background-color: #d3f6d4;
     font-weight: 900;
     color: #049716 !important;
 }
 
-.rowcountForQuestionSearch input{
+.rowcountForQuestionSearch input {
     width: 100px;
 }
 
- .activeSearch .Select__multi-value__label{
+.activeSearch .Select__multi-value__label {
     color: white !important;
     background: #049716;
+    font-weight: bold;
+}
+
+
+.tradeSymbolName div div div {
+    color: orange;
+    font-weight: bold;
+}
+
+.tradeDate input {
+    color: orange;
     font-weight: bold;
 }

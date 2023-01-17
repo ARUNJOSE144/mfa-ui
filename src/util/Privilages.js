@@ -23,6 +23,12 @@ export const PRIVILIAGES = {
     edit: 22,
     delete: 23,
   },
+  TRADE_LOG: {
+    view: 30,
+    create: 31,
+    edit: 32,
+    delete: 33,
+  },
 
 };
 
@@ -75,6 +81,22 @@ export const MENU_DETAILS = [
         linkTo: "/Questions",
         icon: "fa fa-users",
         privilages: _.values(PRIVILIAGES.QUESTIONS)
+      }
+    ]
+  },
+
+
+  {
+    id: 6,
+    label: "Trade",
+    icon: "fa fa-users",
+    submenus: [
+      {
+        id: 300,
+        label: "TradeLogs",
+        linkTo: "/Trade-day-log",
+        icon: "fa fa-users",
+        privilages: _.values(PRIVILIAGES.TRADE_LOG)
       }
     ]
   }

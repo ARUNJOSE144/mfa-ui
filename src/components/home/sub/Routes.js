@@ -70,15 +70,31 @@ const AsyncQuestionEdit = Loadable({
   loading: Loading
 });
 
-
-
 const AsyncQuestionSearchQuestion = Loadable({
   loader: () => import('../../question-management/components/SearchQuestion'),
   loading: Loading
 });
 
 
+const AsyncTradeLogView = Loadable({
+  loader: () => import('../../trade-day-log/components/ViewTradeLog'),
+  loading: Loading
+});
 
+const AsyncTradeLogCreate = Loadable({
+  loader: () => import('../../trade-day-log/components/CreateTradeLog'),
+  loading: Loading
+});
+
+const AsyncTradeLogEdit = Loadable({
+  loader: () => import('../../trade-day-log/components/EditTradeLog'),
+  loading: Loading
+});
+
+const AsyncTradeLogSearch = Loadable({
+  loader: () => import('../../trade-day-log/components/SearchTradeLog'),
+  loading: Loading
+});
 
 
 
@@ -157,10 +173,31 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
           url_Roles={CONSTANTS.QUESTIONS}
         />} />
 
-
-
-
         <Route exact path="/Questions/questionSearch" render={() => <AsyncQuestionSearchQuestion
+          {...properties}
+          url_Roles={CONSTANTS.QUESTIONS}
+        />} />
+
+
+
+        <Route exact path="/Trade-day-log" render={() => <AsyncTradeLogView
+          {...properties}
+          url_questions={CONSTANTS.QUESTIONS}
+          menuPrivilages={MENU_PRIVILIAGES.TRADE_LOG}
+        />} />
+
+        <Route exact path="/Trade-day-log/create" render={() => <AsyncTradeLogCreate
+          {...properties}
+          url_Roles={CONSTANTS.QUESTIONS}
+        />} />
+
+        <Route exact path="/Trade-day-log/edit/:id" render={(props) => <AsyncTradeLogEdit
+          {...props}
+          {...properties}
+          url_Roles={CONSTANTS.QUESTIONS}
+        />} />
+
+        <Route exact path="/Trade-day-log/questionSearch" render={() => <AsyncTradeLogSearch
           {...properties}
           url_Roles={CONSTANTS.QUESTIONS}
         />} />
