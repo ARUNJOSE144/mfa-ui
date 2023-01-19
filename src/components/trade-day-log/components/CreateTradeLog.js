@@ -21,7 +21,7 @@ export default class CreateRole extends Component {
       fields: {},
       files: [],
       sectorList: [{ "files": [], fields: {} }],
-      symbolList: [{ label: "NIFTY", value: "1" }, { label: "BANK-NIFTY", value: "2" }, { label: "FIN-NIFTY", value: "3" }],
+      symbolList: [{ label: "NIFTY", value: "1" }, { label: "BANK-NIFTY", value: "2" }, { label: "FIN-NIFTY", value: "3" }, { label: "DOW-JOHNS", value: "4" }, { label: "NASDAQ", value: "5" }, { label: "S&P 500", value: "6" }],
       movingStatus: [{ label: "Flat", value: "1" }, { label: "Up", value: "2" }, { label: "Down", value: "3" }],
       eventsList: [{ label: "Before Inflation Data", value: "1" }, { label: "After Inflation Data", value: "2" }, { label: "Before Budget", value: "3" }]
     };
@@ -142,7 +142,7 @@ export default class CreateRole extends Component {
     if (this.validate(this.state.indiaVix)) {
       formData.append('indiaVix', this.state.indiaVix);
     }
-      formData.append('events', this.getEvents(this.state.events));
+    formData.append('events', this.getEvents(this.state.events));
     var sectorList = [];
     for (var i = 0; i < this.state.sectorList.length; i++) {
       var sector = {};
@@ -171,6 +171,18 @@ export default class CreateRole extends Component {
       }
       if (sector.symbol.value == "2" && sector.files.length == 1) {
         formData.append('bankNiftyImage', sector.files[0].img)
+      }
+      if (sector.symbol.value == "3" && sector.files.length == 1) {
+        formData.append('finNiftyImage', sector.files[0].img)
+      }
+      if (sector.symbol.value == "4" && sector.files.length == 1) {
+        formData.append('dowJohnsImage', sector.files[0].img)
+      }
+      if (sector.symbol.value == "5" && sector.files.length == 1) {
+        formData.append('nasdaqImage', sector.files[0].img)
+      }
+      if (sector.symbol.value == "6" && sector.files.length == 1) {
+        formData.append('sp500Image', sector.files[0].img)
       }
     }
     return formData;
@@ -357,7 +369,7 @@ export default class CreateRole extends Component {
 
     console.log("Create questions : ", this.state)
     if (this.state.isSuccess) {
-      return <Redirect to="/Questions/questionSearch" />;
+      return <Redirect to="/trade-day-log/questionSearch" />;
     }
 
     return (

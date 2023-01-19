@@ -23,24 +23,27 @@ export default class SearchQuestion extends Component {
       modules: [],
       isSuccess: false,
       fields: {},
-      questionList: [],
-      prevKey: "",
-      questionFromArray: [{ label: "Others", value: 1 }, { label: "Chegg", value: 2 }, { label: "Bartleby ", value: 3 }, { label: "File Load ", value: 4 }],
-      HavingAnswerArray: [{ label: "Yes", value: "1" }, { label: "No", value: "2" }],
       mode: "",
-      selectedQuestionId: "",
-      searchToken: 0,
-      subjects: [],
-      /* rowCounts: [{ label: "10", value: "10" }, { label: "50", value: "50" }, { label: "100", value: "100" }, { label: "All", value: "-1" }], */
       rowCount: 10,
-      bookMarks: [{ label: "No", value: "0" }, { label: "Yes", value: "1" },],
+      tradeDayList: [],
+      dayList: [{ label: "Sunday", value: "Sunday" }, { label: "Monday", value: "Monday" }, { label: "Tuesday", value: "Tuesday" }, { label: "Wednesday", value: "Wednesday" }, { label: "Thursday", value: "Thursday" }, { label: "Friday", value: "Friday" }, { label: "Saturday", value: "Saturday" }],
+      dateList: [],
+      searchToken: 0,
+      symbolList: [{ label: "NIFTY", value: "1" }, { label: "BANK-NIFTY", value: "2" }, { label: "FIN-NIFTY", value: "3" }, { label: "DOW-JOHNS", value: "4" }, { label: "NASDAQ", value: "5" }, { label: "S&P 500", value: "6" }],
+      movingStatus: [{ label: "Flat", value: "1" }, { label: "Up", value: "2" }, { label: "Down", value: "3" }],
     };
 
-    this.props.setHeader("Search Question");
+    this.props.setHeader("Search Day");
     this.getSubjects();
+    this.loadData();
   }
 
-
+  loadData = () => {
+    for (var i = 1; i <= 31; i++) {
+      this.state.dateList.push({ label: i + "", value: i + "" })
+    }
+    this.forceUpdate();
+  }
 
 
 
@@ -60,9 +63,8 @@ export default class SearchQuestion extends Component {
     this.state[name] = value;
     this.state.fields = fields;
     this.forceUpdate();
-    if (!isTouched && (name == "searchQuestionKey" || name == "searchQuestion" ||
-      name == "searchAnswer" || name == "searchQuestionName" || name == "searchQuestionFrom" ||
-      name == "searchHavingAnswer" || name == "searchSubject" || name == "rowCount")) {
+    if (!isTouched && (name == "searchTradeDate" || name == "searchDay" ||
+      name == "searchDate")) {
 
       var self = this;
       this.state.searchToken = this.state.searchToken + 1;
@@ -81,9 +83,9 @@ export default class SearchQuestion extends Component {
 
   loadSearchResults = () => {
     const request = this.getRequest();
-    this.props.ajaxUtil.sendRequest("/question/v1/searchQuestion", request, (response, hasError) => {
+    this.props.ajaxUtil.sendRequest("/tradeLog/v1/search", request, (response, hasError) => {
       console.log("response : ", response)
-      this.setState({ questionList: response.data, dataTotalSize: response.dataTotalSize })
+      this.setState({ tradeDayList: response.data, dataTotalSize: response.dataTotalSize })
     }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
   }
 
@@ -114,34 +116,29 @@ export default class SearchQuestion extends Component {
   }
 
   getRequest() {
-    var searchQuestionFrom = [];
-    if (this.validate(this.state.searchQuestionFrom)) {
-      for (var i = 0; i < this.state.searchQuestionFrom.length; i++) {
-        searchQuestionFrom.push(this.state.searchQuestionFrom[i].value);
+    var searchDays = [];
+    if (this.validate(this.state.searchDay)) {
+      for (var i = 0; i < this.state.searchDay.length; i++) {
+        searchDays.push(this.state.searchDay[i].label);
       }
     }
 
-    var searchHavingAnswer = "";
-    if (this.validate(this.state.searchHavingAnswer)) {
-      searchHavingAnswer = this.state.searchHavingAnswer.value;
+    var searchDates = [];
+    if (this.validate(this.state.searchDate)) {
+      console.log("this.state.searchDate) : ", this.state.searchDate)
+      for (var i = 0; i < this.state.searchDate.length; i++) {
+        searchDates.push(this.state.searchDate[i].label);
+      }
     }
 
-    var searchSubjects = [];
-    if (this.validate(this.state.searchSubject)) {
-      for (var i = 0; i < this.state.searchSubject.length; i++) {
-        searchSubjects.push(this.state.searchSubject[i].value)
-      }
-      // searchSubject = this.state.searchSubject.value;
+    if (validate(this.state.searchTradeDate)) {
+      var searchTradeDate = new Date(this.state.searchTradeDate).getFullYear() + "-" + (new Date(this.state.searchTradeDate).getMonth() + 1) + "-" + new Date(this.state.searchTradeDate).getDate();
     }
 
     return {
-      "key": this.state.searchQuestionKey,
-      "question": this.state.searchQuestion,
-      "answer": this.state.searchAnswer,
-      "name": this.state.searchQuestionName,
-      "questionsFromIds": searchQuestionFrom,
-      "havingAnswer": searchHavingAnswer,
-      "subjectIds": searchSubjects,
+      "tradeDate": searchTradeDate,
+      "dayList": searchDays,
+      "dateList": searchDates,
       "rowCount": this.state.rowCount
     }
   }
@@ -169,12 +166,9 @@ export default class SearchQuestion extends Component {
 
 
   loadQuestionDetails = (question) => {
-    this.props.ajaxUtil.sendRequest("/question/v1/view", { id: question.id }, (response, hasError) => {
-      question.question = response.data.question;
-      question.answer = response.data.answer;
-      question.subjectId = response.data.subjectId;
-      question.questionFrom = response.data.questionFrom;
-
+    this.props.ajaxUtil.sendRequest("/tradeLog/v1/view", { id: question.id }, (response, hasError) => {
+      question.sectorData = response.data.tradeLogDetailsTos;
+      console.log("sectorData : ", question.sectorData)
       this.forceUpdate();
     }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
   }
@@ -203,9 +197,21 @@ export default class SearchQuestion extends Component {
   renderImages = (question) => {
     return (
       <React.Fragment>
-        {this.validate(question.imageDetails) && question.imageDetails.map((image, i) => (
+        {this.validate(question.sectorData) && question.sectorData.map((sector, i) => (
           <Row style={{ margin: "15px", border: "2px solid red" }}>
-            <img src={BASE_URL + "/getDownloadFiles?imagePath=" + image.image} style={{ width: 1100 }} ></img>
+            <div className='col-md-3'>
+              <label style={{ color: "red", fontWeight: "bold", padding: "10px" }}>{this.getObjFromArray(this.state.symbolList, "value", sector.symbol).label}</label><br></br>
+              <label style={{ fontSize: "15px" }} >Preopen : {this.getObjFromArray(this.state.movingStatus, "value", sector.preOpen).label}</label><br></br>
+              <label style={{ fontSize: "15px" }} >First Half : {this.getObjFromArray(this.state.movingStatus, "value", sector.firstHalf).label}</label><br></br>
+              <label style={{ fontSize: "15px" }} >Second Half : {this.getObjFromArray(this.state.movingStatus, "value", sector.secondHalf).label}</label><br></br>
+              <label style={{ fontSize: "15px" }} >Comments : {sector.comments}</label><br></br>
+            </div>
+
+            {validate(sector.tradeLogImageTo) ?
+              <div className='col-md-9'>
+                <img src={BASE_URL + "/getDownloadFiles?imagePath=" + sector.tradeLogImageTo.imagePath} style={{ width: 700 }}  ></img>
+              </div> : null}
+
           </Row>
         ))}
       </React.Fragment>
@@ -238,51 +244,51 @@ export default class SearchQuestion extends Component {
   renderQuestion = () => {
     return (
       <React.Fragment>
-        {this.state.questionList.map((question, i) => (
-          <div key={question.id} className={question.showDetails ? "activeQuestion" : ""} style={{
+        {this.state.tradeDayList.map((tradeDay, i) => (
+          <div key={tradeDay.id} className={tradeDay.showDetails ? "activeQuestion" : ""} style={{
             backgroundColor: "white", marginTop: "10px",
             padding: "10px", fontSize: "17px", boxShadow: "3px 3px 5px 0px rgb(0 0 0 / 5%)",
           }}>
-            <div className="mx-0" onClick={() => this.toggleDetails(question)} style={{ cursor: "pointer" }}>
-              Name  :  <b>{question.name}  </b>   , Keys  : <b style={{ color: "yellowgreen" }}> {question.key}</b>
+            <div className="mx-0" onClick={() => this.toggleDetails(tradeDay)} style={{ cursor: "pointer" }}>
+              Trade Date  :  <b>{tradeDay.tradeDate}  </b>   , Day  : <b style={{ color: "yellowgreen" }}> {tradeDay.day}</b>
 
-              {question.bookmark != "1" ? <i className="fa fa-trash" style={{  marginLeft: 15, float: "right", color: "red", marginTop: "0px", fontSize: "23px" }} onClick={() => this.deleteRow(question)}></i> : null}
-              <i className="fa fa-edit" style={{ marginLeft: 15, float: "right", color: "green", marginTop: "3px", fontSize: "23px" }} onClick={() => this.goTo("EDIT", question)} ></i>
-              {question.bookmark == "1" ? <i className="fa fa-star" style={{ marginLeft: 15, float: "right", color: "blueviolet", marginTop: "3px", fontSize: "23px" }} /* onClick={() => this.goTo("EDIT", question)} */ ></i> : null}
+              {tradeDay.bookmark != "1" ? <i className="fa fa-trash" style={{ marginLeft: 15, float: "right", color: "red", marginTop: "0px", fontSize: "23px" }} onClick={() => this.deleteRow(tradeDay)}></i> : null}
+              <i className="fa fa-edit" style={{ marginLeft: 15, float: "right", color: "green", marginTop: "3px", fontSize: "23px" }} onClick={() => this.goTo("EDIT", tradeDay)} ></i>
+              {tradeDay.bookmark == "1" ? <i className="fa fa-star" style={{ marginLeft: 15, float: "right", color: "blueviolet", marginTop: "3px", fontSize: "23px" }} /* onClick={() => this.goTo("EDIT", question)} */ ></i> : null}
             </div>
 
-            {question.showDetails ? <div style={{ backgroundColor: "#f8f8f8", padding: 15 }}>
+            {tradeDay.showDetails ? <div style={{ backgroundColor: "#f8f8f8", padding: 15 }}>
 
-              <div style={{ padding: "15px" }}>Id  :  <span style={infoCss}>{question.id}</span>
-                ||  Subject :   <span style={infoCss}>{validate(this.getObjFromArray(this.state.subjects, "value", question.subjectId)) ?
-                  this.getObjFromArray(this.state.subjects, "value", question.subjectId).label : "Not Mentioned"}</span>
-                || Question From :   <span style={infoCss}>{validate(this.getObjFromArray(this.state.questionFromArray, "value", question.questionFrom)) ?
-                  this.getObjFromArray(this.state.questionFromArray, "value", question.questionFrom).label : "Not Mentioned"}</span>
+              {/*       <div style={{ padding: "15px" }}>Id  :  <span style={infoCss}>{tradeDay.id}</span>
+                ||  Subject :   <span style={infoCss}>{validate(this.getObjFromArray(this.state.subjects, "value", tradeDay.subjectId)) ?
+                  this.getObjFromArray(this.state.subjects, "value", tradeDay.subjectId).label : "Not Mentioned"}</span>
+                || Question From :   <span style={infoCss}>{validate(this.getObjFromArray(this.state.questionFromArray, "value", tradeDay.questionFrom)) ?
+                  this.getObjFromArray(this.state.questionFromArray, "value", tradeDay.questionFrom).label : "Not Mentioned"}</span>
 
+              </div> */}
+
+              <div style={{ padding: "10px" }}>Trade Date  :  {tradeDay.tradeDate}</div>
+
+              <div style={{ padding: "10px" }}>Day  :  {tradeDay.day}</div>
+
+              <div style={{ padding: "10px" }}>Events  :  {tradeDay.events}</div>
+
+              <div style={{ padding: "10px" }}>India Vix  :  {tradeDay.indiaVix}</div>
+
+              <div style={{ padding: "10px" }}>comments  :  {tradeDay.comments}</div>
+
+              {/*   <div style={{ padding: "15px" }}>Question :
+                <textarea placeholder="Question" class="form-control" style={{ height: "300px" }} value={tradeDay.question} ></textarea>
               </div>
+ */}
+              {this.renderImages(tradeDay)}
 
-              <div style={{ padding: "15px" }}>Name  :  {question.name}</div>
-
-              <div style={{ padding: "15px" }}>Keys  :  {question.key}</div>
-
-              <div style={{ padding: "15px" }}>Question :
-                <textarea placeholder="Question" class="form-control" style={{ height: "300px" }} value={question.question} >{/* {question.question} */}</textarea>
-              </div>
-
-              <div style={{ padding: "15px" }}>Answer :
-                <textarea placeholder="Answer" class="form-control" style={{ height: "300px" }} value={question.answer}>{/* {question.answer} */}</textarea>
-              </div>
-
-              {/*  <img src="E:/images/IMG_202109141252213180.png" style={{ width: 100 }}></img> */}
-
-              {this.renderImages(question)}
-
-              <FieldItem
+              {/*  <FieldItem
                 {...FormElements.bookmark}
-                value={this.getObjFromArray(this.state.bookMarks, "value", question.bookmark)}
-                onChange={this.setBookMark.bind(this, FormElements.bookmark.name, question)}
+                value={this.getObjFromArray(this.state.bookMarks, "value", tradeDay.bookmark)}
+                onChange={this.setBookMark.bind(this, FormElements.bookmark.name, tradeDay)}
                 values={this.state.bookMarks}
-              />
+              /> */}
 
             </div> : null}
 
@@ -314,14 +320,10 @@ export default class SearchQuestion extends Component {
   }
 
   resetFrom = () => {
-    this.state.searchQuestionKey = ""
-    this.state.searchQuestion = ""
-    this.state.searchAnswer = ""
-    this.state.searchQuestionName = ""
-    this.state.searchQuestionFrom = null;
-    this.state.searchHavingAnswer = null;
-    this.state.searchSubject = null;
-    this.state.questionList = [];
+    this.state.searchTradeDate = ""
+    this.state.searchDay = null
+    this.state.searchDate = null
+    this.state.tradeDayList = [];
     this.state.rowCount = 10;
     this.forceUpdate();
 
@@ -330,11 +332,11 @@ export default class SearchQuestion extends Component {
   render() {
     console.log("Ststet Search : ", this.state);
     if (this.state.isSuccess) {
-      return <Redirect to="/Questions" />;
+      return <Redirect to="/trade-day-log" />;
     }
 
     if (this.state.mode === "EDIT") {
-      const editUrl = `/Questions/edit/${this.state.selectedQuestionId}`;
+      const editUrl = `/trade-day-log/edit/${this.state.selectedQuestionId}`;
       return (
         <Switch>
           <Redirect to={editUrl} />
@@ -344,7 +346,7 @@ export default class SearchQuestion extends Component {
     if (this.state.mode === "CREATE") {
       return (
         <Switch>
-          <Redirect to="/Questions/create" push />
+          <Redirect to="/trade-day-log/create" push />
         </Switch>
       );
     }
@@ -359,78 +361,45 @@ export default class SearchQuestion extends Component {
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Reset" isButtonGroup={true} onClick={() => this.resetFrom()} /></span>
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Go Back" isButtonGroup={true} onClick={() => this.onCancel()} /></span>
 
-            <span>Search For Question </span>
+            <span>Search For Days </span>
 
           </div>
 
           <div className="form-Brick-body">
             <Row className="mx-0">
 
-
               <FieldItem
-                {...FormElements.searchQuestionName}
-                value={this.state.searchQuestionName}
-                onChange={this.handleChange.bind(this, FormElements.searchQuestionName.name)}
+                {...FormElements.searchTradeDate}
+                value={this.state.searchTradeDate}
+                onChange={this.handleChange.bind(this, FormElements.searchTradeDate.name)}
                 width="md"
-                className={validate(this.state.searchQuestionName) ? "activeSearch" : ""}
+                className={validate(this.state.searchTradeDate) ? "activeSearch" : ""}
               />
 
               <FieldItem
-                {...FormElements.searchQuestionKey}
-                value={this.state.searchQuestionKey}
-                onChange={this.handleChange.bind(this, FormElements.searchQuestionKey.name)}
+                {...FormElements.searchDay}
+                value={this.state.searchDay}
+                values={this.state.dayList}
+                onChange={this.handleChange.bind(this, FormElements.searchDay.name)}
                 width="md"
-                className={validate(this.state.searchQuestionKey) ? "activeSearch" : ""}
+                className={validate(this.state.searchDay) ? "activeSearch" : ""}
               />
 
               <FieldItem
-                {...FormElements.searchQuestion}
-                value={this.state.searchQuestion}
-                onChange={this.handleChange.bind(this, FormElements.searchQuestion.name)}
+                {...FormElements.searchDate}
+                value={this.state.searchDate}
+                values={this.state.dateList}
+                onChange={this.handleChange.bind(this, FormElements.searchDate.name)}
                 width="md"
-                className={validate(this.state.searchQuestion) ? "activeSearch" : ""}
+                className={validate(this.state.searchDate) ? "activeSearch" : ""}
               />
 
-              <FieldItem
-                {...FormElements.searchAnswer}
-                value={this.state.searchAnswer}
-                onChange={this.handleChange.bind(this, FormElements.searchAnswer.name)}
-                width="md"
-                className={validate(this.state.searchAnswer) ? "activeSearch" : ""}
-              />
-
-              <FieldItem
-                {...FormElements.searchSubject}
-                value={this.state.searchSubject}
-                onChange={this.handleChange.bind(this, FormElements.searchSubject.name)}
-                width="md"
-                values={this.state.subjects}
-                className={validate(this.state.searchSubject) && this.state.searchSubject.length > 0 ? "activeSearch" : ""}
-              />
-
-              <FieldItem
-                {...FormElements.searchQuestionFrom}
-                value={this.state.searchQuestionFrom}
-                onChange={this.handleChange.bind(this, FormElements.searchQuestionFrom.name)}
-                width="md"
-                values={this.state.questionFromArray}
-                className={validate(this.state.searchQuestionFrom) && this.state.searchQuestionFrom.length > 0 ? "activeSearch" : ""}
-              />
-
-              <FieldItem
-                {...FormElements.searchHavingAnswer}
-                value={this.state.searchHavingAnswer}
-                onChange={this.handleChange.bind(this, FormElements.searchHavingAnswer.name)}
-                width="md"
-                values={this.state.HavingAnswerArray}
-                className={validate(this.state.searchHavingAnswer) ? "activeSearch" : ""}
-              />
 
             </Row>
           </div>
 
 
-          <span> <b style={{ color: 'green' }}>{this.state.questionList.length}</b> Questions  {this.state.questionList.length != 0 ? "Out of " + this.state.dataTotalSize : ""}</span>
+          <span> <b style={{ color: 'green' }}>{this.state.tradeDayList.length}</b> Result  {this.state.tradeDayList.length != 0 ? "Out of " + this.state.dataTotalSize : ""}</span>
           {this.renderQuestion()}
 
 
@@ -441,7 +410,7 @@ export default class SearchQuestion extends Component {
 
         <div className="container-fluid">
 
-          {this.state.questionList.length != 0 ?
+          {this.state.tradeDayList.length != 0 ?
             <FieldItem
               {...FormElements.rowCount}
               value={this.state.rowCount}

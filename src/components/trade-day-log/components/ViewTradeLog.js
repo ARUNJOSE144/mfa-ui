@@ -116,11 +116,11 @@ export default class View extends Component {
       "searchKey1": this.state.searchKey,
     }
 
-    this.props.ajaxUtil.sendRequest("/question/v1/search", request, function (resp, hasError) {
+    this.props.ajaxUtil.sendRequest("/tradeLog/v1/list", request, function (resp, hasError) {
 
-      for (var i = 0; i < resp.list.length; i++) {
+     /*  for (var i = 0; i < resp.list.length; i++) {
         resp.list[i].havingAnswer == "1" ? resp.list[i].havingAnswer = "Yes" : resp.list[i].havingAnswer = "No";
-      }
+      } */
 
       self.setState({ dataTotalSize: resp.dataTotalSize, data: resp.list })
     }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
@@ -290,9 +290,10 @@ export default class View extends Component {
           search
           fetchInfo={{ dataTotalSize: this.state.dataTotalSize }}        >
           <TableHeaderColumn isKey dataField="id" className="dth" columnClassName="dtd" width={0} hidden={true}>ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="name" className="dth" columnClassName="dtd" width={130} dataSort>Question Name</TableHeaderColumn>
-          <TableHeaderColumn dataField="key" className="dth" columnClassName="dtd" width={130} >Key</TableHeaderColumn>
-          <TableHeaderColumn dataField="havingAnswer" className="dth" columnClassName="dtd" width={130} >Answered</TableHeaderColumn>
+          <TableHeaderColumn dataField="tradeDate" className="dth" columnClassName="dtd" width={60} dataSort>Trade Date</TableHeaderColumn>
+          <TableHeaderColumn dataField="day" className="dth" columnClassName="dtd" width={60} >Day</TableHeaderColumn>
+          <TableHeaderColumn dataField="events" className="dth" columnClassName="dtd" width={180} >Events</TableHeaderColumn>
+          <TableHeaderColumn dataField="comments" className="dth" columnClassName="dtd" width={180} >Comments</TableHeaderColumn>
 
 
           {/* <TableHeaderColumn dataField="question" className="dth" columnClassName="dtd" width={130}>Question</TableHeaderColumn> */}

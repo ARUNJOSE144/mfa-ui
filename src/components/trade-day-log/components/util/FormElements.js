@@ -98,53 +98,26 @@ export const ROLES = {
 
 
 
-    "searchQuestionKey": {
-        name: "searchQuestionKey",
-        label: "Question Keys  Contains",
+    "searchTradeDate": {
+        name: "searchTradeDate",
+        label: "Trade Date",
         width: "md",
         ismandatory: false,
-        type: FIELD_TYPES.TEXT
+        type: FIELD_TYPES.DATE_PICKER
     },
-    "searchQuestion": {
-        name: "searchQuestion",
-        label: "Question   Contains",
-        width: "md",
-        ismandatory: false,
-        type: FIELD_TYPES.TEXT
-    },
-    "searchAnswer": {
-        name: "searchAnswer",
-        label: "Answer   Contains",
-        width: "md",
-        ismandatory: false,
-        type: FIELD_TYPES.TEXT
-    },
-    "searchSubject": {
-        name: "searchSubject",
-        label: "Subject",
+    "searchDay": {
+        name: "searchDay",
+        label: "Day",
         width: "md",
         ismandatory: false,
         type: FIELD_TYPES.MUTLI_SELECT
     },
-    "searchQuestionName": {
-        name: "searchQuestionName",
-        label: "Question Name  Contains",
+    "searchDate": {
+        name: "searchDate",
+        label: "Search Date",
         width: "md",
         ismandatory: false,
-        type: FIELD_TYPES.TEXT
-    }, "searchQuestionFrom": {
-        name: "searchQuestionFrom",
-        label: "Question From",
-        width: "md",
-        ismandatory: false,
-        "type": FIELD_TYPES.MUTLI_SELECT,
-    },
-    "searchHavingAnswer": {
-        name: "searchHavingAnswer",
-        label: "Having Answer",
-        width: "md",
-        ismandatory: false,
-        "type": FIELD_TYPES.DROP_DOWN,
+        type: FIELD_TYPES.MUTLI_SELECT  
     }
 
 
