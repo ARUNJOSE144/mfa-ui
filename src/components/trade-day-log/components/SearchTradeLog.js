@@ -29,13 +29,17 @@ export default class SearchQuestion extends Component {
       dayList: [{ label: "Sunday", value: "Sunday" }, { label: "Monday", value: "Monday" }, { label: "Tuesday", value: "Tuesday" }, { label: "Wednesday", value: "Wednesday" }, { label: "Thursday", value: "Thursday" }, { label: "Friday", value: "Friday" }, { label: "Saturday", value: "Saturday" }],
       dateList: [],
       searchToken: 0,
-      symbolList: [{ label: "NIFTY", value: "1" }, { label: "BANK-NIFTY", value: "2" }, { label: "FIN-NIFTY", value: "3" }, { label: "DOW-JOHNS", value: "4" }, { label: "NASDAQ", value: "5" }, { label: "S&P 500", value: "6" }],
+      symbolList: [],
       movingStatus: [{ label: "Flat", value: "1" }, { label: "Up", value: "2" }, { label: "Down", value: "3" }],
+      eventsList: [],
+      showResultOf: null
+
     };
 
     this.props.setHeader("Search Day");
-    this.getSubjects();
     this.loadData();
+    this.getEventsList();
+    this.getSymbols();
   }
 
   loadData = () => {
@@ -43,6 +47,25 @@ export default class SearchQuestion extends Component {
       this.state.dateList.push({ label: i + "", value: i + "" })
     }
     this.forceUpdate();
+  }
+
+
+  getEventsList = () => {
+    this.props.ajaxUtil.sendRequest("/tradeLog/v1/getEvents", "", (response, hasError) => {
+      if (!hasError)
+        this.setState({ eventsList: response.data })
+    }, this.props.loadingFunction, { method: "GET", isAutoApiMsg: true });
+  }
+
+
+
+  getSymbols = () => {
+    this.props.ajaxUtil.sendRequest("/tradeLog/v1/getSymbols", "", (response, hasError) => {
+      if (!hasError)
+        this.state.symbolList = response.data;
+      this.forceUpdate();
+    }, this.props.loadingFunction, { method: "GET", isAutoApiMsg: true });
+
   }
 
 
@@ -64,7 +87,7 @@ export default class SearchQuestion extends Component {
     this.state.fields = fields;
     this.forceUpdate();
     if (!isTouched && (name == "searchTradeDate" || name == "searchDay" ||
-      name == "searchDate")) {
+      name == "searchDate" || name == "searchEvents" || name == "searchComment"/*  || name == "showResultOf" */)) {
 
       var self = this;
       this.state.searchToken = this.state.searchToken + 1;
@@ -79,6 +102,10 @@ export default class SearchQuestion extends Component {
 
     }
   }
+
+
+
+
 
 
   loadSearchResults = () => {
@@ -135,11 +162,20 @@ export default class SearchQuestion extends Component {
       var searchTradeDate = new Date(this.state.searchTradeDate).getFullYear() + "-" + (new Date(this.state.searchTradeDate).getMonth() + 1) + "-" + new Date(this.state.searchTradeDate).getDate();
     }
 
+    if (validate(this.state.searchEvents)) {
+      var searchEvents = this.state.searchEvents.label;
+    }
+
+
+
     return {
       "tradeDate": searchTradeDate,
       "dayList": searchDays,
       "dateList": searchDates,
-      "rowCount": this.state.rowCount
+      "events": searchEvents,
+      "comments": this.state.searchComment,
+      "rowCount": this.state.rowCount,
+
     }
   }
 
@@ -166,7 +202,16 @@ export default class SearchQuestion extends Component {
 
 
   loadQuestionDetails = (question) => {
-    this.props.ajaxUtil.sendRequest("/tradeLog/v1/view", { id: question.id }, (response, hasError) => {
+    var request = { id: question.id }
+    if (validate(this.state.showResultOf)) {
+      var showResultOf = [];
+      for (var i = 0; i < this.state.showResultOf.length; i++) {
+        showResultOf.push(this.state.showResultOf[i].value);
+      }
+    }
+    request.showResultOf = showResultOf
+
+    this.props.ajaxUtil.sendRequest("/tradeLog/v1/view", request, (response, hasError) => {
       question.sectorData = response.data.tradeLogDetailsTos;
       console.log("sectorData : ", question.sectorData)
       this.forceUpdate();
@@ -324,6 +369,10 @@ export default class SearchQuestion extends Component {
     this.state.searchDay = null
     this.state.searchDate = null
     this.state.tradeDayList = [];
+    this.state.searchEvents = null
+    this.state.searchComment = ""
+    this.state.showResultOf = null
+
     this.state.rowCount = 10;
     this.forceUpdate();
 
@@ -382,7 +431,7 @@ export default class SearchQuestion extends Component {
                 values={this.state.dayList}
                 onChange={this.handleChange.bind(this, FormElements.searchDay.name)}
                 width="md"
-                className={validate(this.state.searchDay) ? "activeSearch" : ""}
+                className={validate(this.state.searchDay) && this.state.searchDay.length > 0 ? "activeSearch" : ""}
               />
 
               <FieldItem
@@ -391,7 +440,33 @@ export default class SearchQuestion extends Component {
                 values={this.state.dateList}
                 onChange={this.handleChange.bind(this, FormElements.searchDate.name)}
                 width="md"
-                className={validate(this.state.searchDate) ? "activeSearch" : ""}
+                className={validate(this.state.searchDate) && this.state.searchDate.length > 0 ? "activeSearch" : ""}
+              />
+
+              <FieldItem
+                {...FormElements.searchEvents}
+                value={this.state.searchEvents}
+                values={this.state.eventsList}
+                onChange={this.handleChange.bind(this, FormElements.searchEvents.name)}
+                width="md"
+                className={validate(this.state.searchEvents) ? "activeSearch" : ""}
+              />
+
+              <FieldItem
+                {...FormElements.searchComment}
+                value={this.state.searchComment}
+                onChange={this.handleChange.bind(this, FormElements.searchComment.name)}
+                width="md"
+                className={validate(this.state.searchComment) ? "activeSearch" : ""}
+              />
+
+              <FieldItem
+                {...FormElements.showResultOf}
+                value={this.state.showResultOf}
+                values={this.state.symbolList}
+                onChange={this.handleChange.bind(this, FormElements.showResultOf.name)}
+                width="md"
+                className={validate(this.state.showResultOf) && this.state.showResultOf.length > 0 ? "activeSearch" : ""}
               />
 
 

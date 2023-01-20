@@ -23,12 +23,22 @@ export default class CreateRole extends Component {
       sectorList: [{ "files": [], fields: {} }],
       symbolList: [{ label: "NIFTY", value: "1" }, { label: "BANK-NIFTY", value: "2" }, { label: "FIN-NIFTY", value: "3" }, { label: "DOW-JOHNS", value: "4" }, { label: "NASDAQ", value: "5" }, { label: "S&P 500", value: "6" }],
       movingStatus: [{ label: "Flat", value: "1" }, { label: "Up", value: "2" }, { label: "Down", value: "3" }],
-      eventsList: [{ label: "Before Inflation Data", value: "1" }, { label: "After Inflation Data", value: "2" }, { label: "Before Budget", value: "3" }]
+      eventsList: []
     };
     this.props.setHeader("Record Day");
-    this.getSubjects();
+    this.getEventsList();
+    this.getSymbols();
   }
 
+
+  getSymbols = () => {
+    this.props.ajaxUtil.sendRequest("/tradeLog/v1/getSymbols", "", (response, hasError) => {
+      if (!hasError)
+        this.state.symbolList = response.data;
+      this.forceUpdate();
+    }, this.props.loadingFunction, { method: "GET", isAutoApiMsg: true });
+
+  }
 
 
 
@@ -117,14 +127,10 @@ export default class CreateRole extends Component {
 
 
 
-  getSubjects = () => {
-    this.props.ajaxUtil.sendRequest("/question/v1/getSubjectCategories", "", (response, hasError) => {
+  getEventsList = () => {
+    this.props.ajaxUtil.sendRequest("/tradeLog/v1/getEvents", "", (response, hasError) => {
       if (!hasError)
-        for (var i = 0; i < response.list.length; i++) {
-          response.list[i].value = response.list[i].id;
-          response.list[i].label = response.list[i].name;
-        }
-      this.setState({ subjects: response.list })
+        this.setState({ eventsList: response.data })
     }, this.props.loadingFunction, { method: "GET", isAutoApiMsg: true });
   }
 

@@ -117,7 +117,28 @@ export const ROLES = {
         label: "Search Date",
         width: "md",
         ismandatory: false,
-        type: FIELD_TYPES.MUTLI_SELECT  
+        type: FIELD_TYPES.MUTLI_SELECT
+    },
+    "searchEvents": {
+        name: "searchEvents",
+        label: "Search Events",
+        width: "md",
+        ismandatory: false,
+        type: FIELD_TYPES.DROP_DOWN
+    },
+    "searchComment": {
+        name: "searchComment",
+        label: "Search Comment Contains",
+        width: "md",
+        ismandatory: false,
+        type: FIELD_TYPES.TEXT
+    },
+    "showResultOf": {
+        name: "showResultOf",
+        label: "Show Result Of",
+        width: "md",
+        ismandatory: false,
+        type: FIELD_TYPES.MUTLI_SELECT
     }
 
 
