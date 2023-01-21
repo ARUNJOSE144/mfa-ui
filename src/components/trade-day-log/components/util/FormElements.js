@@ -121,7 +121,7 @@ export const ROLES = {
     },
     "searchEvents": {
         name: "searchEvents",
-        label: "Search Events",
+        label: "Search Events Contains",
         width: "md",
         ismandatory: false,
         type: FIELD_TYPES.DROP_DOWN

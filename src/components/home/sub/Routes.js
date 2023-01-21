@@ -186,7 +186,8 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
           menuPrivilages={MENU_PRIVILIAGES.TRADE_LOG}
         />} />
 
-        <Route exact path="/Trade-day-log/create" render={() => <AsyncTradeLogCreate
+        <Route exact path="/Trade-day-log/create/:id" render={(props) => <AsyncTradeLogCreate
+          {...props}
           {...properties}
           url_Roles={CONSTANTS.QUESTIONS}
         />} />

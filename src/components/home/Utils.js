@@ -88,6 +88,10 @@ export const getIcon = (row, className, onClick) => {
 }
 
 
+export const formatDate = (value) => {
+  return new Date(value).getFullYear() + "-" + (new Date(value).getMonth() + 1) + "-" + new Date(value).getDate();
+}
+
 //Using for creating select box options with value and label tags
 export const getSelectOptions = (data, value, label) => {
   if (validate(data) && validate(value) && validate(label)) {

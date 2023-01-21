@@ -4,7 +4,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Redirect, Switch } from "react-router-dom";
 import { BUTTON_SIZE, BUTTON_STYLE, BUTTON_TYPE } from '../../generic/buttons/elements/ButtonTypes';
 import { CustomButton } from '../../generic/buttons/elements/CustomButton';
-import { checkForPrivilage, getIcon } from "../../home/Utils";
+import { checkForPrivilage, formatDate, getIcon } from "../../home/Utils";
 const modules = [];
 
 /* eslint-disable */
@@ -118,9 +118,9 @@ export default class View extends Component {
 
     this.props.ajaxUtil.sendRequest("/tradeLog/v1/list", request, function (resp, hasError) {
 
-     /*  for (var i = 0; i < resp.list.length; i++) {
-        resp.list[i].havingAnswer == "1" ? resp.list[i].havingAnswer = "Yes" : resp.list[i].havingAnswer = "No";
-      } */
+      /*  for (var i = 0; i < resp.list.length; i++) {
+         resp.list[i].havingAnswer == "1" ? resp.list[i].havingAnswer = "Yes" : resp.list[i].havingAnswer = "No";
+       } */
 
       self.setState({ dataTotalSize: resp.dataTotalSize, data: resp.list })
     }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
@@ -142,7 +142,7 @@ export default class View extends Component {
 
   onConfirmCallBack(callback, rowId) {
     var self = this;
-    this.props.ajaxUtil.sendRequest("/question/v1/delete", { id: rowId }, function (resp, hasError) {
+    this.props.ajaxUtil.sendRequest("/tradeLog/v1/delete", { id: rowId }, function (resp, hasError) {
       self.getRolesList(true);
     }, this.props.loadingFunction, { method: 'POST', isShowSuccess: false, isShowFailure: false, isAutoApiMsg: true });
   }
@@ -232,6 +232,7 @@ export default class View extends Component {
   }
 
 
+
   render() {
 
     var options = {
@@ -256,7 +257,7 @@ export default class View extends Component {
     if (this.state.modal === 2) {
       return (
         <Switch>
-          <Redirect to="/trade-day-log/create" push />
+          <Redirect to="/trade-day-log/create/0" push />
         </Switch>
       );
     }
@@ -269,7 +270,7 @@ export default class View extends Component {
     }
 
     if (this.state.modal === 3) {
-      const editUrl = `/trade-day-log/edit/${this.state.id}`;
+      const editUrl = `/trade-day-log/create/${this.state.id}`;
       return (
         <Switch>
           <Redirect to={editUrl} />
@@ -289,20 +290,20 @@ export default class View extends Component {
           version="4"
           search
           fetchInfo={{ dataTotalSize: this.state.dataTotalSize }}        >
-          <TableHeaderColumn isKey dataField="id" className="dth" columnClassName="dtd" width={0} hidden={true}>ID</TableHeaderColumn>
-          <TableHeaderColumn dataField="tradeDate" className="dth" columnClassName="dtd" width={60} dataSort>Trade Date</TableHeaderColumn>
+          <TableHeaderColumn isKey dataField="id" className="dth" columnClassName="dtd" width={50} hidden={false}>ID</TableHeaderColumn>
+          <TableHeaderColumn dataField="tradeDate" className="dth" columnClassName="dtd" width={80} dataSort>Trade Date</TableHeaderColumn>
           <TableHeaderColumn dataField="day" className="dth" columnClassName="dtd" width={60} >Day</TableHeaderColumn>
           <TableHeaderColumn dataField="events" className="dth" columnClassName="dtd" width={180} >Events</TableHeaderColumn>
           <TableHeaderColumn dataField="comments" className="dth" columnClassName="dtd" width={180} >Comments</TableHeaderColumn>
 
 
-          {/* <TableHeaderColumn dataField="question" className="dth" columnClassName="dtd" width={130}>Question</TableHeaderColumn> */}
-          {/* <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-eye", () => this.openViewMode(row))}>View</TableHeaderColumn> */}
-          {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.edit) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn> : null}
-          {/* {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.delete) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={60} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn> : null} */}
+          <TableHeaderColumn className="dth" columnClassName="dtd" width={80} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => formatDate(row.createDate)}>Created Date</TableHeaderColumn>
+          <TableHeaderColumn className="dth" columnClassName="dtd" width={80} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => formatDate(row.modifiedDate)}>Modified Date</TableHeaderColumn>
+          {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.edit) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={40} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-pencil", () => this.openEditMode(row))}>Edit</TableHeaderColumn> : null}
+          {checkForPrivilage(this.props.privilages, this.props.menuPrivilages.delete) ? <TableHeaderColumn className="dth" columnClassName="dtd" width={40} headerAlign='center' dataAlign='center' dataFormat={(cell, row) => getIcon(row, "fa fa-trash", () => this.deleteRow(row))}>Delete</TableHeaderColumn> : null}
         </BootstrapTable >
 
-        
+
       </div>
     );
   }

@@ -6,12 +6,13 @@ import { CustomButton } from '../../generic/buttons/elements/CustomButton';
 import FieldItem from '../../generic/fields/elements/fieldItem/FieldItem';
 import { validateForm } from '../../generic/fields/elements/formValidator/FormValidator';
 import { ROLES as FormElements } from './util/FormElements';
-
+import moment from "moment";
 
 export default class CreateRole extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      tradeLogId: 0,
       permissions: '',
       indiaVix: "",
       comments: "",
@@ -23,7 +24,8 @@ export default class CreateRole extends Component {
       sectorList: [{ "files": [], fields: {} }],
       symbolList: [{ label: "NIFTY", value: "1" }, { label: "BANK-NIFTY", value: "2" }, { label: "FIN-NIFTY", value: "3" }, { label: "DOW-JOHNS", value: "4" }, { label: "NASDAQ", value: "5" }, { label: "S&P 500", value: "6" }],
       movingStatus: [{ label: "Flat", value: "1" }, { label: "Up", value: "2" }, { label: "Down", value: "3" }],
-      eventsList: []
+      eventsList: [],
+      mode: "CREATE"
     };
     this.props.setHeader("Record Day");
     this.getEventsList();
@@ -40,7 +42,61 @@ export default class CreateRole extends Component {
 
   }
 
+  componentDidMount() {
+    if (this.props.match.params.id != 0) {
+      this.state.mode = "EDIT";
+      this.state.tradeLogId = this.props.match.params.id
+      this.getDetails()
+      this.forceUpdate()
+    }
+  }
 
+  getDetails = () => {
+    var request = { id: this.state.tradeLogId }
+
+    this.props.ajaxUtil.sendRequest("/tradeLog/v1/view", request, (response, hasError) => {
+      console.log("response : ", response)
+      this.state.tradeDate = moment(new Date(response.data.tradeDate));
+      this.state.comments = response.data.comments;
+      this.state.indiaVix = response.data.indiaVix;
+
+      if (this.validate(response.data.events)) {
+        for (var i = 0; i < this.state.eventsList.length; i++) {
+          if (response.data.events.includes(this.state.eventsList[i].label))
+            this.state.events.push(this.state.eventsList[i])
+        }
+      }
+
+      this.state.sectorList = [];
+      var sectorList = []
+      if (this.validate(response.data.tradeLogDetailsTos)) {
+        for (var i = 0; i < response.data.tradeLogDetailsTos.length; i++) {
+          var sector = { fields: {}, files: [] }
+          var logDetail = response.data.tradeLogDetailsTos[i];
+          sector.symbol = this.getObjFromArray(this.state.symbolList, "value", logDetail.symbol)
+          sector.preOpen = this.getObjFromArray(this.state.movingStatus, "value", logDetail.preOpen)
+          sector.firstHalf = this.getObjFromArray(this.state.movingStatus, "value", logDetail.firstHalf)
+          sector.secondHalf = this.getObjFromArray(this.state.movingStatus, "value", logDetail.secondHalf)
+          sector.symbolComments = logDetail.comments
+          sector.id = logDetail.id
+          sectorList.push(sector)
+        }
+      }
+      this.state.sectorList = sectorList
+
+
+      this.forceUpdate();
+    }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
+
+  }
+
+  getObjFromArray = (data, key, value) => {
+    for (var i = 0; i < data.length; i++) {
+      if (data[i][key] == value) {
+        return JSON.parse(JSON.stringify(data[i]));
+      }
+    }
+  }
 
 
   handleChange(name, parent, value, obj) {
@@ -141,6 +197,9 @@ export default class CreateRole extends Component {
   getRequest() {
     var formData = new FormData();
     var tradeDate = new Date(this.state.tradeDate).getFullYear() + "-" + (new Date(this.state.tradeDate).getMonth() + 1) + "-" + new Date(this.state.tradeDate).getDate();
+    if (this.validate(this.state.tradeLogId)) {
+      formData.append('id', this.state.tradeLogId);
+    }
     formData.append('tradeDate', tradeDate);
     if (this.validate(this.state.comments)) {
       formData.append('comments', this.state.comments);
@@ -152,6 +211,9 @@ export default class CreateRole extends Component {
     var sectorList = [];
     for (var i = 0; i < this.state.sectorList.length; i++) {
       var sector = {};
+      if (this.validate(this.state.sectorList[i].id)) {
+        sector.id = this.state.sectorList[i].id;
+      }
       sector.symbol = this.state.sectorList[i].symbol.value;
       sector.preOpen = this.state.sectorList[i].preOpen.value;
       sector.firstHalf = this.state.sectorList[i].firstHalf.value;
@@ -189,6 +251,12 @@ export default class CreateRole extends Component {
       }
       if (sector.symbol.value == "6" && sector.files.length == 1) {
         formData.append('sp500Image', sector.files[0].img)
+      }
+      if (sector.symbol.value == "7" && sector.files.length == 1) {
+        formData.append('stock1Image', sector.files[0].img)
+      }
+      if (sector.symbol.value == "8" && sector.files.length == 1) {
+        formData.append('stock2Image', sector.files[0].img)
       }
     }
     return formData;
@@ -350,11 +418,12 @@ export default class CreateRole extends Component {
                   <label className="commonLabel"> Select Images</label>
                 </div>
                 <input type="file" onChange={(e) => this.onSectorImageChange(e, sector)} />
+                {this.state.mode == "EDIT" ? <label style={{ color: "red", fontStyle: "italic", fontWeight: "100" }}> Existing image will be overwritten, If uploading new Image. </label> : null}
               </div>
 
               <div className="col-md-1">
                 {this.state.sectorList.length == i + 1 ? <i style={{ fontSize: "25px", color: "green", "marginTop": "20px" }} onClick={this.addSector} className="fa fa-plus"></i> : null}
-                {this.state.sectorList.length > 1 ? <i style={{ marginLeft: "15px", fontSize: "25px", color: "red", "marginTop": "20px" }} onClick={() => this.deleteSector(i)} className="fa fa-minus"></i> : null}
+                {this.state.sectorList.length > 1 && (!this.validate(sector.id)) ? <i style={{ marginLeft: "15px", fontSize: "25px", color: "red", "marginTop": "20px" }} onClick={() => this.deleteSector(i)} className="fa fa-minus"></i> : null}
               </div>
             </Row>
 
@@ -429,6 +498,7 @@ export default class CreateRole extends Component {
                   <label className="commonLabel"> Select Images</label>
                 </div>
                 <input type="file" onChange={(e) => this.onFileChange(e)} />
+                {this.state.mode == "EDIT" ? <label style={{ color: "red", fontStyle: "italic", fontWeight: "100" }}> Can't Delete Existing Images. Only Insertion of new Image is available</label> : null}
               </div>
 
 
@@ -442,7 +512,7 @@ export default class CreateRole extends Component {
             }
           </div>
 
-
+          {this.state.mode == "EDIT" ? <label style={{ color: "red", fontStyle: "italic", fontWeight: "100" }}> Can't Delete Existing Sectors/Symbols. But you can add new.</label> : null}
           {this.renderList()}
 
 

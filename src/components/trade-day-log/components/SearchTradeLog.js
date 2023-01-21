@@ -87,7 +87,7 @@ export default class SearchQuestion extends Component {
     this.state.fields = fields;
     this.forceUpdate();
     if (!isTouched && (name == "searchTradeDate" || name == "searchDay" ||
-      name == "searchDate" || name == "searchEvents" || name == "searchComment"/*  || name == "showResultOf" */)) {
+      name == "searchDate" || name == "searchEvents" || name == "searchComment" || name == "showResultOf")) {
 
       var self = this;
       this.state.searchToken = this.state.searchToken + 1;
@@ -102,11 +102,6 @@ export default class SearchQuestion extends Component {
 
     }
   }
-
-
-
-
-
 
   loadSearchResults = () => {
     const request = this.getRequest();
@@ -213,6 +208,7 @@ export default class SearchQuestion extends Component {
 
     this.props.ajaxUtil.sendRequest("/tradeLog/v1/view", request, (response, hasError) => {
       question.sectorData = response.data.tradeLogDetailsTos;
+      question.imageList = response.data.imageList;
       console.log("sectorData : ", question.sectorData)
       this.forceUpdate();
     }, this.props.loadingFunction, { isAutoApiMsg: false, isShowSuccess: false, isShowFailure: true });
@@ -257,6 +253,22 @@ export default class SearchQuestion extends Component {
                 <img src={BASE_URL + "/getDownloadFiles?imagePath=" + sector.tradeLogImageTo.imagePath} style={{ width: 700 }}  ></img>
               </div> : null}
 
+          </Row>
+        ))}
+      </React.Fragment>
+    );
+  }
+
+  renderCommonImages = (question) => {
+    return (
+      <React.Fragment>
+        {this.validate(question.imageList) ? <label style={{ color: "red", fontWeight: "bold", padding: "10px" }}>Below are the common Images</label> : null}
+        {this.validate(question.imageList) && question.imageList.map((sector, i) => (
+          <Row style={{ margin: "15px", border: "2px solid red" }}>
+            {validate(sector.imagePath) ?
+              <div className='col-md-12'>
+                <img src={BASE_URL + "/getDownloadFiles?imagePath=" + sector.imagePath} style={{ width: 975 }}  ></img>
+              </div> : null}
           </Row>
         ))}
       </React.Fragment>
@@ -312,9 +324,12 @@ export default class SearchQuestion extends Component {
 
               </div> */}
 
-              <div style={{ padding: "10px" }}>Trade Date  :  {tradeDay.tradeDate}</div>
-
-              <div style={{ padding: "10px" }}>Day  :  {tradeDay.day}</div>
+              <div style={{ padding: "10px" }}>
+                Trade Date  :  <b>{tradeDay.tradeDate} </b> |
+                Day  :  <b>{tradeDay.day}</b>|
+                Create Date  :  <b>{new Date(tradeDay.createDate).getFullYear() + "-" + (new Date(tradeDay.createDate).getMonth() + 1) + "-" + new Date(tradeDay.createDate).getDate()}</b>|
+                Modified Date  :  <b>{new Date(tradeDay.modifiedDate).getFullYear() + "-" + (new Date(tradeDay.modifiedDate).getMonth() + 1) + "-" + new Date(tradeDay.modifiedDate).getDate()}</b>|
+                Id  :  <b>{tradeDay.id}</b></div>
 
               <div style={{ padding: "10px" }}>Events  :  {tradeDay.events}</div>
 
@@ -327,6 +342,9 @@ export default class SearchQuestion extends Component {
               </div>
  */}
               {this.renderImages(tradeDay)}
+
+              {!this.validate(this.state.showResultOf) ?
+                this.renderCommonImages(tradeDay) : null}
 
               {/*  <FieldItem
                 {...FormElements.bookmark}
@@ -385,7 +403,7 @@ export default class SearchQuestion extends Component {
     }
 
     if (this.state.mode === "EDIT") {
-      const editUrl = `/trade-day-log/edit/${this.state.selectedQuestionId}`;
+      const editUrl = `/trade-day-log/create/${this.state.selectedQuestionId}`;
       return (
         <Switch>
           <Redirect to={editUrl} />
@@ -395,7 +413,7 @@ export default class SearchQuestion extends Component {
     if (this.state.mode === "CREATE") {
       return (
         <Switch>
-          <Redirect to="/trade-day-log/create" push />
+          <Redirect to="/trade-day-log/create/0" push />
         </Switch>
       );
     }
@@ -406,11 +424,11 @@ export default class SearchQuestion extends Component {
 
           <div className="form-Brick-Head" style={{ marginBottom: "10px" }}>
 
-            <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create New Question" isButtonGroup={true} onClick={() => this.setState({ mode: "CREATE" })} /></span>
+            <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create New" isButtonGroup={true} onClick={() => this.setState({ mode: "CREATE" })} /></span>
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Reset" isButtonGroup={true} onClick={() => this.resetFrom()} /></span>
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Go Back" isButtonGroup={true} onClick={() => this.onCancel()} /></span>
 
-            <span>Search For Days </span>
+            {/*  <span>Search For Days </span> */}
 
           </div>
 
