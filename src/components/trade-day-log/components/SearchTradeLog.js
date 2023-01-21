@@ -250,7 +250,7 @@ export default class SearchQuestion extends Component {
 
             {validate(sector.tradeLogImageTo) ?
               <div className='col-md-9'>
-                <img src={BASE_URL + "/getDownloadFiles?imagePath=" + sector.tradeLogImageTo.imagePath} style={{ width: 700 }}  ></img>
+                <img src={BASE_URL + "/getDownloadFiles?imagePath=" + sector.tradeLogImageTo.imagePath} style={{ width: "100%" }}  ></img>
               </div> : null}
 
           </Row>
@@ -267,7 +267,7 @@ export default class SearchQuestion extends Component {
           <Row style={{ margin: "15px", border: "2px solid red" }}>
             {validate(sector.imagePath) ?
               <div className='col-md-12'>
-                <img src={BASE_URL + "/getDownloadFiles?imagePath=" + sector.imagePath} style={{ width: 975 }}  ></img>
+                <img src={BASE_URL + "/getDownloadFiles?imagePath=" + sector.imagePath} style={{ width: "100%" }}  ></img>
               </div> : null}
           </Row>
         ))}
