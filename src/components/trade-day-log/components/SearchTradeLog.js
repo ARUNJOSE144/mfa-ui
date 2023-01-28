@@ -61,8 +61,10 @@ export default class SearchQuestion extends Component {
 
   getSymbols = () => {
     this.props.ajaxUtil.sendRequest("/tradeLog/v1/getSymbols", "", (response, hasError) => {
-      if (!hasError)
+      if (!hasError) {
         this.state.symbolList = response.data;
+        this.state.symbolList.push({ label: "Common Images", value: "0" });
+      }
       this.forceUpdate();
     }, this.props.loadingFunction, { method: "GET", isAutoApiMsg: true });
 
@@ -259,21 +261,32 @@ export default class SearchQuestion extends Component {
     );
   }
 
+  toggleImageView = (sector) => {
+    sector.isShow = !sector.isShow;
+    this.forceUpdate()
+  }
+
   renderCommonImages = (question) => {
+    console.log("this.state.showResultOf=========", this.state.showResultOf)
     return (
       <React.Fragment>
-        {this.validate(question.imageList) ? <label style={{ color: "red", fontWeight: "bold", padding: "10px" }}>Below are the common Images</label> : null}
-        {this.validate(question.imageList) && question.imageList.map((sector, i) => (
-          <Row style={{ margin: "15px", border: "2px solid red" }}>
-            {validate(sector.imagePath) ?
-              <div className='col-md-12'>
-                <img src={BASE_URL + "/getDownloadFiles?imagePath=" + sector.imagePath} style={{ width: "100%" }}  ></img>
-              </div> : null}
-          </Row>
-        ))}
+        {this.validate(question.imageList) && (!validate(this.state.showResultOf) || (validate(this.state.showResultOf) && this.state.showResultOf.length == 0 ||
+          validate(this.getObjFromArray(this.state.showResultOf, "value", "0")))) ? <label style={{ color: "red", fontWeight: "bold", padding: "10px" }}>Below are the common Images</label> : null}
+        {this.validate(question.imageList) && (!validate(this.state.showResultOf) || (validate(this.state.showResultOf) && this.state.showResultOf.length == 0 ||
+          validate(this.getObjFromArray(this.state.showResultOf, "value", "0")))) && question.imageList.map((sector, i) => (
+            <Row style={{ padding: "5px", fontWeight: "500", color: "green", background: "antiquewhite", margin: "10px" }}>
+              <div onClick={() => this.toggleImageView(sector)} style={{ cursor: "pointer", width: "-webkit-fill-available" }}>Click to Show/Hide</div>
+              {validate(sector.imagePath) && sector.isShow ?
+                <div className='col-md-12'>
+                  <img src={BASE_URL + "/getDownloadFiles?imagePath=" + sector.imagePath} style={{ width: "100%" }}   ></img>
+                </div> : null}
+            </Row>
+          ))}
       </React.Fragment>
     );
   }
+
+
 
 
   deleteRow(obj, message, callback) {
@@ -343,9 +356,10 @@ export default class SearchQuestion extends Component {
  */}
               {this.renderImages(tradeDay)}
 
-              {!this.validate(this.state.showResultOf) ?
-                this.renderCommonImages(tradeDay) : null}
+              {/*  {!this.validate(this.state.showResultOf) ?
+                this.renderCommonImages(tradeDay) : null} */}
 
+              {this.renderCommonImages(tradeDay)}
               {/*  <FieldItem
                 {...FormElements.bookmark}
                 value={this.getObjFromArray(this.state.bookMarks, "value", tradeDay.bookmark)}
