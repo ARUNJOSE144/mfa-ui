@@ -325,8 +325,8 @@ export default class CreateRole extends Component {
   renderSectorImages = (parent) => {
     return (
       parent.files.map((file, i) => (
-        <div className="col-md-3">
-          <img src={file.url} style={{ width: 100 }}></img>
+        <div className="col-md-9">
+          <img src={file.url} style={{ width: "100%" }}></img>
           <span aria-hidden="true" style={{ right: 30, position: "absolute", fontSize: "31px", color: "red", fontWeight: "800", cursor: "pointer" }} className=" default-segment-ModalCloseIcon my-2" onClick={() => this.deleteImage(parent.files, i)}>
             &times;
           </span>

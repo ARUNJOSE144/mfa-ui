@@ -13,14 +13,20 @@
     <label style="font-weight:bold;font-size: larger;"> Auto Question checking for bartleby</label>
     <textarea style="margin: 0px; width: 1200px; height: 391px;">    		    
        
+
+
 var bTags = document.getElementsByTagName("button");
 var searchText = "View Primary Question";
 var searchEscalationText = "View Escalation Question";
 var searchThreadedText = "View Follow up Question";
 //In seconds
-var pollInterval = 12;
+var pollInterval = 13;
+var threadedQueuePollInterval = 2;
 var audio = new Audio('https://www.soundjay.com/buttons/sounds/button-3.mp3');
 audio.play();
+var isPlay = true;
+var clickEscalationQueue = false
+var clickThrededQueue = false
 
 
 
@@ -30,8 +36,10 @@ setInterval(function () {
     for (var i = 0; i < bTags.length; i++) {
         if (bTags[i].textContent == searchText) {
             console.log("----Button Present----")
-            bTags[i].click()
-            setTimeout(function () { playBeep(); }, 5000);
+            if (isPlay) {
+                bTags[i].click()
+                setTimeout(function () { playBeep(); }, 5000);
+            }
             break;
         }
     }
@@ -49,8 +57,10 @@ setTimeout(function () {
         for (var i = 0; i < bTags.length; i++) {
             if (bTags[i].textContent == searchEscalationText) {
                 console.log("-E---Button Present----")
-                bTags[i].click()
-                setTimeout(function () { playBeep(); }, 5000);
+                if (isPlay && clickEscalationQueue) {
+                    bTags[i].click()
+                    setTimeout(function () { playBeep(); }, 5000);
+                }
                 break;
             }
         }
@@ -65,17 +75,18 @@ setTimeout(function () {
 // Threaded Queue Polling start Here
 setTimeout(function () {
     setInterval(function () {
-        console.log("-T---Polling----");
 
         for (var i = 0; i < bTags.length; i++) {
             if (bTags[i].textContent == searchThreadedText) {
                 console.log("-T---Button Present----")
-                bTags[i].click()
-                setTimeout(function () { playBeep(); }, 5000);
+                if (isPlay && clickThrededQueue) {
+                    bTags[i].click()
+                    setTimeout(function () { playBeep(); }, 5000);
+                }
                 break;
             }
         }
-    }, pollInterval * 1000)
+    }, threadedQueuePollInterval * 1000)
 }, 6000);
 // Threaded Queue Polling end Here
 
@@ -196,6 +207,32 @@ setInterval(function () {
         }
     }
 }, 500);
+
+
+
+// Play/Pause button
+var obj = document.getElementsByClassName("SmeDashboardBody");
+let btn = document.createElement("button");
+btn.innerHTML = "Pause";
+btn.setAttribute("id", "playPauseButton");
+obj[0].append(btn);
+
+btn.addEventListener("click", function () {
+    isPlay = !isPlay
+    if (isPlay) {
+        document.getElementById("playPauseButton").innerHTML = "Pause"
+        document.getElementById("playPauseButton").style.backgroundColor = "green";
+    } else {
+        document.getElementById("playPauseButton").innerHTML = "Play"
+        document.getElementById("playPauseButton").style.backgroundColor = "red";
+    }
+})
+
+document.getElementById("playPauseButton").style.backgroundColor = "green";
+document.getElementById("playPauseButton").style.color = "white";
+
+
+
 
 
 	   
