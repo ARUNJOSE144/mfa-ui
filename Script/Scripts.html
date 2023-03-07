@@ -15,6 +15,8 @@
        
 
 
+
+
 var bTags = document.getElementsByTagName("button");
 var searchText = "View Primary Question";
 var searchEscalationText = "View Escalation Question";
@@ -52,11 +54,8 @@ setInterval(function () {
 // Escalation Queue Polling start Here
 setTimeout(function () {
     setInterval(function () {
-        console.log("-E---Polling----");
-
         for (var i = 0; i < bTags.length; i++) {
             if (bTags[i].textContent == searchEscalationText) {
-                console.log("-E---Button Present----")
                 if (isPlay && clickEscalationQueue) {
                     bTags[i].click()
                     setTimeout(function () { playBeep(); }, 5000);
@@ -75,10 +74,8 @@ setTimeout(function () {
 // Threaded Queue Polling start Here
 setTimeout(function () {
     setInterval(function () {
-
         for (var i = 0; i < bTags.length; i++) {
             if (bTags[i].textContent == searchThreadedText) {
-                console.log("-T---Button Present----")
                 if (isPlay && clickThrededQueue) {
                     bTags[i].click()
                     setTimeout(function () { playBeep(); }, 5000);
@@ -210,30 +207,43 @@ setInterval(function () {
 
 
 
-// Play/Pause button
-var obj = document.getElementsByClassName("SmeDashboardBody");
-let btn = document.createElement("button");
-btn.innerHTML = "Pause";
-btn.setAttribute("id", "playPauseButton");
-obj[0].append(btn);
 
-btn.addEventListener("click", function () {
-    isPlay = !isPlay
-    if (isPlay) {
-        document.getElementById("playPauseButton").innerHTML = "Pause"
+// Primary Queue Polling start Here
+setInterval(function () {
+    if (!validate(document.getElementById("playPauseButton")) && document.getElementsByClassName("SmeDashboardBody").length != 0) {
+
+        // Play/Pause button
+        var obj = document.getElementsByClassName("SmeDashboardBody");
+        let btn = document.createElement("button");
+        btn.innerHTML = "Pause";
+        btn.setAttribute("id", "playPauseButton");
+        obj[0].append(btn);
+
+        btn.addEventListener("click", function () {
+            isPlay = !isPlay
+            if (isPlay) {
+                document.getElementById("playPauseButton").innerHTML = "Pause"
+                document.getElementById("playPauseButton").style.backgroundColor = "green";
+            } else {
+                document.getElementById("playPauseButton").innerHTML = "Play"
+                document.getElementById("playPauseButton").style.backgroundColor = "red";
+            }
+        })
+
         document.getElementById("playPauseButton").style.backgroundColor = "green";
-    } else {
-        document.getElementById("playPauseButton").innerHTML = "Play"
-        document.getElementById("playPauseButton").style.backgroundColor = "red";
+        document.getElementById("playPauseButton").style.color = "white";
     }
-})
+}, 2 * 1000);
+// Primary Queue Polling end Here
 
-document.getElementById("playPauseButton").style.backgroundColor = "green";
-document.getElementById("playPauseButton").style.color = "white";
+function validate(val) {
+    if (val != null && val != undefined && val != "") {
+        return true;
+    } else {
+        return false;
+    }
 
-
-
-
+}
 
 	   
 			
