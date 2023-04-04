@@ -319,7 +319,7 @@ export default class SearchQuestion extends Component {
             backgroundColor: "white", marginTop: "10px",
             padding: "10px", fontSize: "17px", boxShadow: "3px 3px 5px 0px rgb(0 0 0 / 5%)",
           }}>
-            <div className="mx-0" onClick={() => this.toggleDetails(tradeDay)} style={{ cursor: "pointer" }}>
+            <div className="mx-0 tradeDayclass" onClick={() => this.toggleDetails(tradeDay)} style={{ cursor: "pointer" }}>
               Trade Date  :  <b>{tradeDay.tradeDate}  </b>   , Day  : <b style={{ color: "yellowgreen" }}> {tradeDay.day}</b>
 
               {tradeDay.bookmark != "1" ? <i className="fa fa-trash" style={{ marginLeft: 15, float: "right", color: "red", marginTop: "0px", fontSize: "23px" }} onClick={() => this.deleteRow(tradeDay)}></i> : null}
@@ -388,6 +388,12 @@ export default class SearchQuestion extends Component {
     }, this.props.loadingFunction, { method: "GET", isAutoApiMsg: true });
   }
 
+  openAll = () => {
+    var array = document.getElementsByClassName("tradeDayclass")
+    for (let index = 0; index < array.length; index++) {
+      var obj = array[index]; obj.click();
+    }
+  }
 
 
   goTo = (mode, question) => {
@@ -441,6 +447,7 @@ export default class SearchQuestion extends Component {
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Create New" isButtonGroup={true} onClick={() => this.setState({ mode: "CREATE" })} /></span>
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Reset" isButtonGroup={true} onClick={() => this.resetFrom()} /></span>
             <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Go Back" isButtonGroup={true} onClick={() => this.onCancel()} /></span>
+            <span><CustomButton style={BUTTON_STYLE.BRICK} type={BUTTON_TYPE.PRIMARY} size={BUTTON_SIZE.MEDIUM} align="left" label="Open All" isButtonGroup={true} onClick={() => this.openAll()} /></span>
 
             {/*  <span>Search For Days </span> */}
 
