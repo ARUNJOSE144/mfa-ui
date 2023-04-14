@@ -98,6 +98,18 @@ const AsyncTradeLogSearch = Loadable({
 
 
 
+const AsyncTradeView = Loadable({
+  loader: () => import('../../trade/components/ViewTrade'),
+  loading: Loading
+});
+
+
+const AsyncTradeCreate = Loadable({
+  loader: () => import('../../trade/components/CreateTrade'),
+  loading: Loading
+});
+
+
 
 
 
@@ -199,6 +211,21 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
         />} />
 
         <Route exact path="/Trade-day-log/questionSearch" render={() => <AsyncTradeLogSearch
+          {...properties}
+          url_Roles={CONSTANTS.QUESTIONS}
+        />} />
+
+
+
+
+        <Route exact path="/Manage_trade" render={() => <AsyncTradeView
+          {...properties}
+          url_Roles={CONSTANTS.QUESTIONS}
+          menuPrivilages={MENU_PRIVILIAGES.MANAGE_TRADE}
+        />} />
+
+        <Route exact path="/Manage_trade/create/:id" render={(props) => <AsyncTradeCreate
+          {...props}
           {...properties}
           url_Roles={CONSTANTS.QUESTIONS}
         />} />

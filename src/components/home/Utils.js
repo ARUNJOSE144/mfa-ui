@@ -92,6 +92,13 @@ export const formatDate = (value) => {
   return new Date(value).getFullYear() + "-" + (new Date(value).getMonth() + 1) + "-" + new Date(value).getDate();
 }
 
+//get Status Field
+export const getstatusField = (row, className, onClick) => {
+  if (row.status == 1)
+    return <div> Pending</div>
+}
+
+
 //Using for creating select box options with value and label tags
 export const getSelectOptions = (data, value, label) => {
   if (validate(data) && validate(value) && validate(label)) {
