@@ -236,8 +236,8 @@ document.getElementById("playPauseButton").style.color = "white";
 //Time Out for the review time
 setInterval(function () {
     var obj1 = document.getElementsByClassName("ModalBackgroundOverlay");
-    console.log("Review time over");
     if (obj1.length == 1) {
+		console.log("Review time over");
         obj1[0].click();
     }
 }, 5000);

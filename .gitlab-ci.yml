@@ -1,2 +1,0 @@
-include:
-  - remote: 'http://10.0.0.15/girija/buildtools/-/raw/master/CICD-Java-Maven-NoTest.yml'

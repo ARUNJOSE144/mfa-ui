@@ -1,4 +1,4 @@
-export const { AD_URL, BASE_URL, RULEENGINE_URL } = window;
+export const { AD_URL, BASE_URL, RULEENGINE_URL,OPTION_CODE } = window;
 export const LOGIN = "login";
 export const LOGOUT = "logout";
 export const CHANGE_PSWD = "changePswd";

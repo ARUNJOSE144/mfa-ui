@@ -7,6 +7,7 @@ import { CustomButton } from '../../generic/buttons/elements/CustomButton';
 import FieldItem from '../../generic/fields/elements/fieldItem/FieldItem';
 import { validateForm } from '../../generic/fields/elements/formValidator/FormValidator';
 import { ROLES as FormElements } from './util/FormElements';
+import { OPTION_CODE } from "../../../util/Constants";
 
 export default class CreateRole extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class CreateRole extends Component {
       fields: {},
       symbolList: [
         { label: "NIFTY", value: "1", "name": "NSE:NIFTY50-INDEX" },
-        { label: "BANKNIFTY", value: "2", "name": "NSE:BANK-NIFTY-INDEX" },
+        { label: "BANKNIFTY", value: "2", "name": "NSE:NIFTYBANK-INDEX" },
       ],
       strikeListForAll: {
         "1": [{ "label": 15400, "value": 15400 }, { "label": 15450, "value": 15450 }, { "label": 15500, "value": 15500 }, { "label": 15550, "value": 15550 }, { "label": 15600, "value": 15600 }, { "label": 15650, "value": 15650 }, { "label": 15700, "value": 15700 }, { "label": 15750, "value": 15750 }, { "label": 15800, "value": 15800 }, { "label": 15850, "value": 15850 }, { "label": 15900, "value": 15900 }, { "label": 15950, "value": 15950 }, { "label": 16000, "value": 16000 }, { "label": 16050, "value": 16050 }, { "label": 16100, "value": 16100 }, { "label": 16150, "value": 16150 }, { "label": 16200, "value": 16200 }, { "label": 16250, "value": 16250 }, { "label": 16300, "value": 16300 }, { "label": 16350, "value": 16350 }, { "label": 16400, "value": 16400 }, { "label": 16450, "value": 16450 }, { "label": 16500, "value": 16500 }, { "label": 16550, "value": 16550 }, { "label": 16600, "value": 16600 }, { "label": 16650, "value": 16650 }, { "label": 16700, "value": 16700 }, { "label": 16750, "value": 16750 }, { "label": 16800, "value": 16800 }, { "label": 16850, "value": 16850 }, { "label": 16900, "value": 16900 }, { "label": 16950, "value": 16950 }, { "label": 17000, "value": 17000 }, { "label": 17050, "value": 17050 }, { "label": 17100, "value": 17100 }, { "label": 17150, "value": 17150 }, { "label": 17200, "value": 17200 }, { "label": 17250, "value": 17250 }, { "label": 17300, "value": 17300 }, { "label": 17350, "value": 17350 }, { "label": 17400, "value": 17400 }, { "label": 17450, "value": 17450 }, { "label": 17500, "value": 17500 }, { "label": 17550, "value": 17550 }, { "label": 17600, "value": 17600 }, { "label": 17650, "value": 17650 }, { "label": 17700, "value": 17700 }, { "label": 17750, "value": 17750 }, { "label": 17800, "value": 17800 }, { "label": 17850, "value": 17850 }, { "label": 17900, "value": 17900 }, { "label": 17950, "value": 17950 }, { "label": 18000, "value": 18000 }, { "label": 18050, "value": 18050 }, { "label": 18100, "value": 18100 }, { "label": 18150, "value": 18150 }, { "label": 18200, "value": 18200 }, { "label": 18250, "value": 18250 }, { "label": 18300, "value": 18300 }, { "label": 18350, "value": 18350 }, { "label": 18400, "value": 18400 }, { "label": 18450, "value": 18450 }, { "label": 18500, "value": 18500 }, { "label": 18550, "value": 18550 }, { "label": 18600, "value": 18600 }, { "label": 18650, "value": 18650 }, { "label": 18700, "value": 18700 }, { "label": 18750, "value": 18750 }, { "label": 18800, "value": 18800 }, { "label": 18850, "value": 18850 }, { "label": 18900, "value": 18900 }, { "label": 18950, "value": 18950 }, { "label": 19000, "value": 19000 }, { "label": 19050, "value": 19050 }, { "label": 19100, "value": 19100 }],
@@ -27,7 +28,7 @@ export default class CreateRole extends Component {
       aboveOrBelowList: [{ label: "Above", value: "ABOVE" }, { label: "Below", value: "BELOW" }],
       mode: "CREATE",
       strikeList: [],
-      code: "23413"
+      code: OPTION_CODE
 
     };
     this.props.setHeader("Create Trade");
@@ -195,7 +196,8 @@ export default class CreateRole extends Component {
       <div className="custom-container">
         <div className="form-Brick">
           <div className="form-Brick-Head">
-            <span>Basic Details</span>
+            <span>Basic Details  </span>
+            <bold style={{ float: "right" }}> Code  : {this.state.code}</bold>
           </div>
           <div className="form-Brick-body">
             <Row className="mx-0">
