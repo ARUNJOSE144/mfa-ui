@@ -108,6 +108,12 @@ export const MENU_DETAILS = [
         linkTo: "/Manage_trade",
         icon: "fa fa-users",
         privilages: _.values(PRIVILIAGES.MANAGE_TRADE)
+      }, {
+        id: 302,
+        label: "Option Chain",
+        linkTo: "/OptionChain",
+        icon: "fa fa-users",
+        privilages: _.values(PRIVILIAGES.MANAGE_TRADE)
       }
     ]
   }

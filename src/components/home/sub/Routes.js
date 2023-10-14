@@ -109,6 +109,10 @@ const AsyncTradeCreate = Loadable({
   loading: Loading
 });
 
+const AsyncOptionChain = Loadable({
+  loader: () => import('../../option-chain/components/OptionChain'),
+  loading: Loading
+});
 
 
 
@@ -225,6 +229,12 @@ export const Routes = ({ userid, privilages, previousState, userChannelType, use
         />} />
 
         <Route exact path="/Manage_trade/create/:id" render={(props) => <AsyncTradeCreate
+          {...props}
+          {...properties}
+          url_Roles={CONSTANTS.QUESTIONS}
+        />} />
+
+        <Route exact path="/OptionChain" render={(props) => <AsyncOptionChain
           {...props}
           {...properties}
           url_Roles={CONSTANTS.QUESTIONS}
